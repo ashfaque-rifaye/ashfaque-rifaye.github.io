@@ -336,7 +336,7 @@ const Portfolio = () => {
                 <div className="flex flex-col md:flex-row items-start justify-between mb-6 gap-6">
                    <div className="relative shrink-0">
                       <img 
-                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ashfaque&top=shortHair&facialHair=beardMedium&clothes=shirtCrewNeck&skinColor=light&hairColor=black&backgroundColor=b6e3f4"
+                        src="https://ui-avatars.com/api/?name=Ashfaque+Rifaye&size=120&background=4c63d2&color=fff&bold=true&font-size=0.4&rounded=true" 
                         alt="Profile" 
                         className="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-indigo-500 shadow-lg object-cover"
                       />
