@@ -383,12 +383,62 @@ const Portfolio = () => {
                   <div>
                     <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-6">
                       <div className="relative shrink-0">
-                        <img
-                          src="https://api.dicebear.com/9.x/avataaars/svg?seed=AshfaqueBA&backgroundColor=b6e3f4"
-                          alt="Ashfaque Rifaye"
-                          className="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-indigo-500 shadow-lg object-cover bg-indigo-500/20"
-                          onError={(e) => { e.target.onerror = null; e.target.src = 'https://api.dicebear.com/9.x/bottts/svg?seed=AshfaqueAI&backgroundColor=b6e3f4'; }}
-                        />
+                        <div className="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-indigo-500 shadow-lg overflow-hidden bg-indigo-500/20">
+                          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                            <defs>
+                              <linearGradient id="avatarBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#1e40af"/>
+                                <stop offset="100%" stopColor="#3b82f6"/>
+                              </linearGradient>
+                            </defs>
+                            {/* Background */}
+                            <circle cx="40" cy="40" r="40" fill="url(#avatarBg)"/>
+                            {/* Suit jacket */}
+                            <path d="M6 80 L6 61 C6 53 17 48 27 46 L35.5 44 L40 53 L44.5 44 L53 46 C63 48 74 53 74 61 L74 80Z" fill="#1e3a8a"/>
+                            {/* White shirt collar */}
+                            <polygon points="35.5,44 40,53 44.5,44 42,42.5 40,51 38,42.5" fill="white"/>
+                            {/* Tie */}
+                            <polygon points="38.5,42.5 41.5,42.5 40.8,53 40,55.5 39.2,53" fill="#dc2626"/>
+                            {/* Neck */}
+                            <rect x="34.5" y="37" width="11" height="10" rx="2" fill="#f8c460"/>
+                            {/* Head */}
+                            <ellipse cx="40" cy="29" rx="16" ry="18" fill="#f8c460"/>
+                            {/* Short dark hair */}
+                            <path d="M24 25 C24 14 30 9 40 9 C50 9 56 14 56 25 C54 18 48 14 40 14 C32 14 26 18 24 25Z" fill="#2d1a0e"/>
+                            <rect x="24" y="14" width="32" height="13" fill="#2d1a0e"/>
+                            {/* Hair sides (close-crop sideburns) */}
+                            <rect x="24" y="19" width="3" height="13" rx="1.5" fill="#2d1a0e"/>
+                            <rect x="53" y="19" width="3" height="13" rx="1.5" fill="#2d1a0e"/>
+                            {/* Ears */}
+                            <ellipse cx="24" cy="30" rx="3.5" ry="4.5" fill="#f8c460"/>
+                            <ellipse cx="56" cy="30" rx="3.5" ry="4.5" fill="#f8c460"/>
+                            <ellipse cx="24" cy="30" rx="1.8" ry="2.5" fill="#e0a830"/>
+                            <ellipse cx="56" cy="30" rx="1.8" ry="2.5" fill="#e0a830"/>
+                            {/* Thick masculine eyebrows */}
+                            <rect x="27.5" y="22.5" width="9" height="2" rx="1" fill="#2d1a0e"/>
+                            <rect x="43.5" y="22.5" width="9" height="2" rx="1" fill="#2d1a0e"/>
+                            {/* Eye whites */}
+                            <ellipse cx="32" cy="28.5" rx="4" ry="3.2" fill="white"/>
+                            <ellipse cx="48" cy="28.5" rx="4" ry="3.2" fill="white"/>
+                            {/* Irises */}
+                            <circle cx="32.5" cy="28.5" r="2.4" fill="#3d2b1f"/>
+                            <circle cx="48.5" cy="28.5" r="2.4" fill="#3d2b1f"/>
+                            {/* Pupils */}
+                            <circle cx="32.5" cy="28.5" r="1.2" fill="#0f0a07"/>
+                            <circle cx="48.5" cy="28.5" r="1.2" fill="#0f0a07"/>
+                            {/* Eye highlights */}
+                            <circle cx="33.5" cy="27.5" r="0.9" fill="white" opacity="0.65"/>
+                            <circle cx="49.5" cy="27.5" r="0.9" fill="white" opacity="0.65"/>
+                            {/* Nose */}
+                            <path d="M37.5 34.5 C37.5 37 38.8 38 40 38 C41.2 38 42.5 37 42.5 34.5" stroke="#d4940a" strokeWidth="1.1" fill="none" strokeLinecap="round"/>
+                            {/* Smile */}
+                            <path d="M33.5 41 Q40 45.5 46.5 41" stroke="#b87010" strokeWidth="1.6" fill="none" strokeLinecap="round"/>
+                            {/* Short beard / stubble shadow */}
+                            <ellipse cx="40" cy="42.5" rx="10" ry="3.5" fill="#b87010" opacity="0.22"/>
+                            <ellipse cx="33" cy="40" rx="5" ry="2.5" fill="#b87010" opacity="0.18"/>
+                            <ellipse cx="47" cy="40" rx="5" ry="2.5" fill="#b87010" opacity="0.18"/>
+                          </svg>
+                        </div>
                         <div className="absolute bottom-0 right-0 w-6 h-6 bg-emerald-500 rounded-full border-4 border-slate-900 flex items-center justify-center">
                           <div className="w-full h-full rounded-full animate-ping bg-emerald-400 opacity-75 absolute"></div>
                         </div>
