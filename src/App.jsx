@@ -46,43 +46,64 @@ const Portfolio = () => {
   const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID || "G-XXXXXXXXXX";
 
   const RESUME_CONTEXT = `
-  You are an AI assistant for Ashfaque Rifaye, a Technical Business Analyst and Product Owner with 9 years of experience.
+  You are an AI assistant for Ashfaque Rifaye, a Technical Business Solution Analyst and Product Owner with 9 years of experience.
   Your goal is to answer questions about Ashfaque's professional background professionally and accurately based ONLY on the following resume data.
   
   RESUME DATA:
   - Name: Ashfaque Rifaye
-  - Role: Tech Business Analyst | AI Product Manager
-  - Location: Chennai, IND (Open to Relocate: Bangalore, Hyderabad, Dubai, Remote)
-  - Contact: ashfaque_rifaye@outlook.com, linkedin.com/ashfaque-rifaye
-  - Summary: 9 years exp in AI-driven digital solutions, virtual assistants, and enterprise automation. Skilled in Genesys/Google Dialogflow, AI/ML, CRM integrations, and SAFe Agile.
+  - Role: Technical Business Solution Analyst | AT&T
+  - Location: Chennai, IND
+  - Contact: +91 90425 37133 / 63828 44365, ashfaque_rifaye@outlook.com, linkedin.com/ashfaque-rifaye
+  - Portfolio: https://ashfaque-rifaye.github.io/
+  - Summary: Business Solution Analyst/Product Owner with 9 years of experience delivering AI-driven digital solutions, virtual assistants, and enterprise-scale automation for telecom and consumer platforms. Skilled in Genesys/Google Dialogflow, AI/ML automation, CRM/Contact Center integrations, and Agile/SAFe product delivery. Proven success designing RAG-powered conversational AI, driving omnichannel enablement, and leading cross-functional product squads to achieve measurable business outcomes.
   
-  - Experience 1: AT&T (Aug 2022 - Present) - AI Business Analyst / Product Owner.
-    - Lead E2E functional ownership for GenAI-powered Virtual Assistant (Google CCAI/Dialogflow), driving omnichannel enablement across chat, voice, WhatsApp, and RCS.
-    - Defined end-to-end customer journeys, managed project with large team intents/entities, fallback logic, and RAG-powered conversational search.
-    - Delivered 45% containment and reduced live-agent escalations.
-    - Enabled seamless orchestration between AI layer, telephony systems, and backend CRMs through REST APIs.
-    - Managed backlog grooming, sprint planning, and cross-squad coordination in SAFe Agile framework.
-    - Designed KPI dashboards (Power BI, SQL) for performance tracking.
+  - Experience 1: AT&T Communications Services India Pvt. Ltd. (Aug 2022 - Present) - AI Technical Business Solution Analyst (PM), Consumer Technology & Experience.
+    - Led E2E product ownership of AT&T's GenAI-powered Telecom Virtual Assistant (Google CCAI/Dialogflow), scaling omnichannel deployment across chat, voice, WhatsApp, and RCS to serve 1.5M+ monthly customer interactions.
+    - Drove AI-powered automation through E2E conversation design, managing 350+ intents, 1,200+ training phrases, and RAG-powered knowledge retrieval achieving 55% containment rate, reducing live-agent escalations by 28%, saving $4.2M annually.
+    - Architected B2B integration ecosystem connecting AI layer with telephony infrastructure and backend CRMs via REST APIs, reducing average handle time by 32 seconds per interaction.
+    - Delivered comprehensive technical documentation including process flow charts, data flow diagrams, and BRDs for 12-person cross-functional team.
+    - Managed Agile delivery in SAFe framework for 2 dev squads (18 developers); 95% sprint commitment reliability via Jira/Confluence.
+    - Built KPI dashboards (Power BI, SQL) monitoring 15+ metrics including containment, CSAT, 92% intent recognition accuracy; improved NPS by 8 points.
+    - Collaborated with US stakeholders to align AI roadmap with CX objectives, securing $2.5M budget for FY25 enhancements.
+    - AI Focus: Architected RAG system for chatbot knowledge retrieval, rapid prototyped AI features, established human-in-the-loop feedback systems, monitored token usage and API costs.
+    - Key Projects: GenAI Virtual Assistant (1.5M+ monthly users), Retail Hyper-Personalization (15% CTR uplift), AI Performance Analytics Suite (6 channels).
   
-  - Experience 2: Verizon Data Services (Mar 2020 - Aug 2022) - Consultant.
-    - Conducted analysis with data-backed recommendations, funnel analysis, and A/B testing.
-    - Overcame technical challenges to drive $1.5M+ revenue growth for Verizon.
-    - Key Projects: Hum+ Wi-Fi Plan ($100K/yr revenue), Omni Universal Cart (11% growth).
+  - Experience 2: Verizon Data Services (Mar 2020 - Aug 2022) - Consultant, Digital & Assisted Sales, VCG.
+    - Delivered actionable insights through funnel analysis, A/B testing, and market research across 3 LOBs (Retail, Consumer, B2B), informing BRDs/PRDs for 15+ features.
+    - Led cross-functional delivery with UX, Data Science, and Product teams; 94% on-time delivery and $1.5M+ incremental revenue in FY21.
+    - Managed E2E execution coordinating 8-12 stakeholders in SAFe Agile framework.
+    - Facilitated Agile ceremonies for 4 concurrent workstreams, maintaining <4% sprint spillover.
+    - Key Projects: Hum+ Wi-Fi Plan ($100K+ ARR, 23% attach rate), Omni Universal Cart (11% order growth, 13% reduced cart abandonment), Split Fulfillment (+2.1 day delivery improvement, +3 CSAT), ETF Redesign (22% fewer inquiries), 3-Year Device Payment Plans ($320K pilot revenue, 14% higher upgrade rate).
   
   - Experience 3: Infosys (May 2016 - Feb 2020) - Senior Software Engineer.
-    - Modernized legacy Work Statement Requirement Database (WSRD) for Boeing.
-    - Reduced downtime by 40% and increased throughput by 30%.
+    - Modernized legacy WSRD application serving 1,200+ maintenance engineers across 5 Boeing facilities, integrating REST APIs from disparate data sources.
+    - Led full-stack development: data encapsulation, API orchestration, master data management; delivered 6 major releases over 18 months.
+    - Coordinated cross-functional teams to mitigate 40+ critical risks, ensuring 99.2% system uptime post-launch.
+    - Reduced average downtime by 40% (8h to 4.8h), increased data processing throughput by 30% (12K to 15.6K records/day).
+    - Improved maintenance scheduling efficiency by 25%, saving estimated $2.8M annually.
     - Tech Stack: Java 8, React, Angular, Spring Boot, PostgreSQL, Oracle, Python.
   
-  - Core Competencies: Product Ownership, Strategy Roadmaps, SAFe Agile, Scrum, Conversational AI, RAG, LLMs, Google CCAI, Dialogflow CX/ES, NLP, Python, SQL, REST APIs.
-  - Education: B.E. Mechanical Engineering, Velammal Engineering College (2016).
-  - Certifications: SAFe 6 Lean Portfolio Manager (2024), SAFe 6 Agilist (2023), CSPO (2022), Azure AI Fundamentals (2023).
+  - Core Competencies:
+    - Product & Delivery: Product Ownership, Agile/SAFe/Scrum, Jira/Confluence, Backlog Grooming, Sprint Management
+    - AI & Automation: Conversational AI, RAG, LLMs, CCAI, Genesys Cloud CX, Dialogflow CX/ES, NLP, ML
+    - Business Analysis: Data Flow Mapping/Flowcharts, CRM/ERP Integrations, BRD/FRD/PRD, KPI Frameworks
+    - Technology: Python, SQL, REST APIs, Power BI, Azure, React, Java, Data Analytics
+    - Domains: Telecom, Retail/E-Commerce, Customer Experience, Omnichannel Enablement, Support Automation
   
-  - Awards: 
-    - 2025: AT&T Hackathon 1st Place Winner ("Hyper-Personalization of International Travel Experience").
-    - 2025: "Most Impactful Business Solution" (Hackathon Idea).
-    - 2023: AT&T Connection Award.
+  - Education: B.E. Mechanical Engineering, Velammal Engineering College, Anna University (2012-2016), Distinction CGPA: 8.596.
+  
+  - Certifications: SAFe 6 Lean Portfolio Manager (2024), SAFe 6 Agilist (2023), SAFe Product Owner/Product Manager (2023), CSPO (2022), Azure AI Fundamentals (2023).
+  
+  - Awards:
+    - 2025: Won "Best in Show/All Around" Award for Innovation Jam — "AT&T Helios: Zero Friction Convergence" (AI-fueled seamless one-click bundle experience).
+    - 2025: AT&T Hackathon 1st Place Winner — "Hyper-Personalization of International Travel Experience" (AI-driven predictive modeling for personalized travel plans).
+    - 2025: "Most Impactful Business Solution" awarded for Hackathon Idea.
+    - 2023: AT&T Connection Award with Virtual Assistant Team.
     - 2021: Verizon Spotlight Award for Customer Excellence.
+  
+  - Hackathon Project Details:
+    - AT&T Helios: Solved the fragmented bundle experience at AT&T by creating a seamless one-click workflow where customers can add mobile devices, phone plans, wireless plans, and fiber plans in a single cart flow instead of navigating each step manually. Supports trade-in, BYOD, and multi-bundle options.
+    - Hyper-Personalized International Travel: Leveraged AI-driven predictive modeling to deliver hyper-personalized experiences by analyzing customer travel patterns and media preferences. Simplified plan activation through mobile apps/websites with interactive tools for plan comparison, coverage checks, and troubleshooting.
   
   Tone: Professional, confident, helpful.
   If asked about something not in the resume, say: "I don't see that specific detail in Ashfaque's resume, but I can tell you about his expertise in Conversational AI and Product Ownership. Would you like to know about that?"
@@ -272,7 +293,7 @@ const Portfolio = () => {
               </div>
               <div className="flex flex-col">
                 <h1 className={`text-lg md:text-xl font-bold ${headingClass} tracking-tight leading-none`}>Ashfaque Rifaye</h1>
-                <p className={`text-[10px] md:text-xs ${subTextClass} font-mono uppercase tracking-wide mt-0.5`}>Tech BA | AI PM</p>
+                <p className={`text-[10px] md:text-xs ${subTextClass} font-mono uppercase tracking-wide mt-0.5`}>Technical Business Solution Analyst</p>
               </div>
             </div>
 
@@ -453,8 +474,8 @@ const Portfolio = () => {
                   </div>
                 </div>
                 <div>
-                  <span className={`text-3xl md:text-4xl font-bold ${headingClass} block mb-1`}>$1.5M+</span>
-                  <span className={`text-xs font-bold uppercase tracking-wider ${subTextClass}`}>Revenue Growth</span>
+                  <span className={`text-3xl md:text-4xl font-bold ${headingClass} block mb-1`}>$4.2M+</span>
+                  <span className={`text-xs font-bold uppercase tracking-wider ${subTextClass}`}>Annual Cost Savings</span>
                 </div>
               </div>
 
@@ -466,7 +487,7 @@ const Portfolio = () => {
                   </div>
                 </div>
                 <div>
-                  <span className={`text-3xl md:text-4xl font-bold ${headingClass} block mb-1`}>4</span>
+                  <span className={`text-3xl md:text-4xl font-bold ${headingClass} block mb-1`}>5</span>
                   <span className={`text-xs font-bold uppercase tracking-wider ${subTextClass}`}>Industry Awards</span>
                 </div>
               </div>
@@ -493,7 +514,7 @@ const Portfolio = () => {
                   <div>
                     <h4 className={`text-sm font-bold ${headingClass} mb-3 flex items-center gap-2`}><Target size={16} className="text-indigo-500" /> Product Strategy</h4>
                     <div className="flex flex-wrap gap-2">
-                      {['Product Ownership', 'Strategy Roadmap', 'SAFe Agile', 'Scrum', 'Data Driven'].map(skill => (
+                      {['Product Ownership', 'Strategy Roadmap', 'SAFe Agile', 'Scrum', 'Data Driven', 'KPI Frameworks'].map(skill => (
                         <span key={skill} className={`px-2 py-1 rounded-lg text-[10px] font-medium border cursor-default ${isDark ? 'bg-indigo-500/10 border-indigo-500/20 text-indigo-300' : 'bg-indigo-50 border-indigo-100 text-indigo-700'}`}>
                           {skill}
                         </span>
@@ -504,7 +525,7 @@ const Portfolio = () => {
                   <div>
                     <h4 className={`text-sm font-bold ${headingClass} mb-3 flex items-center gap-2`}><Bot size={16} className="text-emerald-500" /> AI & Tech</h4>
                     <div className="flex flex-wrap gap-2">
-                      {['Generative AI', 'RAG', 'Google CCAI', 'Dialogflow', 'LLMs', 'NLP', 'API'].map(skill => (
+                      {['Generative AI', 'RAG', 'Google CCAI', 'Dialogflow', 'LLMs', 'NLP', 'Genesys CX', 'Power BI'].map(skill => (
                         <span key={skill} className={`px-2 py-1 rounded-lg text-[10px] font-medium border cursor-default ${isDark ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300' : 'bg-emerald-50 border-emerald-100 text-emerald-700'}`}>
                           {skill}
                         </span>
@@ -519,14 +540,14 @@ const Portfolio = () => {
                 <div>
                   <h3 className={`text-xl font-bold ${headingClass} mb-4`}>About Me</h3>
                   <p className={`${subTextClass} leading-relaxed mb-4`}>
-                    I'm a <strong>Business Analyst</strong> with 9 years of experience delivering Enterprise-level Scalable Digital Transformation and AI solutions.
-                    I specialize in bridging the gap between business strategy and technical execution, particularly in the <strong>Telecom, Airlines and E-Commerce Domains</strong>.
+                    I'm a <strong>Business Solution Analyst/Product Owner</strong> with 9 years of experience delivering AI-driven digital solutions, virtual assistants, and enterprise-scale automation for telecom and consumer platforms.
+                    I specialize in bridging the gap between business strategy and technical execution, particularly in the <strong>Telecom, Retail/E-Commerce, and Customer Experience Domains</strong>. Recognized for combining technical depth and business acumen to translate strategy into scalable digital experiences.
                   </p>
                 </div>
                 <div className={`mt-6 pt-6 border-t ${isDark ? 'border-white/10' : 'border-slate-100'}`}>
                   <h4 className={`text-sm font-semibold ${headingClass} mb-2`}>Education</h4>
-                  <p className={`text-sm ${subTextClass}`}>B.E. Mechanical Engineering</p>
-                  <p className={`text-xs ${subTextClass} opacity-70`}>Velammal Engineering College (2016)</p>
+                  <p className={`text-sm ${subTextClass}`}>B.E. Mechanical Engineering — Distinction (CGPA: 8.596)</p>
+                  <p className={`text-xs ${subTextClass} opacity-70`}>Velammal Engineering College, Anna University (2012–2016)</p>
                 </div>
               </div>
 
@@ -540,7 +561,7 @@ const Portfolio = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                   {[
                     { name: "SAFe 6 LPM", desc: "Lean Portfolio Manager", year: "2024", color: "text-amber-500", bg: "bg-amber-500/10" },
-                    { name: "SAFe 6 Agilist", desc: "Product Owner/Manager", year: "2023", color: "text-blue-500", bg: "bg-blue-500/10" },
+                    { name: "SAFe 6 Agilist", desc: "SA & PO/PM", year: "2023", color: "text-blue-500", bg: "bg-blue-500/10" },
                     { name: "CSPO", desc: "Certified Scrum PO", year: "2022", color: "text-indigo-500", bg: "bg-indigo-500/10" },
                     { name: "Azure AI", desc: "AI Fundamentals", year: "2023", color: "text-cyan-500", bg: "bg-cyan-500/10" }
                   ].map((cert, idx) => (
@@ -580,27 +601,43 @@ const Portfolio = () => {
               <div className={`${cardBgClass} rounded-3xl p-6 md:p-8 hover:border-indigo-500/30 transition-all group border`}>
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-2">
                   <div>
-                    <h3 className={`text-2xl font-bold ${headingClass} group-hover:${accentTextClass} transition-colors`}>AT&T</h3>
-                    <p className={`text-sm ${accentTextClass} font-medium`}>AI Business Analyst / Product Owner</p>
+                    <h3 className={`text-2xl font-bold ${headingClass} group-hover:${accentTextClass} transition-colors`}>AT&T Communications Services India</h3>
+                    <p className={`text-sm ${accentTextClass} font-medium`}>AI Technical Business Solution Analyst (PM), Consumer Technology & Experience</p>
                   </div>
                   <span className={`self-start md:self-center text-xs font-mono ${subTextClass} ${isDark ? 'bg-slate-800' : 'bg-slate-100'} px-3 py-1.5 rounded-lg border ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>Aug 2022 - Present</span>
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-6">
                   <h4 className={`text-xs uppercase tracking-wide font-bold mb-4 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Key Responsibilities & Achievements</h4>
                   <ul className="space-y-4">
                     {[
-                      "Product Ownership & PM for AI Platforms: Lead E2E functional ownership for GenAI-powered Virtual Assistant (Google CCAI/Dialogflow), driving omnichannel enablement.",
-                      "Process Design & AI Automation: Defined E2E customer journeys, managed project intents/entities, fallback logic, and RAG search.",
-                      "Delivered 45% containment and reduced live-agent escalations via optimized conversational search.",
-                      "Integration Architecture: Enabled seamless orchestration between AI layer, telephony systems, and backend CRMs through REST APIs.",
-                      "Created process flow charts, data flow diagrams, and requirements documentation aligned to enterprise AI strategy.",
-                      "Managed project backlog grooming, sprint planning, and cross-squad coordination in SAFe Agile framework.",
-                      "Designed KPI dashboards (Power BI, SQL) for performance tracking & optimization across consumer LOB.",
-                      "Stakeholder Management: Partnered with US-based Product Owners, Architects, and SMEs to align AI capabilities with CX goals."
+                      "Led E2E product ownership of AT&T's GenAI-powered Virtual Assistant (Google CCAI/Dialogflow), scaling omnichannel deployment across chat, voice, WhatsApp, and RCS to serve 1.5M+ monthly customer interactions across consumer LOB.",
+                      "Drove AI-powered automation through E2E conversation design, managing 350+ intents, 1,200+ training phrases, and RAG-powered knowledge retrieval — achieving 55% containment rate, reducing live-agent escalations by 28%, saving an estimated $4.2M annually.",
+                      "Architected B2B integration ecosystem connecting AI layer with telephony infrastructure and backend CRMs via REST APIs, reducing average handle time by 32 seconds per interaction.",
+                      "Delivered comprehensive technical documentation including process flow charts, data flow diagrams, and BRDs aligned to enterprise AI strategy, supporting 12-person cross-functional team across engineering, UX, and operations.",
+                      "Managed Agile delivery in SAFe framework, owning backlog grooming and sprint planning for 2 development squads (18 developers); maintained 95% sprint commitment reliability via Jira/Confluence.",
+                      "Built KPI performance dashboards (Power BI, SQL) monitoring 15+ metrics including containment, CSAT, intent recognition accuracy (92%), and fallback rates — improving NPS by 8 points.",
+                      "Collaborated with US stakeholders including Product Owners, Enterprise Architects, and Business SMEs to align AI roadmap with CX objectives, securing $2.5M budget for FY25 enhancements."
                     ].map((item, i) => (
                       <li key={i} className={`flex items-start text-sm md:text-base ${subTextClass} leading-relaxed`}>
                         <ChevronRight size={18} className={`mt-0.5 mr-3 ${accentTextClass} shrink-0`} />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className={`pt-6 border-t ${isDark ? 'border-white/10' : 'border-slate-100'}`}>
+                  <h4 className={`text-xs uppercase tracking-wide font-bold mb-4 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>AI Innovation</h4>
+                  <ul className="space-y-3">
+                    {[
+                      "Architected a Retrieval-Augmented Generation (RAG) system to automate knowledge retrieval for Chatbots.",
+                      "Rapid prototyped with AI for features and use cases to demonstrate to business and stakeholders.",
+                      "Established automated human-in-the-loop feedback systems where low-confidence AI responses were flagged for manual review.",
+                      "Monitored token usage and API costs to balance performance; collaborated with engineers to optimize API response times for GenAI features."
+                    ].map((item, i) => (
+                      <li key={i} className={`flex items-start text-sm ${subTextClass} leading-relaxed`}>
+                        <Sparkles size={14} className={`mt-1 mr-3 text-violet-400 shrink-0`} />
                         {item}
                       </li>
                     ))}
@@ -613,20 +650,19 @@ const Portfolio = () => {
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-2">
                   <div>
                     <h3 className={`text-2xl font-bold ${headingClass} group-hover:${accentTextClass} transition-colors`}>Verizon Data Services</h3>
-                    <p className={`text-sm ${accentTextClass} font-medium`}>Consultant (Digital Sales)</p>
+                    <p className={`text-sm ${accentTextClass} font-medium`}>Consultant — Digital & Assisted Sales, Verizon Consumer Group</p>
                   </div>
                   <span className={`self-start md:self-center text-xs font-mono ${subTextClass} ${isDark ? 'bg-slate-800' : 'bg-slate-100'} px-3 py-1.5 rounded-lg border ${isDark ? 'border-slate-700' : 'border-slate-200'}`}>Mar 2020 - Aug 2022</span>
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-6">
                   <h4 className={`text-xs uppercase tracking-wide font-bold mb-4 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Key Responsibilities & Achievements</h4>
                   <ul className="space-y-4">
                     {[
-                      "Conducted analysis with data-backed recommendations, funnel analysis, market research, and A/B testing.",
-                      "Contributed to BRDs, PRDs, and product roadmaps.",
-                      "Collaborated with UX, Data, and Product teams to deliver customer-centric digital solutions aligned with KPIs and OKRs.",
-                      "Organized Scrum meetings with Scrum Masters, stakeholders, and dev teams, enforcing Agile practices.",
-                      "Overcame technical challenges to drive $1.5M+ revenue growth for Verizon."
+                      "Delivered actionable insights through funnel analysis, A/B testing, and market research across 3 LOBs (Retail, Consumer, B2B), informing BRDs/PRDs for 15+ features in Verizon's digital ecosystem.",
+                      "Led cross-functional delivery with UX, Data Science, and Product teams; achieved 94% on-time delivery and $1.5M+ incremental revenue in FY21.",
+                      "Managed E2E execution across retail, consumer, and B2B platforms, coordinating 8-12 stakeholders including Scrum Masters, RTEs, and engineering in SAFe Agile framework.",
+                      "Facilitated Agile ceremonies for 4 concurrent workstreams, maintaining <4% sprint spillover."
                     ].map((item, i) => (
                       <li key={i} className={`flex items-start text-sm md:text-base ${subTextClass} leading-relaxed`}>
                         <ChevronRight size={18} className={`mt-0.5 mr-3 ${accentTextClass} shrink-0`} />
@@ -634,6 +670,24 @@ const Portfolio = () => {
                       </li>
                     ))}
                   </ul>
+                </div>
+
+                <div className={`pt-6 border-t ${isDark ? 'border-white/10' : 'border-slate-100'}`}>
+                  <h4 className={`text-xs uppercase tracking-wide font-bold mb-4 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>High-Impact Projects</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {[
+                      { name: "Hum+ Wi-Fi Plan", metric: "$100K+ ARR, 23% attach rate" },
+                      { name: "Omni Universal Cart", metric: "11% order growth, 13% less abandonment" },
+                      { name: "Split Fulfillment", metric: "+2.1 day delivery, +3 CSAT points" },
+                      { name: "ETF Redesign", metric: "22% fewer service inquiries" },
+                      { name: "3-Year Device Payment", metric: "$320K pilot revenue, 14% upgrade rate" }
+                    ].map((proj, i) => (
+                      <div key={i} className={`p-3 rounded-xl border ${isDark ? 'bg-slate-800/50 border-white/5' : 'bg-slate-50 border-slate-100'}`}>
+                        <p className={`text-sm font-semibold ${headingClass}`}>{proj.name}</p>
+                        <p className={`text-xs ${accentTextClass} mt-1`}>{proj.metric}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -647,15 +701,14 @@ const Portfolio = () => {
                   <span className={`self-start md:self-center text-xs font-mono py-1 px-3 rounded-lg w-fit ${isDark ? 'bg-slate-800' : 'bg-slate-100'} ${subTextClass}`}>May 2016 - Feb 2020</span>
                 </div>
                 <h4 className={`text-xs uppercase tracking-wide font-bold mb-4 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Key Responsibilities & Achievements</h4>
-                <p className={`text-sm md:text-base ${subTextClass} mb-4 leading-relaxed`}>
-                  Modernized legacy Work Statement Requirement Database (WSRD) for Boeing and developed applications integrating REST APIs.
-                </p>
                 <ul className="space-y-4">
                   {[
-                    "Coordinated with design teams to identify and mitigate risks, ensuring data accuracy.",
-                    "Troubleshot production issues and resolved critical incidents, reducing downtime by 40% and increasing throughput by 30%.",
-                    "Developed end-to-end applications: Data encapsulation, REST API Blending, Task management.",
-                    "Leveraged Java 8, React, Angular, Spring Boot, PostgreSQL, Oracle, Python."
+                    "Modernized legacy Work Statement Requirement Database (WSRD) serving 1,200+ maintenance engineers across 5 Boeing facilities, integrating multiple REST APIs from disparate data sources to centralize aircraft maintenance work statements.",
+                    "Led full-stack development featuring data encapsulation, API orchestration, master data management, and task workflow automation; delivered 6 major releases across 18-month timeline.",
+                    "Coordinated cross-functional teams (UX designers, backend/frontend engineers, DBAs) to identify and mitigate 40+ critical risks, ensuring 99.2% system uptime post-launch.",
+                    "Resolved production incidents through rapid troubleshooting and root cause analysis, reducing average downtime by 40% (8h to 4.8h) and increasing data processing throughput by 30% (12K to 15.6K records/day).",
+                    "Improved maintenance scheduling efficiency by 25%, enabling faster aircraft turnaround and saving an estimated $2.8M annually in operational delays.",
+                    "Leveraged Java 8, React, Angular, Spring Boot, PostgreSQL, Oracle, Python to deliver robust and scalable solutions."
                   ].map((item, i) => (
                     <li key={i} className={`flex items-start text-sm md:text-base ${subTextClass} leading-relaxed`}>
                       <ChevronRight size={18} className={`mt-0.5 mr-3 ${accentTextClass} shrink-0`} />
@@ -671,33 +724,100 @@ const Portfolio = () => {
           {activeTab === 'works' && (
             <div className="animate-in fade-in zoom-in duration-300 py-4">
               <div className="mb-8">
-                <h2 className={`text-3xl font-bold ${headingClass}`}>Featured Projects</h2>
-                <p className={`${subTextClass} mt-2`}>Delivering business value through AI and automation.</p>
+                <h2 className={`text-3xl font-bold ${headingClass}`}>Featured Projects & Hackathons</h2>
+                <p className={`${subTextClass} mt-2`}>Delivering business value through AI, automation, and innovation.</p>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-indigo-900/10 to-slate-900 border-white/5' : 'bg-white border-slate-200'}`}>
-                  <MessageSquare className="text-indigo-400 mb-4" size={32} />
-                  <h3 className={`text-xl font-bold ${headingClass} mb-2`}>GenAI Virtual Assistant</h3>
-                  <p className={`text-sm ${subTextClass} mb-4`}>RAG-powered CCAI implementation for AT&T. Orchestrated seamless integrations between AI layer and backend CRMs.</p>
-                  <div className="flex gap-2"><span className="text-[10px] px-2 py-1 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Dialogflow</span></div>
+
+              {/* Hackathon Projects - Featured */}
+              <div className="mb-8">
+                <h3 className={`text-lg font-bold ${headingClass} mb-4 flex items-center gap-2`}><Trophy size={20} className="text-amber-500" /> Award-Winning Hackathon Projects</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                  {/* AT&T Helios */}
+                  <div className={`rounded-3xl p-8 border relative overflow-hidden ${isDark ? 'bg-gradient-to-br from-amber-900/15 to-slate-900 border-amber-500/20' : 'bg-amber-50/50 border-amber-200'}`}>
+                    <div className={`absolute top-4 right-4 px-2 py-1 rounded-lg text-[10px] font-bold ${isDark ? 'bg-amber-500/20 text-amber-400' : 'bg-amber-100 text-amber-700'}`}>Best in Show</div>
+                    <Zap className="text-amber-400 mb-4" size={32} />
+                    <h3 className={`text-xl font-bold ${headingClass} mb-2`}>AT&T Helios — Zero Friction Convergence</h3>
+                    <p className={`text-sm ${subTextClass} mb-4 leading-relaxed`}>Solved the fragmented bundle experience at AT&T by creating a seamless one-click workflow. Customers can add mobile devices, phone plans, wireless plans, and fiber plans in a single cart flow — including trade-in, BYOD, and multi-bundle options — instead of navigating each step manually.</p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="text-[10px] px-2 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">AI-Fueled</span>
+                      <span className="text-[10px] px-2 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">One-Click Bundle</span>
+                      <span className="text-[10px] px-2 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">CX Innovation</span>
+                    </div>
+                  </div>
+
+                  {/* Hyper-Personalized Travel */}
+                  <div className={`rounded-3xl p-8 border relative overflow-hidden ${isDark ? 'bg-gradient-to-br from-violet-900/15 to-slate-900 border-violet-500/20' : 'bg-violet-50/50 border-violet-200'}`}>
+                    <div className={`absolute top-4 right-4 px-2 py-1 rounded-lg text-[10px] font-bold ${isDark ? 'bg-violet-500/20 text-violet-400' : 'bg-violet-100 text-violet-700'}`}>1st Place + Most Impactful</div>
+                    <Globe className="text-violet-400 mb-4" size={32} />
+                    <h3 className={`text-xl font-bold ${headingClass} mb-2`}>Hyper-Personalized International Travel</h3>
+                    <p className={`text-sm ${subTextClass} mb-4 leading-relaxed`}>Leveraged AI-driven predictive modeling to deliver hyper-personalized experiences by analyzing customer travel patterns and media preferences. Simplified plan activation through mobile apps and websites with interactive tools for plan comparison, coverage checks, and troubleshooting support.</p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="text-[10px] px-2 py-1 rounded bg-violet-500/10 text-violet-400 border border-violet-500/20">AI Predictive Modeling</span>
+                      <span className="text-[10px] px-2 py-1 rounded bg-violet-500/10 text-violet-400 border border-violet-500/20">Travel CX</span>
+                      <span className="text-[10px] px-2 py-1 rounded bg-violet-500/10 text-violet-400 border border-violet-500/20">Personalization</span>
+                    </div>
+                  </div>
                 </div>
-                <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-violet-900/10 to-slate-900 border-white/5' : 'bg-white border-slate-200'}`}>
-                  <Sparkles className="text-violet-400 mb-4" size={32} />
-                  <h3 className={`text-xl font-bold ${headingClass} mb-2`}>Retail Hyper-Personalization</h3>
-                  <p className={`text-sm ${subTextClass} mb-4`}>Tailoring retail experiences using data analytics to drive customer engagement and sales optimization.</p>
-                  <div className="flex gap-2"><span className="text-[10px] px-2 py-1 rounded bg-violet-500/10 text-violet-400 border border-violet-500/20">Analytics</span></div>
+              </div>
+
+              {/* AT&T Key Projects */}
+              <div className="mb-8">
+                <h3 className={`text-lg font-bold ${headingClass} mb-4 flex items-center gap-2`}><Brain size={20} className="text-indigo-500" /> AT&T — Key Deliverables</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-indigo-900/10 to-slate-900 border-white/5' : 'bg-white border-slate-200'}`}>
+                    <MessageSquare className="text-indigo-400 mb-4" size={32} />
+                    <h3 className={`text-xl font-bold ${headingClass} mb-2`}>GenAI Virtual Assistant</h3>
+                    <p className={`text-sm ${subTextClass} mb-4`}>RAG-powered CCAI implementation serving 1.5M+ monthly users. 350+ intents, 55% containment, $4.2M annual savings.</p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="text-[10px] px-2 py-1 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Dialogflow</span>
+                      <span className="text-[10px] px-2 py-1 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">RAG</span>
+                      <span className="text-[10px] px-2 py-1 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">CCAI</span>
+                    </div>
+                  </div>
+                  <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-emerald-900/10 to-slate-900 border-white/5' : 'bg-white border-slate-200'}`}>
+                    <Sparkles className="text-emerald-400 mb-4" size={32} />
+                    <h3 className={`text-xl font-bold ${headingClass} mb-2`}>Retail Hyper-Personalization</h3>
+                    <p className={`text-sm ${subTextClass} mb-4`}>15% uplift in product recommendation CTR through AI-driven personalization and data analytics across retail channels.</p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="text-[10px] px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Analytics</span>
+                      <span className="text-[10px] px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">AI/ML</span>
+                    </div>
+                  </div>
+                  <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-green-900/10 to-slate-900 border-white/5' : 'bg-white border-slate-200'}`}>
+                    <TrendingUp className="text-green-400 mb-4" size={32} />
+                    <h3 className={`text-xl font-bold ${headingClass} mb-2`}>AI Performance Analytics Suite</h3>
+                    <p className={`text-sm ${subTextClass} mb-4`}>Real-time monitoring across 6 channels. Power BI dashboards tracking 15+ KPIs including CSAT, containment, and NPS.</p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="text-[10px] px-2 py-1 rounded bg-green-500/10 text-green-400 border border-green-500/20">Power BI</span>
+                      <span className="text-[10px] px-2 py-1 rounded bg-green-500/10 text-green-400 border border-green-500/20">SQL</span>
+                    </div>
+                  </div>
                 </div>
-                <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-green-900/10 to-slate-900 border-white/5' : 'bg-white border-slate-200'}`}>
-                  <TrendingUp className="text-green-400 mb-4" size={32} />
-                  <h3 className={`text-xl font-bold ${headingClass} mb-2`}>KPI-Driven AI Performance Dashboards</h3>
-                  <p className={`text-sm ${subTextClass} mb-4`}>Designed comprehensive dashboards (Power BI, SQL) for performance tracking and optimization across consumer lines of business.</p>
-                  <div className="flex gap-2"><span className="text-[10px] px-2 py-1 rounded bg-green-500/10 text-green-400 border border-green-500/20">Power BI</span></div>
-                </div>
-                <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-blue-900/10 to-slate-900 border-white/5' : 'bg-white border-slate-200'}`}>
-                  <Zap className="text-blue-400 mb-4" size={32} />
-                  <h3 className={`text-xl font-bold ${headingClass} mb-2`}>Hum+ Wi-Fi Plan</h3>
-                  <p className={`text-sm ${subTextClass} mb-4`}>Revenue generating project adding $100K annually through strategic planning and digital sales optimization.</p>
-                  <div className="flex gap-2"><span className="text-[10px] px-2 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">Strategy</span></div>
+              </div>
+
+              {/* Verizon Key Projects */}
+              <div>
+                <h3 className={`text-lg font-bold ${headingClass} mb-4 flex items-center gap-2`}><Target size={20} className="text-blue-500" /> Verizon — High-Impact Projects</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-blue-900/10 to-slate-900 border-white/5' : 'bg-white border-slate-200'}`}>
+                    <Zap className="text-blue-400 mb-4" size={32} />
+                    <h3 className={`text-xl font-bold ${headingClass} mb-2`}>Omni Universal Cart</h3>
+                    <p className={`text-sm ${subTextClass} mb-4`}>11% order fulfillment growth and 13% reduced cart abandonment through unified omnichannel cart experience.</p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="text-[10px] px-2 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">Omnichannel</span>
+                      <span className="text-[10px] px-2 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">E-Commerce</span>
+                    </div>
+                  </div>
+                  <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-cyan-900/10 to-slate-900 border-white/5' : 'bg-white border-slate-200'}`}>
+                    <BarChart2 className="text-cyan-400 mb-4" size={32} />
+                    <h3 className={`text-xl font-bold ${headingClass} mb-2`}>Hum+ Wi-Fi Plan</h3>
+                    <p className={`text-sm ${subTextClass} mb-4`}>$100K+ ARR with 23% attach rate. Revenue-generating add-on through strategic planning and digital sales optimization.</p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="text-[10px] px-2 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Strategy</span>
+                      <span className="text-[10px] px-2 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Revenue</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -709,28 +829,44 @@ const Portfolio = () => {
               <h2 className={`text-3xl font-bold ${headingClass} mb-6`}>Honors & Recommendations</h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                {/* AWARD 1 */}
+                {/* AWARD 1 - Helios */}
+                <div className={`rounded-3xl p-6 border ${isDark ? 'bg-amber-900/10 border-amber-500/20' : 'bg-amber-50 border-amber-200'}`}>
+                  <Trophy className="text-amber-500 mb-4" size={32} />
+                  <h3 className={`text-lg font-bold ${headingClass} mb-1`}>Best in Show / All Around Award (2025)</h3>
+                  <p className={`text-xs font-mono uppercase tracking-wide text-amber-500 mb-2`}>AT&T Innovation Jam</p>
+                  <p className={`text-sm ${subTextClass}`}>"AT&T Helios — Zero Friction Convergence: Transforming the AT&T Bundle Experience into an AI-Fueled Seamless, One-Click Growth Engine."</p>
+                </div>
+
+                {/* AWARD 2 - Hackathon 1st */}
                 <div className={`rounded-3xl p-6 border ${isDark ? 'bg-amber-900/10 border-amber-500/20' : 'bg-amber-50 border-amber-200'}`}>
                   <Trophy className="text-amber-500 mb-4" size={32} />
                   <h3 className={`text-lg font-bold ${headingClass} mb-1`}>Hackathon 1st Place Winner (2025)</h3>
                   <p className={`text-xs font-mono uppercase tracking-wide text-amber-500 mb-2`}>AT&T Hackathon</p>
-                  <p className={`text-sm ${subTextClass}`}>"Hyper-Personalization of International Travel Experience". Also awarded "Most Impactful Business Solution".</p>
+                  <p className={`text-sm ${subTextClass}`}>"Hyper-Personalization of International Travel Experience" — AI-driven predictive modeling for personalized customer travel plans.</p>
                 </div>
 
-                {/* AWARD 2 */}
-                <div className={`rounded-3xl p-6 border ${isDark ? 'bg-amber-900/10 border-amber-500/20' : 'bg-amber-50 border-amber-200'}`}>
-                  <Award className="text-amber-500 mb-4" size={32} />
+                {/* AWARD 3 - Most Impactful */}
+                <div className={`rounded-3xl p-6 border ${isDark ? 'bg-violet-900/10 border-violet-500/20' : 'bg-violet-50 border-violet-200'}`}>
+                  <Star className="text-violet-500 mb-4" size={32} />
+                  <h3 className={`text-lg font-bold ${headingClass} mb-1`}>Most Impactful Business Solution (2025)</h3>
+                  <p className={`text-xs font-mono uppercase tracking-wide text-violet-500 mb-2`}>AT&T Hackathon</p>
+                  <p className={`text-sm ${subTextClass}`}>Awarded for presenting the most impactful business solution idea at AT&T's annual hackathon.</p>
+                </div>
+
+                {/* AWARD 4 - Connection Award */}
+                <div className={`rounded-3xl p-6 border ${isDark ? 'bg-indigo-900/10 border-indigo-500/20' : 'bg-indigo-50 border-indigo-200'}`}>
+                  <Award className="text-indigo-500 mb-4" size={32} />
                   <h3 className={`text-lg font-bold ${headingClass} mb-1`}>Connection Award (2023)</h3>
-                  <p className={`text-xs font-mono uppercase tracking-wide text-amber-500 mb-2`}>AT&T CTX Team</p>
-                  <p className={`text-sm ${subTextClass}`}>Recognized for outstanding contribution to the Virtual Assistant project.</p>
+                  <p className={`text-xs font-mono uppercase tracking-wide text-indigo-500 mb-2`}>AT&T CTX Team</p>
+                  <p className={`text-sm ${subTextClass}`}>Recognized with the Virtual Assistant Team for outstanding contribution by AT&T CTX team.</p>
                 </div>
 
-                {/* AWARD 3 */}
-                <div className={`rounded-3xl p-6 border ${isDark ? 'bg-blue-900/10 border-blue-500/20' : 'bg-blue-50 border-blue-200'}`}>
+                {/* AWARD 5 - Verizon */}
+                <div className={`md:col-span-2 rounded-3xl p-6 border ${isDark ? 'bg-blue-900/10 border-blue-500/20' : 'bg-blue-50 border-blue-200'}`}>
                   <Award className="text-blue-500 mb-4" size={32} />
-                  <h3 className={`text-lg font-bold ${headingClass} mb-1`}>Spotlight Award (2021)</h3>
+                  <h3 className={`text-lg font-bold ${headingClass} mb-1`}>Spotlight Award for Customer Excellence (2021)</h3>
                   <p className={`text-xs font-mono uppercase tracking-wide text-blue-500 mb-2`}>Verizon GTS Team</p>
-                  <p className={`text-sm ${subTextClass}`}>Awarded for Customer Excellence and driving revenue impact.</p>
+                  <p className={`text-sm ${subTextClass}`}>Awarded for Customer Excellence and driving revenue impact across Verizon's consumer digital platforms.</p>
                 </div>
               </div>
 
