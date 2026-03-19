@@ -384,10 +384,10 @@ const Portfolio = () => {
                     <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-6">
                       <div className="relative shrink-0">
                         <img
-                          src="https://api.dicebear.com/7.x/avataaars/svg?seed=AshfaqueAI&backgroundColor=b6e3f4&top=shortHairShortCurly&facialHair=beardMedium&clothes=blazerSweater&skinColor=tanned"
+                          src="https://api.dicebear.com/9.x/avataaars/svg?seed=AshfaqueBA&backgroundColor=b6e3f4"
                           alt="Ashfaque Rifaye"
-                          className="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-indigo-500 shadow-lg object-cover"
-                          onError={(e) => { e.target.onerror = null; e.target.src = 'https://ui-avatars.com/api/?name=AR&background=6366f1&color=fff&size=200&bold=true&font-size=0.5'; }}
+                          className="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-indigo-500 shadow-lg object-cover bg-indigo-500/20"
+                          onError={(e) => { e.target.onerror = null; e.target.src = 'https://api.dicebear.com/9.x/bottts/svg?seed=AshfaqueAI&backgroundColor=b6e3f4'; }}
                         />
                         <div className="absolute bottom-0 right-0 w-6 h-6 bg-emerald-500 rounded-full border-4 border-slate-900 flex items-center justify-center">
                           <div className="w-full h-full rounded-full animate-ping bg-emerald-400 opacity-75 absolute"></div>
