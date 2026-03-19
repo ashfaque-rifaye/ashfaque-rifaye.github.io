@@ -207,7 +207,12 @@ const Portfolio = () => {
       file_name: 'Ashfaque_Resume',
       file_extension: format
     });
-    alert(`Downloading Resume in ${format} format...`);
+    const link = document.createElement('a');
+    link.href = '/Ashfaque_Rifaye_Resume.pdf';
+    link.download = 'Ashfaque_Rifaye_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
     setShowDownloadOptions(false);
   };
 
@@ -293,7 +298,7 @@ const Portfolio = () => {
               </div>
               <div className="flex flex-col">
                 <h1 className={`text-lg md:text-xl font-bold ${headingClass} tracking-tight leading-none`}>Ashfaque Rifaye</h1>
-                <p className={`text-[10px] md:text-xs ${subTextClass} font-mono uppercase tracking-wide mt-0.5`}>Technical Business Solution Analyst</p>
+                <p className={`text-[10px] md:text-xs ${subTextClass} font-mono uppercase tracking-wide mt-0.5`}>Tech BA | AI PM</p>
               </div>
             </div>
 
@@ -379,9 +384,10 @@ const Portfolio = () => {
                     <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-6">
                       <div className="relative shrink-0">
                         <img
-                          src="https://api.dicebear.com/7.x/avataaars/svg?seed=AshfaqueRifaye&backgroundColor=b6e3f4&top=shortHairShortFlat&facialHairProbability=100&facialHair=beardLight&clotheType=blazerSweater&skinColor=d08b5b"
-                          alt="Profile"
+                          src="https://api.dicebear.com/7.x/avataaars/svg?seed=AshfaqueAI&backgroundColor=b6e3f4&top=shortHairShortCurly&facialHair=beardMedium&clothes=blazerSweater&skinColor=tanned"
+                          alt="Ashfaque Rifaye"
                           className="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-indigo-500 shadow-lg object-cover"
+                          onError={(e) => { e.target.onerror = null; e.target.src = 'https://ui-avatars.com/api/?name=AR&background=6366f1&color=fff&size=200&bold=true&font-size=0.5'; }}
                         />
                         <div className="absolute bottom-0 right-0 w-6 h-6 bg-emerald-500 rounded-full border-4 border-slate-900 flex items-center justify-center">
                           <div className="w-full h-full rounded-full animate-ping bg-emerald-400 opacity-75 absolute"></div>
@@ -540,7 +546,7 @@ const Portfolio = () => {
                 <div>
                   <h3 className={`text-xl font-bold ${headingClass} mb-4`}>About Me</h3>
                   <p className={`${subTextClass} leading-relaxed mb-4`}>
-                    I'm a <strong>Business Solution Analyst/Product Owner</strong> with 9 years of experience delivering AI-driven digital solutions, virtual assistants, and enterprise-scale automation for telecom and consumer platforms.
+                    I'm a <strong>Technical Business Analyst / AI Product Manager</strong> with 9 years of experience delivering AI-driven digital solutions, virtual assistants, and enterprise-scale automation for telecom and consumer platforms.
                     I specialize in bridging the gap between business strategy and technical execution, particularly in the <strong>Telecom, Retail/E-Commerce, and Customer Experience Domains</strong>. Recognized for combining technical depth and business acumen to translate strategy into scalable digital experiences.
                   </p>
                 </div>
