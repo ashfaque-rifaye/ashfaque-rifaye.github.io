@@ -42,21 +42,14 @@ import {
 
 const Portfolio = () => {
   // --- CONFIGURATION ---
-  // API keys are now stored in .env file for security
-  // Get your Gemini API key here: https://aistudio.google.com/app/apikey
-  // Get your Google Analytics Measurement ID from: Analytics Admin > Data Streams
-  const apiKey = import.meta.env.VITE_GEMINI_API_KEY || "";
   const gatewayUrl = import.meta.env.VITE_GATEWAY_URL || "https://ashfaque94-inference-gateway-4.hf.space";
   const gatewayApiKey = import.meta.env.VITE_GATEWAY_API_KEY || "";
   const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID || "G-XXXXXXXXXX";
 
   // Log configuration on load (for debugging)
   useEffect(() => {
-    console.log('[Config] Environment Variables:');
-    console.log('  VITE_GEMINI_API_KEY:', apiKey ? '✓ Set' : '✗ Missing');
-    console.log('  VITE_GATEWAY_URL:', gatewayUrl);
-    console.log('  VITE_GATEWAY_API_KEY:', gatewayApiKey ? '✓ Set' : '✗ Missing');
-    console.log('  VITE_GA_MEASUREMENT_ID:', GA_MEASUREMENT_ID);
+    console.log('[Config] Inference Gateway:', gatewayUrl);
+    console.log('[Config] Gateway API Key:', gatewayApiKey ? `✓ Set (${gatewayApiKey.substring(0, 6)}...)` : '✗ Missing');
   }, []);
 
   // --- CODESANDBOX PROJECTS (Interactive Demos) ---
@@ -269,7 +262,7 @@ const Portfolio = () => {
     setIsChatLoading(true);
     trackEvent('ai_assistant_query', { query_length: userMessage.length });
 
-    // Try gateway endpoints first (HF Spaces), then fall back to Gemini API
+    // Try HF Space 4 first, then fallback to Space 5
     const gatewayEndpoints = [
       gatewayUrl + '/v1/chat/completions',
       'https://ashfaque94-inference-gateway-5.hf.space/v1/chat/completions'
@@ -277,17 +270,17 @@ const Portfolio = () => {
 
     let success = false;
     let lastError = null;
-    let usedService = 'none';
 
-    // Try gateway endpoints
     for (const endpoint of gatewayEndpoints) {
       try {
-        console.log(`[Chat] Trying gateway endpoint: ${endpoint}`);
+        console.log(`[Chat] Trying: ${endpoint}`);
+        console.log(`[Chat] Using API key: ${gatewayApiKey ? gatewayApiKey.substring(0, 6) + '...' : 'MISSING'}`);
         
         const response = await fetch(endpoint, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'X-API-Key': gatewayApiKey,
             'Authorization': `Bearer ${gatewayApiKey}`
           },
           body: JSON.stringify({
@@ -305,58 +298,24 @@ const Portfolio = () => {
           })
         });
 
+        console.log(`[Chat] Response status: ${response.status}`);
+
         if (response.ok) {
           const data = await response.json();
           const aiResponse = data.choices?.[0]?.message?.content || "I couldn't generate a response. Please try again.";
-          console.log(`[Chat] ✓ Success from gateway: ${endpoint}`);
+          console.log(`[Chat] ✓ Success from: ${endpoint}`);
           setChatHistory(prev => [...prev, { role: 'model', text: aiResponse }]);
-          usedService = 'gateway';
           success = true;
           break;
         } else {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          const errorBody = await response.text();
+          console.error(`[Chat] Response body:`, errorBody);
+          throw new Error(`HTTP ${response.status}: ${errorBody || response.statusText}`);
         }
 
       } catch (error) {
         lastError = error;
-        console.warn(`[Chat] ✗ Gateway failed (${endpoint}): ${error.message}`);
-      }
-    }
-
-    // Fallback to Gemini API if gateway failed
-    if (!success && apiKey) {
-      try {
-        console.log(`[Chat] Gateway failed, falling back to Gemini API...`);
-        
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [
-              ...chatHistory.map(msg => ({
-                role: msg.role === 'model' ? 'model' : 'user',
-                parts: [{ text: msg.text }]
-              })),
-              { role: 'user', parts: [{ text: userMessage }] }
-            ],
-            systemInstruction: { parts: [{ text: RESUME_CONTEXT }] }
-          })
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "I couldn't generate a response. Please try again.";
-          console.log(`[Chat] ✓ Success using Gemini API (fallback)`);
-          setChatHistory(prev => [...prev, { role: 'model', text: aiResponse }]);
-          usedService = 'gemini';
-          success = true;
-        } else {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-
-      } catch (error) {
-        console.error(`[Chat] ✗ Gemini API also failed:`, error.message);
-        lastError = error;
+        console.warn(`[Chat] ✗ Failed (${endpoint}): ${error.message}`);
       }
     }
 
@@ -365,7 +324,7 @@ const Portfolio = () => {
       console.error(`[Chat] ✗ All endpoints failed. Last error: ${errorMsg}`);
       setChatHistory(prev => [...prev, { 
         role: 'model', 
-        text: `I'm having trouble connecting. Error: ${errorMsg}. Please check the browser console (F12) for details.` 
+        text: `I'm having trouble connecting to the inference server (401 Unauthorized). This usually means the HuggingFace Space is set to Private. Please make the Space public or provide an HF access token.` 
       }]);
     }
 
