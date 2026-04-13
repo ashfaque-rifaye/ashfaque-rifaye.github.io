@@ -50,6 +50,33 @@ const Portfolio = () => {
   const gatewayApiKey = import.meta.env.VITE_GATEWAY_API_KEY || "";
   const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID || "G-XXXXXXXXXX";
 
+  // --- CODESANDBOX PROJECTS (Interactive Demos) ---
+  // To add a CodeSandbox embed, provide the sandbox ID from the URL: https://codesandbox.io/s/[SANDBOX_ID]
+  // Get the embed URL from: Share Button → Embed
+  const CODESANDBOX_PROJECTS = [
+    {
+      id: 'att-helios',
+      title: 'AT&T Helios: Zero Friction Convergence',
+      description: 'AI-fueled seamless one-click bundle experience. Won "Best in Show" at AT&T Innovation Jam 2025.',
+      sandboxId: '', // TODO: Add sandbox ID from https://codesandbox.io when available
+      tags: ['React', 'AI/ML', 'UX Design', 'Hackathon Winner']
+    },
+    {
+      id: 'travel-personalization',
+      title: 'Hyper-Personalized International Travel',
+      description: 'AI-driven predictive modeling for personalized travel plans. AT&T Hackathon 1st Place Winner 2025.',
+      sandboxId: '', // TODO: Add sandbox ID from https://codesandbox.io when available
+      tags: ['AI/ML', 'Predictive Analytics', 'Hackathon 1st Place']
+    },
+    {
+      id: 'genai-virtual-assistant',
+      title: 'GenAI Virtual Assistant (CCAI/Dialogflow)',
+      description: 'Production conversational AI handling 1.5M+ monthly customer interactions across omnichannel (chat, voice, WhatsApp, RCS).',
+      sandboxId: '', // TODO: Add sandbox ID from https://codesandbox.io when available
+      tags: ['Google CCAI', 'Dialogflow CX', 'Production AI', 'Omnichannel']
+    }
+  ];
+
   const RESUME_CONTEXT = `
   You are an AI assistant for Ashfaque Rifaye, a Technical Business Solution Analyst and Product Owner with 9 years of experience.
   Your goal is to answer questions about Ashfaque's professional background professionally and accurately based ONLY on the following resume data.
@@ -233,36 +260,68 @@ const Portfolio = () => {
     setIsChatLoading(true);
     trackEvent('ai_assistant_query', { query_length: userMessage.length });
 
-    try {
-      const response = await fetch(`${gatewayUrl}/v1/chat/completions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${gatewayApiKey}`
-        },
-        body: JSON.stringify({
-          model: 'google/gemini-2.0-flash',
-          messages: [
-            { role: 'system', content: RESUME_CONTEXT },
-            ...chatHistory.map(msg => ({
-              role: msg.role === 'model' ? 'assistant' : 'user',
-              content: msg.text
-            })),
-            { role: 'user', content: userMessage }
-          ]
-        })
-      });
+    // Try primary gateway (Space 4), fallback to Space 5
+    const spaces = [
+      'https://ashfaque94-inference-gateway-4.hf.space',
+      'https://ashfaque94-inference-gateway-5.hf.space'
+    ];
+    let success = false;
+    let lastError = null;
 
-      if (!response.ok) throw new Error('API Error');
-      const data = await response.json();
-      const aiResponse = data.choices?.[0]?.message?.content || "I'm having trouble connecting right now.";
-      setChatHistory(prev => [...prev, { role: 'model', text: aiResponse }]);
+    for (const spaceUrl of spaces) {
+      try {
+        const endpoint = `${spaceUrl}/v1/chat/completions`;
+        console.log(`[Chat] Trying endpoint: ${endpoint}`);
+        
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${gatewayApiKey}`
+          },
+          body: JSON.stringify({
+            model: 'google/gemini-2.0-flash',
+            messages: [
+              { role: 'system', content: RESUME_CONTEXT },
+              ...chatHistory.map(msg => ({
+                role: msg.role === 'model' ? 'assistant' : 'user',
+                content: msg.text
+              })),
+              { role: 'user', content: userMessage }
+            ],
+            temperature: 0.7,
+            max_tokens: 1024
+          })
+        });
 
-    } catch (error) {
-      setChatHistory(prev => [...prev, { role: 'model', text: "Sorry, I encountered a connection error. Please try again later." }]);
-    } finally {
-      setIsChatLoading(false);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const aiResponse = data.choices?.[0]?.message?.content || "I couldn't generate a response. Please try again.";
+        
+        console.log(`[Chat] Success from ${spaceUrl}`);
+        setChatHistory(prev => [...prev, { role: 'model', text: aiResponse }]);
+        success = true;
+        break;
+
+      } catch (error) {
+        lastError = error;
+        console.error(`[Chat] Failed on ${spaceUrl}:`, error.message);
+      }
     }
+
+    if (!success) {
+      const errorMsg = lastError?.message || 'unknown error';
+      console.error(`[Chat] All endpoints failed. Last error: ${errorMsg}`);
+      setChatHistory(prev => [...prev, { 
+        role: 'model', 
+        text: `I'm having trouble connecting to the inference server. Error: ${errorMsg}. Please check the browser console for details.` 
+      }]);
+    }
+
+    setIsChatLoading(false);
   };
 
   // --- THEME CLASSES ---
@@ -339,13 +398,17 @@ const Portfolio = () => {
                 <button
                   className={`p-1.5 rounded-full border transition-all flex items-center ${isDark ? 'bg-slate-800 border-white/10 hover:bg-slate-700' : 'bg-white border-slate-200 hover:bg-slate-100'}`}
                   aria-label="Select Color Mode"
-                  title={colorMode === 'dark' ? 'Dark' : colorMode === 'light' ? 'Light' : colorMode === 'high-contrast' ? 'High Contrast' : 'Warm'}
                 >
                   {colorMode === 'dark' && <Moon size={14} className="text-indigo-400" />}
                   {colorMode === 'light' && <Sun size={14} className="text-amber-500" />}
                   {colorMode === 'high-contrast' && <span className="text-xs font-bold text-yellow-400">HC</span>}
                   {colorMode === 'warm' && <span className="text-sm leading-none">🔥</span>}
                 </button>
+                {/* Hover Tooltip with Mode Name */}
+                <span className={`absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-3 py-1 text-xs font-semibold rounded-lg whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ${isDark ? 'bg-slate-800 text-white border border-white/10' : 'bg-slate-700 text-white border border-white/20'}`}>
+                  {colorMode === 'dark' ? 'Dark' : colorMode === 'light' ? 'Light' : colorMode === 'high-contrast' ? 'High Contrast' : 'Warm'}
+                </span>
+                {/* Dropdown Menu */}
                 <div className={`absolute right-0 top-full mt-2 w-52 rounded-2xl shadow-2xl border overflow-hidden z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ${isDark ? 'bg-slate-900 border-white/10' : 'bg-white border-slate-200'}`}>
                   <div className={`px-3 py-2 text-[10px] font-mono uppercase tracking-widest ${subTextClass}`}>Display Mode</div>
                   {[
@@ -372,22 +435,29 @@ const Portfolio = () => {
             {/* Mobile Actions */}
             <div className="flex md:hidden items-center space-x-3">
               <div className="relative group">
-                <button className={`p-2 rounded-full border transition-all ${isDark ? 'bg-slate-800 border-white/10' : 'bg-white border-slate-200'}`}>
-                  {colorMode === 'dark' && <Moon size={18} className="text-indigo-400" />}
-                  {colorMode === 'light' && <Sun size={18} className="text-amber-500" />}
+                <button className={`p-1.5 rounded-full border transition-all ${isDark ? 'bg-slate-800 border-white/10 hover:bg-slate-700' : 'bg-white border-slate-200 hover:bg-slate-100'}`}>
+                  {colorMode === 'dark' && <Moon size={14} className="text-indigo-400" />}
+                  {colorMode === 'light' && <Sun size={14} className="text-amber-500" />}
                   {colorMode === 'high-contrast' && <span className="text-xs font-bold text-yellow-400">HC</span>}
-                  {colorMode === 'warm' && <span className="text-base">🔥</span>}
+                  {colorMode === 'warm' && <span className="text-sm">🔥</span>}
                 </button>
+                {/* Hover Tooltip with Mode Name */}
+                <span className={`absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-3 py-1 text-xs font-semibold rounded-lg whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ${isDark ? 'bg-slate-800 text-white border border-white/10' : 'bg-slate-700 text-white border border-white/20'}`}>
+                  {colorMode === 'dark' ? 'Dark' : colorMode === 'light' ? 'Light' : colorMode === 'high-contrast' ? 'High Contrast' : 'Warm'}
+                </span>
+                {/* Dropdown Menu */}
                 <div className={`absolute right-0 top-full mt-2 w-44 rounded-xl shadow-2xl border overflow-hidden z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ${isDark ? 'bg-slate-900 border-white/10' : 'bg-white border-slate-200'}`}>
                   {[
-                    { id: 'dark', label: '🌙 Dark' },
-                    { id: 'light', label: '☀️ Light' },
-                    { id: 'high-contrast', label: '⚫ High Contrast' },
-                    { id: 'warm', label: '🔥 Warm' }
+                    { id: 'dark', icon: <Moon size={12} className="text-indigo-400" />, label: 'Dark' },
+                    { id: 'light', icon: <Sun size={12} className="text-amber-500" />, label: 'Light' },
+                    { id: 'high-contrast', icon: <span className="text-xs font-bold text-yellow-400">HC</span>, label: 'High Contrast' },
+                    { id: 'warm', icon: <span className="text-xs">🔥</span>, label: 'Warm' }
                   ].map(mode => (
                     <button key={mode.id} onClick={() => handleColorModeChange(mode.id)}
-                      className={`w-full text-left px-4 py-2.5 text-sm font-medium transition-colors ${colorMode === mode.id ? 'bg-indigo-600 text-white' : `${textClass} hover:bg-indigo-500/10`}`}>
+                      className={`w-full text-left px-4 py-2.5 text-sm font-medium transition-colors flex items-center gap-2 ${colorMode === mode.id ? 'bg-indigo-600 text-white' : `${textClass} hover:bg-indigo-500/10`}`}>
+                      <span className="flex-shrink-0 w-3.5 flex justify-center">{mode.icon}</span>
                       {mode.label}
+                      {colorMode === mode.id && <CheckCircle size={12} className="ml-auto" />}
                     </button>
                   ))}
                 </div>
@@ -943,6 +1013,56 @@ const Portfolio = () => {
                       <span className="text-[10px] px-2 py-1 rounded bg-violet-500/10 text-violet-400 border border-violet-500/20">Personalization</span>
                     </div>
                   </div>
+                </div>
+              </div>
+
+              {/* CodeSandbox Interactive Demos */}
+              <div className="mb-8">
+                <h3 className={`text-lg font-bold ${headingClass} mb-4 flex items-center gap-2`}><Code2 size={20} className="text-cyan-500" /> Live Interactive Demos</h3>
+                <p className={`${subTextClass} mb-6 text-sm`}>Explore interactive prototypes and live projects below. Click into each demo to interact with the interface.</p>
+                <div className="grid grid-cols-1 gap-6">
+                  {CODESANDBOX_PROJECTS.map(project => (
+                    <div key={project.id} className={`rounded-3xl overflow-hidden border ${isDark ? 'bg-slate-900/50 border-white/5' : 'bg-white/70 border-slate-200'}`}>
+                      <div className="p-6 border-b" style={{background: isDark ? 'linear-gradient(135deg, rgb(15,23,42) 0%, rgb(30,41,59) 100%)' : 'linear-gradient(135deg, rgb(248,250,252) 0%, rgb(241,245,249) 100%)'}}>
+                        <div className="flex items-start justify-between mb-3">
+                          <h4 className={`text-lg font-bold ${headingClass}`}>{project.title}</h4>
+                          {project.sandboxId ? (
+                            <span className="text-[10px] px-2 py-1 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/20">Live</span>
+                          ) : (
+                            <span className="text-[10px] px-2 py-1 rounded bg-slate-500/20 text-slate-400 border border-slate-500/20">Coming Soon</span>
+                          )}
+                        </div>
+                        <p className={`text-sm ${subTextClass} mb-4`}>{project.description}</p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {project.tags.map((tag, idx) => (
+                            <span key={idx} className="text-[9px] px-2 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">{tag}</span>
+                          ))}
+                        </div>
+                      </div>
+                      {project.sandboxId ? (
+                        <iframe
+                          src={`https://codesandbox.io/embed/${project.sandboxId}?view=preview&theme=${isDark ? 'dark' : 'light'}`}
+                          style={{
+                            width: '100%',
+                            height: '500px',
+                            border: 0,
+                            borderRadius: 0,
+                            overflow: 'hidden'
+                          }}
+                          title={project.title}
+                          allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; magnetometer; microphone; midi; payment; usb; xr-spatial-tracking"
+                          sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+                        />
+                      ) : (
+                        <div className={`p-12 text-center ${isDark ? 'bg-slate-800/50' : 'bg-slate-50'}`}>
+                          <Code2 size={48} className={`mx-auto mb-4 opacity-30 ${isDark ? 'text-white' : 'text-slate-400'}`} />
+                          <p className={`${headingClass} font-semibold mb-2`}>Sandbox Coming Soon</p>
+                          <p className={`text-sm ${subTextClass}`}>This interactive demo will be available soon. Check back later!</p>
+                          <p className={`text-xs ${subTextClass} mt-4 font-mono`}>Awaiting CodeSandbox URL</p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
 
