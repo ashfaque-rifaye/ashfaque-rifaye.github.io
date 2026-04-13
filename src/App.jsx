@@ -162,10 +162,18 @@ const Portfolio = () => {
   const [isChatWidgetOpen, setIsChatWidgetOpen] = useState(false);
   const [chatInput, setChatInput] = useState('');
   const [chatHistory, setChatHistory] = useState([
-    { role: 'model', text: "Hi! I'm Ashfaque's AI Twin. Ask me anything about his experience, skills, or projects! ✨" }
+    { role: 'model', text: "Hi! I'm Ashfaque's AI Twin. Ask me anything about his experience, skills, or projects! ✨", model: 'System' }
   ]);
   const [isChatLoading, setIsChatLoading] = useState(false);
+  const [copiedIndex, setCopiedIndex] = useState(null);
   const chatEndRef = useRef(null);
+
+  const suggestedQuestions = [
+    "What's his experience with AI/ML?",
+    "Tell me about AT&T projects",
+    "What are his hackathon wins?",
+    "Explain his SAFe certifications"
+  ];
 
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
@@ -273,7 +281,7 @@ const Portfolio = () => {
 
     const userMessage = chatInput;
     setChatInput('');
-    setChatHistory(prev => [...prev, { role: 'user', text: userMessage }]);
+    setChatHistory(prev => [...prev, { role: 'user', text: userMessage, model: 'You' }]);
     setIsChatLoading(true);
     trackEvent('ai_assistant_query', { query_length: userMessage.length });
 
@@ -318,8 +326,12 @@ const Portfolio = () => {
         if (response.ok) {
           const data = await response.json();
           const aiResponse = data.choices?.[0]?.message?.content || "I couldn't generate a response. Please try again.";
+          
+          // Extract model info from response or use provider info
+          const model = data.model || data.provider || 'Unknown Model';
+          
           console.log(`[Chat] ✅ SUCCESS - Response received from ${endpoint}`);
-          setChatHistory(prev => [...prev, { role: 'model', text: aiResponse }]);
+          setChatHistory(prev => [...prev, { role: 'model', text: aiResponse, model: model }]);
           success = true;
           break;
         } else {
@@ -1352,10 +1364,11 @@ const Portfolio = () => {
       {/* --- FLOATING AI CHAT WIDGET --- */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
         {isChatWidgetOpen && (
-          <div className={`w-80 md:w-96 rounded-3xl shadow-2xl border flex flex-col overflow-hidden ${isDark ? 'bg-slate-900 border-white/10' : 'bg-white border-slate-200'}`} style={{maxHeight: '480px'}}>
-            <div className={`p-4 border-b flex justify-between items-center ${isDark ? 'border-white/5' : 'border-slate-100'}`}>
+          <div className={`w-80 md:w-96 rounded-3xl shadow-2xl border flex flex-col overflow-hidden ${isDark ? 'bg-slate-900 border-white/10' : 'bg-white border-slate-200'}`} style={{maxHeight: '600px'}}>
+            {/* Header */}
+            <div className={`p-4 border-b flex justify-between items-center ${isDark ? 'border-white/5 bg-gradient-to-r from-slate-900 to-slate-800' : 'border-slate-100 bg-gradient-to-r from-blue-50 to-indigo-50'}`}>
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-full flex items-center justify-center shadow-lg">
                   <Bot size={16} className="text-white" />
                 </div>
                 <div>
@@ -1367,31 +1380,108 @@ const Portfolio = () => {
                 <X size={16} />
               </button>
             </div>
-            <div className="overflow-y-auto p-4 space-y-3" style={{minHeight: '200px', maxHeight: '300px'}}>
+
+            {/* Messages Area */}
+            <div className="overflow-y-auto p-4 space-y-4 flex-1" style={{minHeight: '280px', maxHeight: '380px'}}>
               {chatHistory.map((msg, i) => (
                 <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`p-3 rounded-2xl text-sm max-w-[85%] ${msg.role === 'user' ? 'bg-indigo-600 text-white' : isDark ? 'bg-slate-800 text-slate-300' : 'bg-slate-100 text-slate-700'}`}>{msg.text}</div>
+                  <div className={`max-w-[85%] rounded-2xl ${msg.role === 'user' ? 'bg-indigo-600 text-white' : isDark ? 'bg-slate-800 text-slate-300' : 'bg-slate-100 text-slate-700'}`}>
+                    {/* Message Text */}
+                    <div className="p-3 text-sm leading-relaxed whitespace-pre-wrap break-words">
+                      {msg.text}
+                    </div>
+                    {/* Model Attribution */}
+                    {msg.model && (
+                      <div className={`px-3 pb-2 text-xs font-mono opacity-70 flex items-center justify-between gap-2`}>
+                        <span>📌 {msg.model}</span>
+                        {msg.role === 'model' && (
+                          <button
+                            onClick={() => {
+                              navigator.clipboard.writeText(msg.text);
+                              setCopiedIndex(i);
+                              setTimeout(() => setCopiedIndex(null), 2000);
+                            }}
+                            className="hover:opacity-100 opacity-50 transition-opacity"
+                            title="Copy message"
+                          >
+                            {copiedIndex === i ? '✓ Copied!' : '📋 Copy'}
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
-              {isChatLoading && <div className={`text-xs ${subTextClass}`}>Thinking...</div>}
+
+              {/* Loading State */}
+              {isChatLoading && (
+                <div className="flex justify-start">
+                  <div className={`p-3 rounded-2xl ${isDark ? 'bg-slate-800' : 'bg-slate-100'}`}>
+                    <div className="flex gap-1">
+                      <div className={`w-2 h-2 rounded-full ${isDark ? 'bg-slate-500' : 'bg-slate-400'} animate-bounce`} style={{animationDelay: '0ms'}}></div>
+                      <div className={`w-2 h-2 rounded-full ${isDark ? 'bg-slate-500' : 'bg-slate-400'} animate-bounce`} style={{animationDelay: '150ms'}}></div>
+                      <div className={`w-2 h-2 rounded-full ${isDark ? 'bg-slate-500' : 'bg-slate-400'} animate-bounce`} style={{animationDelay: '300ms'}}></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <div ref={chatEndRef}></div>
             </div>
-            <form onSubmit={handleChatSubmit} className={`p-3 border-t flex gap-2 ${isDark ? 'border-white/5' : 'border-slate-100'}`}>
+
+            {/* Suggested Questions (show only if chat is empty or has few messages) */}
+            {chatHistory.length <= 2 && !isChatLoading && (
+              <div className={`px-4 py-3 border-t ${isDark ? 'border-white/5' : 'border-slate-100'}`}>
+                <p className={`text-xs font-semibold ${subTextClass} mb-2`}>Suggested questions:</p>
+                <div className="space-y-1.5">
+                  {suggestedQuestions.map((q, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        setChatInput(q);
+                        // Auto-submit after setting input
+                        setTimeout(() => {
+                          const form = document.querySelector('form[data-chat-form]');
+                          if (form) form.dispatchEvent(new Event('submit', { bubbles: true }));
+                        }, 50);
+                      }}
+                      className={`w-full text-left text-xs p-2 rounded-lg transition-all ${isDark ? 'bg-slate-700/50 hover:bg-slate-700 text-slate-300' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'}`}
+                    >
+                      💡 {q}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Input Area */}
+            <form 
+              onSubmit={handleChatSubmit} 
+              className={`p-3 border-t flex gap-2 ${isDark ? 'border-white/5' : 'border-slate-100'}`}
+              data-chat-form
+            >
               <input
-                className={`flex-1 bg-transparent border rounded-xl p-2 text-sm ${isDark ? 'border-slate-700 text-white placeholder:text-slate-500' : 'border-slate-200 text-black placeholder:text-slate-400'}`}
+                className={`flex-1 bg-transparent border rounded-xl p-2.5 text-sm font-medium transition-all ${isDark ? 'border-slate-700 text-white placeholder:text-slate-500 focus:border-indigo-500 focus:outline-none' : 'border-slate-200 text-black placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none'}`}
                 value={chatInput}
                 onChange={e => setChatInput(e.target.value)}
                 placeholder="Ask about my resume..."
+                disabled={isChatLoading}
               />
-              <button type="submit" className="p-2 bg-indigo-600 rounded-xl text-white hover:bg-indigo-700 transition-colors">
+              <button 
+                type="submit" 
+                disabled={isChatLoading}
+                className="p-2.5 bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-600 rounded-xl text-white transition-colors flex items-center justify-center"
+              >
                 <Send size={16} />
               </button>
             </form>
           </div>
         )}
+
+        {/* Floating Button */}
         <button
           onClick={() => setIsChatWidgetOpen(prev => !prev)}
-          className={`w-14 h-14 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white shadow-2xl flex items-center justify-center transition-all duration-300 ${isChatWidgetOpen ? 'rotate-90' : ''}`}
+          className={`w-14 h-14 rounded-full bg-gradient-to-br from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white shadow-2xl flex items-center justify-center transition-all duration-300 ${isChatWidgetOpen ? 'rotate-90' : 'animate-pulse'}`}
           aria-label="Chat with Ashfaque's AI Twin"
         >
           {isChatWidgetOpen ? <X size={22} /> : <Bot size={22} />}
