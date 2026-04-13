@@ -34,7 +34,10 @@ import {
   ShieldCheck,
   MapPin,
   ScrollText,
-  Trophy
+  Trophy,
+  Palette,
+  Code2,
+  Github
 } from 'lucide-react';
 
 const Portfolio = () => {
@@ -111,7 +114,8 @@ const Portfolio = () => {
 
   // --- STATE MANAGEMENT ---
   const [activeTab, setActiveTab] = useState('overview');
-  const [isDark, setIsDark] = useState(true);
+  const [colorMode, setColorMode] = useState('dark'); // 'dark' | 'light' | 'high-contrast' | 'warm'
+  const isDark = colorMode === 'dark' || colorMode === 'high-contrast';
   const [typedText, setTypedText] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showDownloadOptions, setShowDownloadOptions] = useState(false);
@@ -183,9 +187,9 @@ const Portfolio = () => {
   }, [activeTab]);
 
   // --- HANDLERS ---
-  const handleThemeToggle = () => {
-    setIsDark(!isDark);
-    trackEvent('toggle_theme', { mode: !isDark ? 'dark' : 'light' });
+  const handleColorModeChange = (mode) => {
+    setColorMode(mode);
+    trackEvent('toggle_theme', { mode });
   };
 
   const handleTabChange = (tab) => {
@@ -255,14 +259,18 @@ const Portfolio = () => {
   };
 
   // --- THEME CLASSES ---
-  const bgClass = isDark ? 'bg-slate-950' : 'bg-slate-50';
-  const textClass = isDark ? 'text-slate-200' : 'text-slate-800';
-  const cardBgClass = isDark
+  const bgClass = colorMode === 'warm' ? 'bg-amber-50' : colorMode === 'high-contrast' ? 'bg-black' : isDark ? 'bg-slate-950' : 'bg-slate-50';
+  const textClass = colorMode === 'warm' ? 'text-amber-900' : colorMode === 'high-contrast' ? 'text-white' : isDark ? 'text-slate-200' : 'text-slate-800';
+  const cardBgClass = colorMode === 'high-contrast'
+    ? 'bg-gray-900 backdrop-blur-sm border-gray-600'
+    : colorMode === 'warm'
+    ? 'bg-white/90 backdrop-blur-sm border-amber-200 shadow-md'
+    : isDark
     ? 'bg-slate-900/50 backdrop-blur-sm border-white/5'
     : 'bg-white/70 backdrop-blur-sm border-slate-200 shadow-sm';
-  const headingClass = isDark ? 'text-white' : 'text-slate-900';
-  const subTextClass = isDark ? 'text-slate-400' : 'text-slate-600';
-  const accentTextClass = isDark ? 'text-indigo-400' : 'text-indigo-600';
+  const headingClass = colorMode === 'warm' ? 'text-amber-950' : colorMode === 'high-contrast' ? 'text-white' : isDark ? 'text-white' : 'text-slate-900';
+  const subTextClass = colorMode === 'warm' ? 'text-amber-700' : colorMode === 'high-contrast' ? 'text-gray-300' : isDark ? 'text-slate-400' : 'text-slate-600';
+  const accentTextClass = colorMode === 'warm' ? 'text-amber-600' : colorMode === 'high-contrast' ? 'text-yellow-400' : isDark ? 'text-indigo-400' : 'text-indigo-600';
 
   // --- SKILL ICONS ---
   const skills = [
@@ -320,23 +328,63 @@ const Portfolio = () => {
                 ))}
               </nav>
 
-              <button
-                onClick={handleThemeToggle}
-                className={`p-2 rounded-full border transition-all ${isDark ? 'bg-slate-800 border-white/10 hover:bg-slate-700' : 'bg-white border-slate-200 hover:bg-slate-100'}`}
-                aria-label="Toggle Theme"
-              >
-                {isDark ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} className="text-slate-600" />}
-              </button>
+              {/* Color Mode Dropdown */}
+              <div className="relative group">
+                <button
+                  className={`p-2 rounded-full border transition-all flex items-center gap-1.5 ${isDark ? 'bg-slate-800 border-white/10 hover:bg-slate-700' : 'bg-white border-slate-200 hover:bg-slate-100'}`}
+                  aria-label="Select Color Mode"
+                >
+                  {colorMode === 'dark' && <Moon size={18} className="text-indigo-400" />}
+                  {colorMode === 'light' && <Sun size={18} className="text-amber-500" />}
+                  {colorMode === 'high-contrast' && <span className="text-sm font-bold text-yellow-400">HC</span>}
+                  {colorMode === 'warm' && <span className="text-base leading-none">🔥</span>}
+                </button>
+                <div className={`absolute right-0 top-full mt-2 w-52 rounded-2xl shadow-2xl border overflow-hidden z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ${isDark ? 'bg-slate-900 border-white/10' : 'bg-white border-slate-200'}`}>
+                  <div className={`px-3 py-2 text-[10px] font-mono uppercase tracking-widest ${subTextClass}`}>Display Mode</div>
+                  {[
+                    { id: 'dark', icon: <Moon size={14} className="text-indigo-400" />, label: 'Dark', desc: 'Deep navy' },
+                    { id: 'light', icon: <Sun size={14} className="text-amber-500" />, label: 'Light', desc: 'Clean white' },
+                    { id: 'high-contrast', icon: <span className="text-xs font-black text-yellow-400 w-3.5 text-center">HC</span>, label: 'High Contrast', desc: 'WCAG AAA' },
+                    { id: 'warm', icon: <span className="text-sm leading-none">🔥</span>, label: 'Warm', desc: 'Sepia / eye-friendly' }
+                  ].map(mode => (
+                    <button
+                      key={mode.id}
+                      onClick={() => handleColorModeChange(mode.id)}
+                      className={`w-full text-left px-4 py-3 flex items-center gap-3 transition-colors ${colorMode === mode.id ? 'bg-indigo-600 text-white' : `${textClass} hover:bg-indigo-500/10`}`}
+                    >
+                      <span className="flex-shrink-0 w-4 flex justify-center">{mode.icon}</span>
+                      <span className="text-sm font-semibold">{mode.label}</span>
+                      {colorMode !== mode.id && <span className={`text-xs ml-auto ${subTextClass}`}>{mode.desc}</span>}
+                      {colorMode === mode.id && <CheckCircle size={14} className="ml-auto text-white/80" />}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Mobile Actions */}
             <div className="flex md:hidden items-center space-x-3">
-              <button
-                onClick={handleThemeToggle}
-                className={`p-2 rounded-full border transition-all ${isDark ? 'bg-slate-800 border-white/10' : 'bg-white border-slate-200'}`}
-              >
-                {isDark ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} className="text-slate-600" />}
-              </button>
+              <div className="relative group">
+                <button className={`p-2 rounded-full border transition-all ${isDark ? 'bg-slate-800 border-white/10' : 'bg-white border-slate-200'}`}>
+                  {colorMode === 'dark' && <Moon size={18} className="text-indigo-400" />}
+                  {colorMode === 'light' && <Sun size={18} className="text-amber-500" />}
+                  {colorMode === 'high-contrast' && <span className="text-xs font-bold text-yellow-400">HC</span>}
+                  {colorMode === 'warm' && <span className="text-base">🔥</span>}
+                </button>
+                <div className={`absolute right-0 top-full mt-2 w-44 rounded-xl shadow-2xl border overflow-hidden z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ${isDark ? 'bg-slate-900 border-white/10' : 'bg-white border-slate-200'}`}>
+                  {[
+                    { id: 'dark', label: '🌙 Dark' },
+                    { id: 'light', label: '☀️ Light' },
+                    { id: 'high-contrast', label: '⚫ High Contrast' },
+                    { id: 'warm', label: '🔥 Warm' }
+                  ].map(mode => (
+                    <button key={mode.id} onClick={() => handleColorModeChange(mode.id)}
+                      className={`w-full text-left px-4 py-2.5 text-sm font-medium transition-colors ${colorMode === mode.id ? 'bg-indigo-600 text-white' : `${textClass} hover:bg-indigo-500/10`}`}>
+                      {mode.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
               <button onClick={() => setIsMenuOpen(!isMenuOpen)} className={`p-2 rounded-lg ${headingClass} hover:bg-white/10`}>
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -645,6 +693,81 @@ const Portfolio = () => {
                   </div>
                 </div>
               )}
+
+              {/* AI STACK TILE */}
+              <div className={`md:col-span-4 ${cardBgClass} rounded-3xl p-6 md:p-8 border`}>
+                <div className="flex items-center gap-3 mb-6">
+                  <Brain className="text-violet-500" size={24} />
+                  <div>
+                    <h3 className={`text-lg font-bold ${headingClass}`}>AI Stack & Models</h3>
+                    <p className={`text-xs ${subTextClass} mt-0.5`}>Tools and models I actively use and experiment with</p>
+                  </div>
+                </div>
+
+                {/* Tools Row */}
+                <div className="mb-5">
+                  <p className={`text-[10px] font-mono uppercase tracking-widest ${subTextClass} mb-3`}>Platforms & Tools</p>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { name: 'Lovable', icon: '🎨' },
+                      { name: 'GitHub Copilot', icon: '⚙️' },
+                      { name: 'Emergent', icon: '🧠' },
+                      { name: 'Gemma', icon: '🤖' },
+                      { name: 'Microsoft Copilot', icon: '🔮' },
+                      { name: 'Perplexity AI', icon: '🔍' },
+                      { name: 'MixPanel', icon: '📊' },
+                      { name: 'Hugging Face', icon: '🤗' }
+                    ].map((tool) => (
+                      <span key={tool.name} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium border transition-all hover:scale-105 cursor-default ${
+                        isDark ? 'bg-violet-500/10 border-violet-500/20 text-violet-300' : 'bg-violet-50 border-violet-200 text-violet-700'
+                      }`}>
+                        <span>{tool.icon}</span>{tool.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Models Grid */}
+                <div>
+                  <p className={`text-[10px] font-mono uppercase tracking-widest ${subTextClass} mb-3`}>LLMs & AI Models</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    {[
+                      {
+                        name: 'Claude', org: 'Anthropic', color: 'slate',
+                        models: ['Opus', 'Sonnet', 'Haiku']
+                      },
+                      {
+                        name: 'ChatGPT', org: 'OpenAI', color: 'green',
+                        models: ['GPT-3.5', 'GPT-4', 'GPT-4o', 'o1', 'GPT-5 ✨', 'GPT-5.4 ⭐']
+                      },
+                      {
+                        name: 'Gemini', org: 'Google', color: 'blue',
+                        models: ['1.5 Pro', '1.5 Flash', '2.0', '3.0 🚀']
+                      },
+                      {
+                        name: 'Video & OSS', org: 'Specialized', color: 'purple',
+                        models: ['Higgsfield AI', 'Runway', 'Pika', 'Deepseek']
+                      }
+                    ].map((group) => (
+                      <div key={group.name} className={`p-4 rounded-2xl border ${
+                        isDark ? 'bg-slate-800/50 border-white/5' : 'bg-slate-50 border-slate-100'
+                      }`}>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className={`text-sm font-bold ${headingClass}`}>{group.name}</span>
+                          <span className={`text-[9px] font-mono px-1.5 py-0.5 rounded ${isDark ? 'bg-white/5 text-slate-400' : 'bg-slate-200 text-slate-500'}`}>{group.org}</span>
+                        </div>
+                        <div className="flex flex-wrap gap-1">
+                          {group.models.map(m => (
+                            <span key={m} className={`text-[10px] px-2 py-0.5 rounded-full ${
+                              isDark ? 'bg-white/5 text-slate-300' : 'bg-white border border-slate-200 text-slate-600'
+                            }`}>{m}</span>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 
@@ -853,7 +976,7 @@ const Portfolio = () => {
               </div>
 
               {/* Verizon Key Projects */}
-              <div>
+              <div className="mb-8">
                 <h3 className={`text-lg font-bold ${headingClass} mb-4 flex items-center gap-2`}><Target size={20} className="text-blue-500" /> Verizon — High-Impact Projects</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-blue-900/10 to-slate-900 border-white/5' : 'bg-white border-slate-200'}`}>
@@ -874,6 +997,90 @@ const Portfolio = () => {
                       <span className="text-[10px] px-2 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Revenue</span>
                     </div>
                   </div>
+                </div>
+              </div>
+
+              {/* Personal GitHub Projects */}
+              <div>
+                <h3 className={`text-lg font-bold ${headingClass} mb-2 flex items-center gap-2`}><Code2 size={20} className="text-purple-500" /> Personal Projects & Experiments</h3>
+                <p className={`text-sm ${subTextClass} mb-4`}>Independent builds, AI experiments, and personal side projects from <a href="https://github.com/ashfaque-rifaye" target="_blank" rel="noreferrer" className="text-indigo-400 hover:text-indigo-300 underline underline-offset-2">github.com/ashfaque-rifaye</a></p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {[
+                    {
+                      name: 'AI for Bharat Hackathon',
+                      lang: 'Python',
+                      desc: 'Hackathon submission exploring AI-driven solutions addressing India-specific challenges. Built end-to-end with Python-based ML pipeline and a conversational interface.',
+                      tags: ['Python', 'AI/ML', 'NLP'],
+                      color: 'indigo'
+                    },
+                    {
+                      name: 'AI Mock Interview',
+                      lang: 'React',
+                      desc: 'AI-powered mock interview platform that simulates real interview scenarios, evaluates responses using LLMs, and provides structured feedback to help candidates prepare.',
+                      tags: ['LLM', 'Interview AI', 'React'],
+                      color: 'violet'
+                    },
+                    {
+                      name: 'Productivity Hub',
+                      lang: 'Python',
+                      desc: 'Multi-agent productivity system hosted on Google Cloud, orchestrating specialized AI agents for task management, research, scheduling, and knowledge retrieval.',
+                      tags: ['Multi-Agent', 'GCP', 'Python'],
+                      color: 'emerald'
+                    },
+                    {
+                      name: 'Job Automater',
+                      lang: 'Python',
+                      desc: 'Automated job application assistant that parses listings, matches requirements against a profile, and streamlines the application process using scripted AI workflows.',
+                      tags: ['Automation', 'Python', 'AI'],
+                      color: 'amber'
+                    },
+                    {
+                      name: 'PC Builder 101',
+                      lang: 'React',
+                      desc: 'End-to-end PC configuration and buying guide app. Users select components with compatibility checks and get region-specific purchase links with realistic build previews.',
+                      tags: ['React', 'E-Commerce', 'UX'],
+                      color: 'blue'
+                    },
+                    {
+                      name: 'Health Wise Monitoring',
+                      lang: 'React',
+                      desc: 'Personal health dashboard application designed for continuous wellness tracking, surfacing trends across vitals and activity data for proactive health insights.',
+                      tags: ['Health Tech', 'Dashboard', 'Analytics'],
+                      color: 'rose'
+                    }
+                  ].map((proj, idx) => {
+                    const colors = {
+                      indigo: isDark ? 'from-indigo-900/15 to-slate-900 border-indigo-500/20' : 'bg-indigo-50 border-indigo-200',
+                      violet: isDark ? 'from-violet-900/15 to-slate-900 border-violet-500/20' : 'bg-violet-50 border-violet-200',
+                      emerald: isDark ? 'from-emerald-900/15 to-slate-900 border-emerald-500/20' : 'bg-emerald-50 border-emerald-200',
+                      amber: isDark ? 'from-amber-900/15 to-slate-900 border-amber-500/20' : 'bg-amber-50 border-amber-200',
+                      blue: isDark ? 'from-blue-900/15 to-slate-900 border-blue-500/20' : 'bg-blue-50 border-blue-200',
+                      rose: isDark ? 'from-rose-900/15 to-slate-900 border-rose-500/20' : 'bg-rose-50 border-rose-200',
+                    };
+                    const tagColors = {
+                      indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
+                      violet: 'bg-violet-500/10 text-violet-400 border-violet-500/20',
+                      emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+                      amber: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+                      blue: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+                      rose: 'bg-rose-500/10 text-rose-400 border-rose-500/20',
+                    };
+                    return (
+                      <div key={idx} className={`rounded-2xl p-6 border ${isDark ? `bg-gradient-to-br ${colors[proj.color]}` : colors[proj.color]}`}>
+                        <div className="flex items-start justify-between mb-3">
+                          <Code2 size={22} className={`${isDark ? `text-${proj.color}-400` : `text-${proj.color}-600`} shrink-0`} />
+                          <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${isDark ? 'bg-white/5 text-slate-400' : 'bg-white text-slate-500 border border-slate-200'}`}>{proj.lang}</span>
+                        </div>
+                        <h4 className={`font-bold ${headingClass} mb-2 text-sm`}>{proj.name}</h4>
+                        <p className={`text-xs ${subTextClass} leading-relaxed mb-3`}>{proj.desc}</p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {proj.tags.map(t => (
+                            <span key={t} className={`text-[10px] px-2 py-0.5 rounded border ${tagColors[proj.color]}`}>{t}</span>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
