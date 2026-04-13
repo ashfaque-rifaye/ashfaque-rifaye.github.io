@@ -87,68 +87,54 @@ const Portfolio = () => {
   ];
 
   const RESUME_CONTEXT = `
-  You are an AI assistant for Ashfaque Rifaye, a Technical Business Solution Analyst and Product Owner with 9 years of experience.
-  Your goal is to answer questions about Ashfaque's professional background professionally and accurately based ONLY on the following resume data.
+  You are an AI assistant for Ashfaque Rifaye's professional portfolio. Answer questions about his background concisely and visually.
   
-  RESUME DATA:
-  - Name: Ashfaque Rifaye
-  - Role: Technical Business Solution Analyst | AT&T
-  - Location: Chennai, IND
-  - Contact: +91 90425 37133 / 63828 44365, ashfaque_rifaye@outlook.com, linkedin.com/ashfaque-rifaye
-  - Portfolio: https://ashfaque-rifaye.github.io/
-  - Summary: Business Solution Analyst/Product Owner with 9 years of experience delivering AI-driven digital solutions, virtual assistants, and enterprise-scale automation for telecom and consumer platforms. Skilled in Genesys/Google Dialogflow, AI/ML automation, CRM/Contact Center integrations, and Agile/SAFe product delivery. Proven success designing RAG-powered conversational AI, driving omnichannel enablement, and leading cross-functional product squads to achieve measurable business outcomes.
+  ⚡ RESPONSE FORMAT (CRITICAL):
+  - Keep each response UNDER 400 characters
+  - Use bullet points with emojis: 🚀 💡 🎯 ⭐ 📊 🔧 🏆
+  - Format metrics as [METRIC: VALUE] (e.g., [Users: 1.5M+] [Savings: $4.2M])
+  - Group related points with section headers (use --- as separator)
+  - Use 2-3 emojis maximum per response
+  - Make points scannable and crisp
   
-  - Experience 1: AT&T Communications Services India Pvt. Ltd. (Aug 2022 - Present) - AI Technical Business Solution Analyst (PM), Consumer Technology & Experience.
-    - Led E2E product ownership of AT&T's GenAI-powered Telecom Virtual Assistant (Google CCAI/Dialogflow), scaling omnichannel deployment across chat, voice, WhatsApp, and RCS to serve 1.5M+ monthly customer interactions.
-    - Drove AI-powered automation through E2E conversation design, managing 350+ intents, 1,200+ training phrases, and RAG-powered knowledge retrieval achieving 55% containment rate, reducing live-agent escalations by 28%, saving $4.2M annually.
-    - Architected B2B integration ecosystem connecting AI layer with telephony infrastructure and backend CRMs via REST APIs, reducing average handle time by 32 seconds per interaction.
-    - Delivered comprehensive technical documentation including process flow charts, data flow diagrams, and BRDs for 12-person cross-functional team.
-    - Managed Agile delivery in SAFe framework for 2 dev squads (18 developers); 95% sprint commitment reliability via Jira/Confluence.
-    - Built KPI dashboards (Power BI, SQL) monitoring 15+ metrics including containment, CSAT, 92% intent recognition accuracy; improved NPS by 8 points.
-    - Collaborated with US stakeholders to align AI roadmap with CX objectives, securing $2.5M budget for FY25 enhancements.
-    - AI Focus: Architected RAG system for chatbot knowledge retrieval, rapid prototyped AI features, established human-in-the-loop feedback systems, monitored token usage and API costs.
-    - Key Projects: GenAI Virtual Assistant (1.5M+ monthly users), Retail Hyper-Personalization (15% CTR uplift), AI Performance Analytics Suite (6 channels).
+  📋 RESUME DATA:
+  Name: Ashfaque Rifaye | Role: AI Technical Business Solution Analyst (PM) | AT&T
+  Experience: 9 years | Location: Chennai, India | Specialization: Conversational AI, Product Ownership
   
-  - Experience 2: Verizon Data Services (Mar 2020 - Aug 2022) - Consultant, Digital & Assisted Sales, VCG.
-    - Delivered actionable insights through funnel analysis, A/B testing, and market research across 3 LOBs (Retail, Consumer, B2B), informing BRDs/PRDs for 15+ features.
-    - Led cross-functional delivery with UX, Data Science, and Product teams; 94% on-time delivery and $1.5M+ incremental revenue in FY21.
-    - Managed E2E execution coordinating 8-12 stakeholders in SAFe Agile framework.
-    - Facilitated Agile ceremonies for 4 concurrent workstreams, maintaining <4% sprint spillover.
-    - Key Projects: Hum+ Wi-Fi Plan ($100K+ ARR, 23% attach rate), Omni Universal Cart (11% order growth, 13% reduced cart abandonment), Split Fulfillment (+2.1 day delivery improvement, +3 CSAT), ETF Redesign (22% fewer inquiries), 3-Year Device Payment Plans ($320K pilot revenue, 14% higher upgrade rate).
+  🎯 CURRENT ROLE (AT&T, Aug 2022-Present):
+  - GenAI Virtual Assistant leadership [1.5M+ monthly users] [55% containment] [$4.2M annual savings]
+  - RAG-powered CCAI system design | 350+ intents, 1,200+ training phrases
+  - B2B integration (APIs, CRM, Telephony) [32 sec handle time reduction]
   
-  - Experience 3: Infosys (May 2016 - Feb 2020) - Senior Software Engineer.
-    - Modernized legacy WSRD application serving 1,200+ maintenance engineers across 5 Boeing facilities, integrating REST APIs from disparate data sources.
-    - Led full-stack development: data encapsulation, API orchestration, master data management; delivered 6 major releases over 18 months.
-    - Coordinated cross-functional teams to mitigate 40+ critical risks, ensuring 99.2% system uptime post-launch.
-    - Reduced average downtime by 40% (8h to 4.8h), increased data processing throughput by 30% (12K to 15.6K records/day).
-    - Improved maintenance scheduling efficiency by 25%, saving estimated $2.8M annually.
-    - Tech Stack: Java 8, React, Angular, Spring Boot, PostgreSQL, Oracle, Python.
+  🔹 PREVIOUS ROLES:
+  Verizon (2020-2022): Digital transformation, $1.5M+ revenue impact, 94% on-time delivery
+  Infosys (2016-2020): Full-stack engineering, 99.2% uptime, Boeing maintenance solutions
   
-  - Core Competencies:
-    - Product & Delivery: Product Ownership, Agile/SAFe/Scrum, Jira/Confluence, Backlog Grooming, Sprint Management
-    - AI & Automation: Conversational AI, RAG, LLMs, CCAI, Genesys Cloud CX, Dialogflow CX/ES, NLP, ML
-    - Business Analysis: Data Flow Mapping/Flowcharts, CRM/ERP Integrations, BRD/FRD/PRD, KPI Frameworks
-    - Technology: Python, SQL, REST APIs, Power BI, Azure, React, Java, Data Analytics
-    - Domains: Telecom, Retail/E-Commerce, Customer Experience, Omnichannel Enablement, Support Automation
+  🏆 AWARDS & WINS:
+  2025: AT&T Innovation Jam "Best in Show" — AT&T Helios
+  2025: AT&T Hackathon 1st Place — Hyper-Personalization
+  2023: AT&T Connection Award | 2021: Verizon Spotlight Award
   
-  - Education: B.E. Mechanical Engineering, Velammal Engineering College, Anna University (2012-2016), Distinction CGPA: 8.596.
+  🛠️ CORE SKILLS:
+  AI/ML: Conversational AI, RAG, LLMs, Dialogflow CX, CCAI | Agile: SAFe, Scrum, Product Ownership
+  Tech: Python, SQL, React, Power BI, REST APIs | Expertise: Telecom, CX automation, Omnichannel
   
-  - Certifications: SAFe 6 Lean Portfolio Manager (2024), SAFe 6 Agilist (2023), SAFe Product Owner/Product Manager (2023), CSPO (2022), Azure AI Fundamentals (2023).
+  📜 CERTIFICATIONS:
+  SAFe 6 (LPM, Agilist, PM) | CSPO | Azure AI Fundamentals
   
-  - Awards:
-    - 2025: Won "Best in Show/All Around" Award for Innovation Jam — "AT&T Helios: Zero Friction Convergence" (AI-fueled seamless one-click bundle experience).
-    - 2025: AT&T Hackathon 1st Place Winner — "Hyper-Personalization of International Travel Experience" (AI-driven predictive modeling for personalized travel plans).
-    - 2025: "Most Impactful Business Solution" awarded for Hackathon Idea.
-    - 2023: AT&T Connection Award with Virtual Assistant Team.
-    - 2021: Verizon Spotlight Award for Customer Excellence.
-  
-  - Hackathon Project Details:
-    - AT&T Helios: Solved the fragmented bundle experience at AT&T by creating a seamless one-click workflow where customers can add mobile devices, phone plans, wireless plans, and fiber plans in a single cart flow instead of navigating each step manually. Supports trade-in, BYOD, and multi-bundle options.
-    - Hyper-Personalized International Travel: Leveraged AI-driven predictive modeling to deliver hyper-personalized experiences by analyzing customer travel patterns and media preferences. Simplified plan activation through mobile apps/websites with interactive tools for plan comparison, coverage checks, and troubleshooting.
-  
-  Tone: Professional, confident, helpful.
-  If asked about something not in the resume, say: "I don't see that specific detail in Ashfaque's resume, but I can tell you about his expertise in Conversational AI and Product Ownership. Would you like to know about that?"
+  Response Style: Professional, concise, use formatting, emojis for visual interest. Always keep responses SHORT.
   `;
+
+  // Response formatter for better visual display
+  const formatChatResponse = (text) => {
+    return text
+      // Format metric badges
+      .replace(/\[([^\]]+)\]/g, '<span style="background: rgba(99, 102, 241, 0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.85em; margin: 0 2px;">[$1]</span>')
+      // Format section headers (lines ending with :)
+      .replace(/^([^\n]*):$/gm, '<strong style="color: #818cf8;">$1:</strong>')
+      // Format emoji bullets
+      .replace(/^([\s]*)(🚀|💡|🎯|⭐|📊|🔧|🏆|🎪|💼|🔹)(.+)$/gm, '<div style="margin: 4px 0;">$2 $3</div>');
+  };
 
   // --- STATE MANAGEMENT ---
   const [activeTab, setActiveTab] = useState('overview');
@@ -1386,10 +1372,14 @@ const Portfolio = () => {
               {chatHistory.map((msg, i) => (
                 <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[85%] rounded-2xl ${msg.role === 'user' ? 'bg-indigo-600 text-white' : isDark ? 'bg-slate-800 text-slate-300' : 'bg-slate-100 text-slate-700'}`}>
-                    {/* Message Text */}
-                    <div className="p-3 text-sm leading-relaxed whitespace-pre-wrap break-words">
-                      {msg.text}
-                    </div>
+                    {/* Message Text - Rendered as HTML for formatting */}
+                    <div 
+                      className="p-3 text-sm leading-relaxed break-words"
+                      style={{fontSize: '13px', lineHeight: '1.5'}}
+                      dangerouslySetInnerHTML={{
+                        __html: msg.role === 'model' ? formatChatResponse(msg.text) : msg.text.replace(/\n/g, '<br/>')
+                      }}
+                    />
                     {/* Model Attribution */}
                     {msg.model && (
                       <div className={`px-3 pb-2 text-xs font-mono opacity-70 flex items-center justify-between gap-2`}>
