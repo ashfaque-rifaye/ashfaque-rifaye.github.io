@@ -42,14 +42,21 @@ import {
 
 const Portfolio = () => {
   // --- CONFIGURATION ---
-  const gatewayUrl = import.meta.env.VITE_GATEWAY_URL || "https://ashfaque94-inference-gateway-4.hf.space";
+  // HuggingFace Spaces Endpoints with Bearer Token Authentication
+  const llmEndpoints = [
+    'https://ashfaque94-inference-gateway-4.hf.space',
+    'https://ashfaque94-inference-gateway-5.hf.space'
+  ];
   const gatewayApiKey = import.meta.env.VITE_GATEWAY_API_KEY || "";
   const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID || "G-XXXXXXXXXX";
 
   // Log configuration on load (for debugging)
   useEffect(() => {
-    console.log('[Config] Inference Gateway:', gatewayUrl);
-    console.log('[Config] Gateway API Key:', gatewayApiKey ? `✓ Set (${gatewayApiKey.substring(0, 6)}...)` : '✗ Missing');
+    console.log('[Config] LLM Endpoints:', llmEndpoints);
+    console.log('[Config] Gateway API Key:', gatewayApiKey ? `✓ Set (${gatewayApiKey.substring(0, 6)}...)` : '✗ Missing - Chat will fail');
+    if (!gatewayApiKey) {
+      console.error('[Config] ❌ GATEWAY_API_KEY not found in .env file!');
+    }
   }, []);
 
   // --- CODESANDBOX PROJECTS (Interactive Demos) ---
@@ -255,6 +262,14 @@ const Portfolio = () => {
   const handleChatSubmit = async (e) => {
     e.preventDefault();
     if (!chatInput.trim()) return;
+    
+    if (!gatewayApiKey) {
+      setChatHistory(prev => [...prev, { 
+        role: 'model', 
+        text: '❌ Configuration Error: GATEWAY_API_KEY not found in environment variables. Please check your .env file.' 
+      }]);
+      return;
+    }
 
     const userMessage = chatInput;
     setChatInput('');
@@ -262,69 +277,69 @@ const Portfolio = () => {
     setIsChatLoading(true);
     trackEvent('ai_assistant_query', { query_length: userMessage.length });
 
-    // Try HF Space 4 first, then fallback to Space 5
-    const gatewayEndpoints = [
-      gatewayUrl + '/v1/chat/completions',
-      'https://ashfaque94-inference-gateway-5.hf.space/v1/chat/completions'
-    ];
-
     let success = false;
     let lastError = null;
 
-    for (const endpoint of gatewayEndpoints) {
+    // Try each endpoint with the Bearer token
+    for (const endpoint of llmEndpoints) {
       try {
-        console.log(`[Chat] Trying: ${endpoint}`);
-        console.log(`[Chat] Using API key: ${gatewayApiKey ? gatewayApiKey.substring(0, 6) + '...' : 'MISSING'}`);
+        const url = `${endpoint}/v1/chat/completions`;
+        console.log(`[Chat] Trying endpoint: ${endpoint}`);
+        console.log(`[Chat] Auth: Bearer ${gatewayApiKey.substring(0, 10)}...`);
         
-        const response = await fetch(endpoint, {
+        // ✅ CORRECT: Only Authorization header with Bearer token
+        const headers = {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${gatewayApiKey}`
+        };
+        
+        const payload = {
+          model: 'google/gemini-2.0-flash',
+          messages: [
+            { role: 'system', content: RESUME_CONTEXT },
+            ...chatHistory.map(msg => ({
+              role: msg.role === 'model' ? 'assistant' : 'user',
+              content: msg.text
+            })),
+            { role: 'user', content: userMessage }
+          ],
+          temperature: 0.7,
+          max_tokens: 1024
+        };
+
+        const response = await fetch(url, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-API-Key': gatewayApiKey,
-            'Authorization': `Bearer ${gatewayApiKey}`
-          },
-          body: JSON.stringify({
-            model: 'google/gemini-2.0-flash',
-            messages: [
-              { role: 'system', content: RESUME_CONTEXT },
-              ...chatHistory.map(msg => ({
-                role: msg.role === 'model' ? 'assistant' : 'user',
-                content: msg.text
-              })),
-              { role: 'user', content: userMessage }
-            ],
-            temperature: 0.7,
-            max_tokens: 1024
-          })
+          headers,
+          body: JSON.stringify(payload)
         });
 
-        console.log(`[Chat] Response status: ${response.status}`);
+        console.log(`[Chat] Response Status: ${response.status} ${response.statusText}`);
 
         if (response.ok) {
           const data = await response.json();
           const aiResponse = data.choices?.[0]?.message?.content || "I couldn't generate a response. Please try again.";
-          console.log(`[Chat] ✓ Success from: ${endpoint}`);
+          console.log(`[Chat] ✅ SUCCESS - Response received from ${endpoint}`);
           setChatHistory(prev => [...prev, { role: 'model', text: aiResponse }]);
           success = true;
           break;
         } else {
-          const errorBody = await response.text();
-          console.error(`[Chat] Response body:`, errorBody);
-          throw new Error(`HTTP ${response.status}: ${errorBody || response.statusText}`);
+          const errorBody = await response.text().catch(() => 'No response body');
+          console.error(`[Chat] ❌ Status ${response.status}:`, errorBody);
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
 
       } catch (error) {
         lastError = error;
-        console.warn(`[Chat] ✗ Failed (${endpoint}): ${error.message}`);
+        console.warn(`[Chat] ❌ Endpoint failed (${endpoint}): ${error.message}`);
       }
     }
 
     if (!success) {
-      const errorMsg = lastError?.message || 'unknown error';
-      console.error(`[Chat] ✗ All endpoints failed. Last error: ${errorMsg}`);
+      const errorMsg = lastError?.message || 'All endpoints failed';
+      console.error(`[Chat] ❌ All endpoints exhausted. Final error: ${errorMsg}`);
       setChatHistory(prev => [...prev, { 
         role: 'model', 
-        text: `I'm having trouble connecting to the inference server (401 Unauthorized). This usually means the HuggingFace Space is set to Private. Please make the Space public or provide an HF access token.` 
+        text: `Connection Failed: ${errorMsg}. Please check browser console (F12) for detailed logs.` 
       }]);
     }
 
