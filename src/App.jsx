@@ -50,6 +50,15 @@ const Portfolio = () => {
   const gatewayApiKey = import.meta.env.VITE_GATEWAY_API_KEY || "";
   const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID || "G-XXXXXXXXXX";
 
+  // Log configuration on load (for debugging)
+  useEffect(() => {
+    console.log('[Config] Environment Variables:');
+    console.log('  VITE_GEMINI_API_KEY:', apiKey ? '✓ Set' : '✗ Missing');
+    console.log('  VITE_GATEWAY_URL:', gatewayUrl);
+    console.log('  VITE_GATEWAY_API_KEY:', gatewayApiKey ? '✓ Set' : '✗ Missing');
+    console.log('  VITE_GA_MEASUREMENT_ID:', GA_MEASUREMENT_ID);
+  }, []);
+
   // --- CODESANDBOX PROJECTS (Interactive Demos) ---
   // To add a CodeSandbox embed, provide the sandbox ID from the URL: https://codesandbox.io/s/[SANDBOX_ID]
   // Get the embed URL from: Share Button → Embed
@@ -260,18 +269,20 @@ const Portfolio = () => {
     setIsChatLoading(true);
     trackEvent('ai_assistant_query', { query_length: userMessage.length });
 
-    // Try primary gateway (Space 4), fallback to Space 5
-    const spaces = [
-      'https://ashfaque94-inference-gateway-4.hf.space',
-      'https://ashfaque94-inference-gateway-5.hf.space'
+    // Try gateway endpoints first (HF Spaces), then fall back to Gemini API
+    const gatewayEndpoints = [
+      gatewayUrl + '/v1/chat/completions',
+      'https://ashfaque94-inference-gateway-5.hf.space/v1/chat/completions'
     ];
+
     let success = false;
     let lastError = null;
+    let usedService = 'none';
 
-    for (const spaceUrl of spaces) {
+    // Try gateway endpoints
+    for (const endpoint of gatewayEndpoints) {
       try {
-        const endpoint = `${spaceUrl}/v1/chat/completions`;
-        console.log(`[Chat] Trying endpoint: ${endpoint}`);
+        console.log(`[Chat] Trying gateway endpoint: ${endpoint}`);
         
         const response = await fetch(endpoint, {
           method: 'POST',
@@ -294,30 +305,67 @@ const Portfolio = () => {
           })
         });
 
-        if (!response.ok) {
+        if (response.ok) {
+          const data = await response.json();
+          const aiResponse = data.choices?.[0]?.message?.content || "I couldn't generate a response. Please try again.";
+          console.log(`[Chat] ✓ Success from gateway: ${endpoint}`);
+          setChatHistory(prev => [...prev, { role: 'model', text: aiResponse }]);
+          usedService = 'gateway';
+          success = true;
+          break;
+        } else {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
 
-        const data = await response.json();
-        const aiResponse = data.choices?.[0]?.message?.content || "I couldn't generate a response. Please try again.";
-        
-        console.log(`[Chat] Success from ${spaceUrl}`);
-        setChatHistory(prev => [...prev, { role: 'model', text: aiResponse }]);
-        success = true;
-        break;
-
       } catch (error) {
         lastError = error;
-        console.error(`[Chat] Failed on ${spaceUrl}:`, error.message);
+        console.warn(`[Chat] ✗ Gateway failed (${endpoint}): ${error.message}`);
+      }
+    }
+
+    // Fallback to Gemini API if gateway failed
+    if (!success && apiKey) {
+      try {
+        console.log(`[Chat] Gateway failed, falling back to Gemini API...`);
+        
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [
+              ...chatHistory.map(msg => ({
+                role: msg.role === 'model' ? 'model' : 'user',
+                parts: [{ text: msg.text }]
+              })),
+              { role: 'user', parts: [{ text: userMessage }] }
+            ],
+            systemInstruction: { parts: [{ text: RESUME_CONTEXT }] }
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "I couldn't generate a response. Please try again.";
+          console.log(`[Chat] ✓ Success using Gemini API (fallback)`);
+          setChatHistory(prev => [...prev, { role: 'model', text: aiResponse }]);
+          usedService = 'gemini';
+          success = true;
+        } else {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+      } catch (error) {
+        console.error(`[Chat] ✗ Gemini API also failed:`, error.message);
+        lastError = error;
       }
     }
 
     if (!success) {
       const errorMsg = lastError?.message || 'unknown error';
-      console.error(`[Chat] All endpoints failed. Last error: ${errorMsg}`);
+      console.error(`[Chat] ✗ All endpoints failed. Last error: ${errorMsg}`);
       setChatHistory(prev => [...prev, { 
         role: 'model', 
-        text: `I'm having trouble connecting to the inference server. Error: ${errorMsg}. Please check the browser console for details.` 
+        text: `I'm having trouble connecting. Error: ${errorMsg}. Please check the browser console (F12) for details.` 
       }]);
     }
 
