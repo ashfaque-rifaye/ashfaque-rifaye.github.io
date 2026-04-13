@@ -87,53 +87,34 @@ const Portfolio = () => {
   ];
 
   const RESUME_CONTEXT = `
-  You are an AI assistant for Ashfaque Rifaye's professional portfolio. Answer questions about his background concisely and visually.
-  
-  ⚡ RESPONSE FORMAT (CRITICAL):
-  - Keep each response UNDER 400 characters
-  - Use bullet points with emojis: 🚀 💡 🎯 ⭐ 📊 🔧 🏆
-  - Format metrics as [METRIC: VALUE] (e.g., [Users: 1.5M+] [Savings: $4.2M])
-  - Group related points with section headers (use --- as separator)
-  - Use 2-3 emojis maximum per response
-  - Make points scannable and crisp
-  
-  📋 RESUME DATA:
-  Name: Ashfaque Rifaye | Role: AI Technical Business Solution Analyst (PM) | AT&T
-  Experience: 9 years | Location: Chennai, India | Specialization: Conversational AI, Product Ownership
-  
-  🎯 CURRENT ROLE (AT&T, Aug 2022-Present):
-  - GenAI Virtual Assistant leadership [1.5M+ monthly users] [55% containment] [$4.2M annual savings]
-  - RAG-powered CCAI system design | 350+ intents, 1,200+ training phrases
-  - B2B integration (APIs, CRM, Telephony) [32 sec handle time reduction]
-  
-  🔹 PREVIOUS ROLES:
-  Verizon (2020-2022): Digital transformation, $1.5M+ revenue impact, 94% on-time delivery
-  Infosys (2016-2020): Full-stack engineering, 99.2% uptime, Boeing maintenance solutions
-  
-  🏆 AWARDS & WINS:
-  2025: AT&T Innovation Jam "Best in Show" — AT&T Helios
-  2025: AT&T Hackathon 1st Place — Hyper-Personalization
-  2023: AT&T Connection Award | 2021: Verizon Spotlight Award
-  
-  🛠️ CORE SKILLS:
-  AI/ML: Conversational AI, RAG, LLMs, Dialogflow CX, CCAI | Agile: SAFe, Scrum, Product Ownership
-  Tech: Python, SQL, React, Power BI, REST APIs | Expertise: Telecom, CX automation, Omnichannel
-  
-  📜 CERTIFICATIONS:
-  SAFe 6 (LPM, Agilist, PM) | CSPO | Azure AI Fundamentals
-  
-  Response Style: Professional, concise, use formatting, emojis for visual interest. Always keep responses SHORT.
+You are Ashfaque Rifaye's AI assistant. Answer in EXACTLY 1-3 SHORT lines with emojis.
+
+RULES:
+- MAX 150 characters per response
+- Use ONLY: 🚀 💡 🎯 ⭐ 📊 $
+- Format metrics as [1.5M+] not sentences
+- NO long explanations - facts only
+- Template: EMOJI Point [metric] | EMOJI Point [metric]
+
+DATA SHORTCUTS:
+- AI/ML: RAG, CCAI, Dialogflow, 1.5M+ users, 55% containment, $4.2M saved
+- AT&T: Virtual Assistant PM, 9 years, GenAI expert, 350+ intents
+- Skills: Python, SQL, Power BI, React, SAFe, Product Ownership
+- Awards: AT&T Best in Show 2025, Hackathon 1st Place 2025
+- Certs: SAFe 6, Azure AI, CSPO
+
+EXAMPLE ANSWER:
+🚀 GenAI Virtual Assistant [1.5M+ monthly] | 💡 RAG-powered CCAI system | 📊 $4.2M annual savings
+
+DO NOT explain. DO NOT elaborate. FACTS ONLY.
   `;
 
-  // Response formatter for better visual display
-  const formatChatResponse = (text) => {
-    return text
-      // Format metric badges
-      .replace(/\[([^\]]+)\]/g, '<span style="background: rgba(99, 102, 241, 0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.85em; margin: 0 2px;">[$1]</span>')
-      // Format section headers (lines ending with :)
-      .replace(/^([^\n]*):$/gm, '<strong style="color: #818cf8;">$1:</strong>')
-      // Format emoji bullets
-      .replace(/^([\s]*)(🚀|💡|🎯|⭐|📊|🔧|🏆|🎪|💼|🔹)(.+)$/gm, '<div style="margin: 4px 0;">$2 $3</div>');
+  // Truncate and format response
+  const truncateResponse = (text, maxChars = 200) => {
+    if (text.length > maxChars) {
+      return text.substring(0, maxChars).trim() + '...';
+    }
+    return text;
   };
 
   // --- STATE MANAGEMENT ---
@@ -155,10 +136,10 @@ const Portfolio = () => {
   const chatEndRef = useRef(null);
 
   const suggestedQuestions = [
-    "What's his experience with AI/ML?",
-    "Tell me about AT&T projects",
-    "What are his hackathon wins?",
-    "Explain his SAFe certifications"
+    "AI/ML experience?",
+    "AT&T projects?",
+    "Hackathon wins?",
+    "Key certifications?"
   ];
 
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -313,11 +294,14 @@ const Portfolio = () => {
           const data = await response.json();
           const aiResponse = data.choices?.[0]?.message?.content || "I couldn't generate a response. Please try again.";
           
+          // Truncate response to 200 chars max
+          const truncatedResponse = truncateResponse(aiResponse, 200);
+          
           // Extract model info from response or use provider info
           const model = data.model || data.provider || 'Unknown Model';
           
           console.log(`[Chat] ✅ SUCCESS - Response received from ${endpoint}`);
-          setChatHistory(prev => [...prev, { role: 'model', text: aiResponse, model: model }]);
+          setChatHistory(prev => [...prev, { role: 'model', text: truncatedResponse, model: model }]);
           success = true;
           break;
         } else {
@@ -1372,14 +1356,13 @@ const Portfolio = () => {
               {chatHistory.map((msg, i) => (
                 <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[85%] rounded-2xl ${msg.role === 'user' ? 'bg-indigo-600 text-white' : isDark ? 'bg-slate-800 text-slate-300' : 'bg-slate-100 text-slate-700'}`}>
-                    {/* Message Text - Rendered as HTML for formatting */}
+                    {/* Message Text - Simple render with line breaks */}
                     <div 
-                      className="p-3 text-sm leading-relaxed break-words"
-                      style={{fontSize: '13px', lineHeight: '1.5'}}
-                      dangerouslySetInnerHTML={{
-                        __html: msg.role === 'model' ? formatChatResponse(msg.text) : msg.text.replace(/\n/g, '<br/>')
-                      }}
-                    />
+                      className="p-3 text-sm leading-relaxed break-words whitespace-pre-line"
+                      style={{fontSize: '13px', lineHeight: '1.6'}}
+                    >
+                      {msg.text}
+                    </div>
                     {/* Model Attribution */}
                     {msg.model && (
                       <div className={`px-3 pb-2 text-xs font-mono opacity-70 flex items-center justify-between gap-2`}>
