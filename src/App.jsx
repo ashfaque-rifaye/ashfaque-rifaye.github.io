@@ -46,6 +46,8 @@ const Portfolio = () => {
   // Get your Gemini API key here: https://aistudio.google.com/app/apikey
   // Get your Google Analytics Measurement ID from: Analytics Admin > Data Streams
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY || "";
+  const gatewayUrl = import.meta.env.VITE_GATEWAY_URL || "https://ashfaque94-inference-gateway-4.hf.space";
+  const gatewayApiKey = import.meta.env.VITE_GATEWAY_API_KEY || "";
   const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID || "G-XXXXXXXXXX";
 
   const RESUME_CONTEXT = `
@@ -121,6 +123,7 @@ const Portfolio = () => {
   const [showDownloadOptions, setShowDownloadOptions] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
+  const [isChatWidgetOpen, setIsChatWidgetOpen] = useState(false);
   const [chatInput, setChatInput] = useState('');
   const [chatHistory, setChatHistory] = useState([
     { role: 'model', text: "Hi! I'm Ashfaque's AI Twin. Ask me anything about his experience, skills, or projects! ✨" }
@@ -231,28 +234,32 @@ const Portfolio = () => {
     trackEvent('ai_assistant_query', { query_length: userMessage.length });
 
     try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+      const response = await fetch(`${gatewayUrl}/v1/chat/completions`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${gatewayApiKey}`
+        },
         body: JSON.stringify({
-          contents: [
+          model: 'google/gemini-2.0-flash',
+          messages: [
+            { role: 'system', content: RESUME_CONTEXT },
             ...chatHistory.map(msg => ({
-              role: msg.role === 'model' ? 'model' : 'user',
-              parts: [{ text: msg.text }]
+              role: msg.role === 'model' ? 'assistant' : 'user',
+              content: msg.text
             })),
-            { role: 'user', parts: [{ text: userMessage }] }
-          ],
-          systemInstruction: { parts: [{ text: RESUME_CONTEXT }] }
+            { role: 'user', content: userMessage }
+          ]
         })
       });
 
       if (!response.ok) throw new Error('API Error');
       const data = await response.json();
-      const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm having trouble connecting right now.";
+      const aiResponse = data.choices?.[0]?.message?.content || "I'm having trouble connecting right now.";
       setChatHistory(prev => [...prev, { role: 'model', text: aiResponse }]);
 
     } catch (error) {
-      setChatHistory(prev => [...prev, { role: 'model', text: "Sorry, I encountered a connection error. Please make sure the API Key is configured in the code." }]);
+      setChatHistory(prev => [...prev, { role: 'model', text: "Sorry, I encountered a connection error. Please try again later." }]);
     } finally {
       setIsChatLoading(false);
     }
@@ -313,7 +320,7 @@ const Portfolio = () => {
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center space-x-3">
               <nav className={`flex items-center space-x-1 p-1 rounded-full border ${isDark ? 'bg-slate-900/50 border-white/5' : 'bg-slate-100 border-slate-200'}`}>
-                {['overview', 'experience', 'works', 'awards', 'AI Assistant', 'contact'].map((tab) => (
+                {['overview', 'experience', 'works', 'awards', 'contact'].map((tab) => (
                   <button
                     key={tab}
                     onClick={() => handleTabChange(tab)}
@@ -322,7 +329,6 @@ const Portfolio = () => {
                       : `${subTextClass} hover:${headingClass} hover:bg-black/5 dark:hover:bg-white/5`
                       }`}
                   >
-                    {tab === 'AI Assistant' && <Sparkles size={12} className={activeTab === tab ? "text-yellow-300" : "text-indigo-400"} />}
                     {tab === 'awards' ? 'Awards' : tab.charAt(0).toUpperCase() + tab.slice(1)}
                   </button>
                 ))}
@@ -331,13 +337,14 @@ const Portfolio = () => {
               {/* Color Mode Dropdown */}
               <div className="relative group">
                 <button
-                  className={`p-2 rounded-full border transition-all flex items-center gap-1.5 ${isDark ? 'bg-slate-800 border-white/10 hover:bg-slate-700' : 'bg-white border-slate-200 hover:bg-slate-100'}`}
+                  className={`p-1.5 rounded-full border transition-all flex items-center ${isDark ? 'bg-slate-800 border-white/10 hover:bg-slate-700' : 'bg-white border-slate-200 hover:bg-slate-100'}`}
                   aria-label="Select Color Mode"
+                  title={colorMode === 'dark' ? 'Dark' : colorMode === 'light' ? 'Light' : colorMode === 'high-contrast' ? 'High Contrast' : 'Warm'}
                 >
-                  {colorMode === 'dark' && <Moon size={18} className="text-indigo-400" />}
-                  {colorMode === 'light' && <Sun size={18} className="text-amber-500" />}
-                  {colorMode === 'high-contrast' && <span className="text-sm font-bold text-yellow-400">HC</span>}
-                  {colorMode === 'warm' && <span className="text-base leading-none">🔥</span>}
+                  {colorMode === 'dark' && <Moon size={14} className="text-indigo-400" />}
+                  {colorMode === 'light' && <Sun size={14} className="text-amber-500" />}
+                  {colorMode === 'high-contrast' && <span className="text-xs font-bold text-yellow-400">HC</span>}
+                  {colorMode === 'warm' && <span className="text-sm leading-none">🔥</span>}
                 </button>
                 <div className={`absolute right-0 top-full mt-2 w-52 rounded-2xl shadow-2xl border overflow-hidden z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ${isDark ? 'bg-slate-900 border-white/10' : 'bg-white border-slate-200'}`}>
                   <div className={`px-3 py-2 text-[10px] font-mono uppercase tracking-widest ${subTextClass}`}>Display Mode</div>
@@ -395,14 +402,13 @@ const Portfolio = () => {
           {isMenuOpen && (
             <div className={`md:hidden absolute left-0 right-0 top-full p-4 border-b shadow-xl backdrop-blur-xl animate-in slide-in-from-top-2 z-40 ${isDark ? 'bg-slate-950/95 border-white/10' : 'bg-white/95 border-slate-200'}`}>
               <nav className="flex flex-col space-y-1">
-                {['overview', 'experience', 'works', 'awards', 'AI Assistant', 'contact'].map((tab) => (
+                {['overview', 'experience', 'works', 'awards', 'contact'].map((tab) => (
                   <button
                     key={tab}
                     onClick={() => handleTabChange(tab)}
                     className={`w-full text-left px-4 py-3 rounded-xl transition-colors flex items-center gap-3 font-medium ${activeTab === tab ? 'bg-indigo-600 text-white' : `${textClass} hover:bg-white/5`
                       }`}
                   >
-                    {tab === 'AI Assistant' && <Sparkles size={16} />}
                     {tab === 'awards' ? 'Awards & Testimonials' : tab.charAt(0).toUpperCase() + tab.slice(1)}
                     {activeTab === tab && <ChevronRight size={16} className="ml-auto" />}
                   </button>
@@ -659,7 +665,7 @@ const Portfolio = () => {
               <div className={`md:col-span-4 ${cardBgClass} rounded-3xl p-6 md:p-8 border`}>
                 <div className="flex items-center gap-3 mb-6">
                   <ShieldCheck className="text-emerald-500" size={24} />
-                  <h3 className={`text-lg font-bold ${headingClass}`}>Professional Credentials</h3>
+                  <h3 className={`text-lg font-bold ${headingClass}`}>Professional Certifications</h3>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
@@ -1171,27 +1177,6 @@ const Portfolio = () => {
           )}
 
           {/* --- AI & CONTACT (Simplified for brevity in switch) --- */}
-          {activeTab === 'AI Assistant' && (
-            <div className="h-[600px] flex flex-col md:flex-row gap-6 animate-in fade-in py-4">
-              {/* Re-use chat component logic from previous code, simplified view here */}
-              <div className={`flex-1 ${cardBgClass} rounded-3xl border flex flex-col overflow-hidden`}>
-                <div className="p-4 border-b border-white/5"><h3 className={`font-bold ${headingClass}`}>Ashfaque's AI Twin</h3></div>
-                <div className="flex-1 p-4 overflow-y-auto space-y-4">
-                  {chatHistory.map((msg, i) => (
-                    <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                      <div className={`p-3 rounded-2xl max-w-[80%] ${msg.role === 'user' ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-slate-300'}`}>{msg.text}</div>
-                    </div>
-                  ))}
-                  {isChatLoading && <div className="text-xs text-slate-500">Thinking...</div>}
-                  <div ref={chatEndRef}></div>
-                </div>
-                <form onSubmit={handleChatSubmit} className="p-4 border-t border-white/5 flex gap-2">
-                  <input className={`flex-1 bg-transparent border rounded-lg p-2 ${isDark ? 'border-slate-700 text-white' : 'border-slate-200 text-black'}`} value={chatInput} onChange={e => setChatInput(e.target.value)} placeholder="Ask about my resume..." />
-                  <button type="submit" className="p-2 bg-indigo-600 rounded-lg text-white"><Send size={20} /></button>
-                </form>
-              </div>
-            </div>
-          )}
 
           {activeTab === 'contact' && (
             <div className="max-w-2xl mx-auto py-8 animate-in fade-in">
@@ -1221,6 +1206,56 @@ const Portfolio = () => {
         </footer>
 
       </div>
+
+      {/* --- FLOATING AI CHAT WIDGET --- */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+        {isChatWidgetOpen && (
+          <div className={`w-80 md:w-96 rounded-3xl shadow-2xl border flex flex-col overflow-hidden ${isDark ? 'bg-slate-900 border-white/10' : 'bg-white border-slate-200'}`} style={{maxHeight: '480px'}}>
+            <div className={`p-4 border-b flex justify-between items-center ${isDark ? 'border-white/5' : 'border-slate-100'}`}>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center">
+                  <Bot size={16} className="text-white" />
+                </div>
+                <div>
+                  <h3 className={`text-sm font-bold ${headingClass}`}>Ashfaque's AI Twin</h3>
+                  <p className={`text-xs ${subTextClass}`}>Ask about my experience</p>
+                </div>
+              </div>
+              <button onClick={() => setIsChatWidgetOpen(false)} className={`p-1 rounded-lg transition-colors hover:bg-white/10 ${subTextClass}`}>
+                <X size={16} />
+              </button>
+            </div>
+            <div className="overflow-y-auto p-4 space-y-3" style={{minHeight: '200px', maxHeight: '300px'}}>
+              {chatHistory.map((msg, i) => (
+                <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`p-3 rounded-2xl text-sm max-w-[85%] ${msg.role === 'user' ? 'bg-indigo-600 text-white' : isDark ? 'bg-slate-800 text-slate-300' : 'bg-slate-100 text-slate-700'}`}>{msg.text}</div>
+                </div>
+              ))}
+              {isChatLoading && <div className={`text-xs ${subTextClass}`}>Thinking...</div>}
+              <div ref={chatEndRef}></div>
+            </div>
+            <form onSubmit={handleChatSubmit} className={`p-3 border-t flex gap-2 ${isDark ? 'border-white/5' : 'border-slate-100'}`}>
+              <input
+                className={`flex-1 bg-transparent border rounded-xl p-2 text-sm ${isDark ? 'border-slate-700 text-white placeholder:text-slate-500' : 'border-slate-200 text-black placeholder:text-slate-400'}`}
+                value={chatInput}
+                onChange={e => setChatInput(e.target.value)}
+                placeholder="Ask about my resume..."
+              />
+              <button type="submit" className="p-2 bg-indigo-600 rounded-xl text-white hover:bg-indigo-700 transition-colors">
+                <Send size={16} />
+              </button>
+            </form>
+          </div>
+        )}
+        <button
+          onClick={() => setIsChatWidgetOpen(prev => !prev)}
+          className={`w-14 h-14 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white shadow-2xl flex items-center justify-center transition-all duration-300 ${isChatWidgetOpen ? 'rotate-90' : ''}`}
+          aria-label="Chat with Ashfaque's AI Twin"
+        >
+          {isChatWidgetOpen ? <X size={22} /> : <Bot size={22} />}
+        </button>
+      </div>
+
     </div>
   );
 };
