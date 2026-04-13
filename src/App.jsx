@@ -34,10 +34,7 @@ import {
   ShieldCheck,
   MapPin,
   ScrollText,
-  Trophy,
-  Palette,
-  Code2,
-  Wrench
+  Trophy
 } from 'lucide-react';
 
 const Portfolio = () => {
@@ -114,7 +111,7 @@ const Portfolio = () => {
 
   // --- STATE MANAGEMENT ---
   const [activeTab, setActiveTab] = useState('overview');
-  const [colorMode, setColorMode] = useState('dark'); // 'dark', 'light', 'high-contrast', 'warm'
+  const [isDark, setIsDark] = useState(true);
   const [typedText, setTypedText] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showDownloadOptions, setShowDownloadOptions] = useState(false);
@@ -186,9 +183,9 @@ const Portfolio = () => {
   }, [activeTab]);
 
   // --- HANDLERS ---
-  const handleColorModeChange = (newMode) => {
-    setColorMode(newMode);
-    trackEvent('toggle_theme', { mode: newMode });
+  const handleThemeToggle = () => {
+    setIsDark(!isDark);
+    trackEvent('toggle_theme', { mode: !isDark ? 'dark' : 'light' });
   };
 
   const handleTabChange = (tab) => {
@@ -257,81 +254,15 @@ const Portfolio = () => {
     }
   };
 
-  // --- THEME CLASSES BASED ON COLOR MODE ---
-  const getColorTheme = () => {
-    const themes = {
-      dark: {
-        isDark: true,
-        bg: 'bg-slate-950',
-        text: 'text-slate-200',
-        cardBg: 'bg-slate-900/50 backdrop-blur-sm border-white/5',
-        heading: 'text-white',
-        subText: 'text-slate-400',
-        accent: 'text-indigo-400',
-        accentBg: 'bg-indigo-500/10',
-        accentBorder: 'border-indigo-500/20',
-        hoverBg: 'hover:bg-white/5',
-        headerBg: 'bg-slate-950/80 border-white/5',
-        navBg: 'bg-slate-900/50 border-white/5',
-        navText: 'text-slate-200',
-      },
-      light: {
-        isDark: false,
-        bg: 'bg-slate-50',
-        text: 'text-slate-800',
-        cardBg: 'bg-white/70 backdrop-blur-sm border-slate-200 shadow-sm',
-        heading: 'text-slate-900',
-        subText: 'text-slate-600',
-        accent: 'text-indigo-600',
-        accentBg: 'bg-indigo-50',
-        accentBorder: 'border-indigo-200',
-        hoverBg: 'hover:bg-black/5',
-        headerBg: 'bg-white/80 border-slate-200',
-        navBg: 'bg-slate-100 border-slate-200',
-        navText: 'text-slate-800',
-      },
-      'high-contrast': {
-        isDark: true,
-        bg: 'bg-black',
-        text: 'text-white',
-        cardBg: 'bg-gray-900 backdrop-blur-sm border-gray-700',
-        heading: 'text-white',
-        subText: 'text-gray-300',
-        accent: 'text-yellow-300',
-        accentBg: 'bg-yellow-900/30',
-        accentBorder: 'border-yellow-500',
-        hoverBg: 'hover:bg-gray-700',
-        headerBg: 'bg-black/95 border-gray-700',
-        navBg: 'bg-gray-900 border-gray-700',
-        navText: 'text-white',
-      },
-      warm: {
-        isDark: true,
-        bg: 'bg-amber-50',
-        text: 'text-amber-900',
-        cardBg: 'bg-white/80 backdrop-blur-sm border-amber-200 shadow-sm',
-        heading: 'text-amber-900',
-        subText: 'text-amber-700',
-        accent: 'text-amber-600',
-        accentBg: 'bg-amber-100',
-        accentBorder: 'border-amber-300',
-        hoverBg: 'hover:bg-amber-100/5',
-        headerBg: 'bg-white/80 border-amber-200',
-        navBg: 'bg-amber-100 border-amber-200',
-        navText: 'text-amber-900',
-      }
-    };
-    return themes[colorMode];
-  };
-
-  const theme = getColorTheme();
-  const { isDark } = theme;
-  const bgClass = theme.bg;
-  const textClass = theme.text;
-  const cardBgClass = theme.cardBg;
-  const headingClass = theme.heading;
-  const subTextClass = theme.subText;
-  const accentTextClass = theme.accent;
+  // --- THEME CLASSES ---
+  const bgClass = isDark ? 'bg-slate-950' : 'bg-slate-50';
+  const textClass = isDark ? 'text-slate-200' : 'text-slate-800';
+  const cardBgClass = isDark
+    ? 'bg-slate-900/50 backdrop-blur-sm border-white/5'
+    : 'bg-white/70 backdrop-blur-sm border-slate-200 shadow-sm';
+  const headingClass = isDark ? 'text-white' : 'text-slate-900';
+  const subTextClass = isDark ? 'text-slate-400' : 'text-slate-600';
+  const accentTextClass = isDark ? 'text-indigo-400' : 'text-indigo-600';
 
   // --- SKILL ICONS ---
   const skills = [
@@ -357,12 +288,12 @@ const Portfolio = () => {
       <div className="relative z-10 flex flex-col min-h-screen">
 
         {/* --- STICKY HEADER --- */}
-        <header className={`sticky top-0 z-50 backdrop-blur-xl border-b ${theme.headerBg} transition-colors duration-300`}>
+        <header className={`sticky top-0 z-50 backdrop-blur-xl border-b ${isDark ? 'bg-slate-950/80 border-white/5' : 'bg-white/80 border-slate-200'} transition-colors duration-300`}>
           <div className="max-w-6xl mx-auto px-4 md:px-8 h-16 md:h-20 flex justify-between items-center">
 
             {/* Logo */}
             <div className="flex items-center space-x-3 cursor-pointer group" onClick={() => handleTabChange('overview')}>
-              <div className={`p-2 rounded-xl border transition-colors ${theme.accentBg} ${theme.accentBorder} group-hover:opacity-80`}>
+              <div className={`p-2 rounded-xl border transition-colors ${isDark ? 'border-indigo-500/30 bg-indigo-500/10 group-hover:bg-indigo-500/20' : 'border-indigo-200 bg-indigo-50 group-hover:bg-indigo-100'}`}>
                 <Terminal size={22} className={accentTextClass} />
               </div>
               <div className="flex flex-col">
@@ -373,74 +304,39 @@ const Portfolio = () => {
 
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center space-x-3">
-              <nav className={`flex items-center space-x-1 p-1 rounded-full border ${theme.navBg}`}>
-                {['overview', 'experience', 'works', 'ai-stack', 'awards', 'AI Assistant', 'contact'].map((tab) => (
+              <nav className={`flex items-center space-x-1 p-1 rounded-full border ${isDark ? 'bg-slate-900/50 border-white/5' : 'bg-slate-100 border-slate-200'}`}>
+                {['overview', 'experience', 'works', 'awards', 'AI Assistant', 'contact'].map((tab) => (
                   <button
                     key={tab}
                     onClick={() => handleTabChange(tab)}
                     className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 flex items-center gap-2 ${activeTab === tab
                       ? 'bg-indigo-600 text-white shadow-md'
-                      : `${subTextClass} hover:${headingClass} ${theme.hoverBg}`
+                      : `${subTextClass} hover:${headingClass} hover:bg-black/5 dark:hover:bg-white/5`
                       }`}
                   >
                     {tab === 'AI Assistant' && <Sparkles size={12} className={activeTab === tab ? "text-yellow-300" : "text-indigo-400"} />}
-                    {tab === 'ai-stack' && <Wrench size={12} />}
-                    {tab === 'awards' ? 'Awards' : tab.charAt(0).toUpperCase() + tab.slice(1).replace('-', ' ')}
+                    {tab === 'awards' ? 'Awards' : tab.charAt(0).toUpperCase() + tab.slice(1)}
                   </button>
                 ))}
               </nav>
 
-              {/* Color Mode Selector */}
-              <div className="relative group">
-                <button
-                  className={`p-2 rounded-full border transition-all flex items-center gap-2 ${theme.headerBg.split(' ')[0]} hover:opacity-80`}
-                  aria-label="Select Color Mode"
-                >
-                  <Palette size={18} className={theme.accent} />
-                </button>
-                <div className={`absolute right-0 mt-2 w-48 rounded-xl shadow-xl border overflow-hidden z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all ${theme.cardBg}`}>
-                  {[
-                    { id: 'dark', label: '🌙 Dark', desc: 'Deep slate' },
-                    { id: 'light', label: '☀️ Light', desc: 'Clean white' },
-                    { id: 'high-contrast', label: '⚫ High Contrast', desc: 'WCAG AAA' },
-                    { id: 'warm', label: '🔥 Warm', desc: 'Sepia tone' }
-                  ].map(mode => (
-                    <button
-                      key={mode.id}
-                      onClick={() => handleColorModeChange(mode.id)}
-                      className={`w-full text-left px-4 py-3 transition-colors flex items-center justify-between ${colorMode === mode.id ? 'bg-indigo-600 text-white' : `${textClass} hover:bg-indigo-500/10`}`}
-                    >
-                      <span className="text-sm font-medium">{mode.label}</span>
-                      {colorMode === mode.id && <CheckCircle size={16} />}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <button
+                onClick={handleThemeToggle}
+                className={`p-2 rounded-full border transition-all ${isDark ? 'bg-slate-800 border-white/10 hover:bg-slate-700' : 'bg-white border-slate-200 hover:bg-slate-100'}`}
+                aria-label="Toggle Theme"
+              >
+                {isDark ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} className="text-slate-600" />}
+              </button>
             </div>
 
             {/* Mobile Actions */}
             <div className="flex md:hidden items-center space-x-3">
-              <div className="relative group">
-                <button className={`p-2 rounded-full border transition-all ${theme.headerBg.split(' ')[0]} hover:opacity-80`}>
-                  <Palette size={18} className={theme.accent} />
-                </button>
-                <div className={`absolute right-0 mt-2 w-40 rounded-xl shadow-xl border overflow-hidden z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all ${theme.cardBg}`}>
-                  {[
-                    { id: 'dark', label: '🌙 Dark' },
-                    { id: 'light', label: '☀️ Light' },
-                    { id: 'high-contrast', label: '⚫ HC' },
-                    { id: 'warm', label: '🔥 Warm' }
-                  ].map(mode => (
-                    <button
-                      key={mode.id}
-                      onClick={() => handleColorModeChange(mode.id)}
-                      className={`w-full text-left px-3 py-2 transition-colors text-sm font-medium ${colorMode === mode.id ? 'bg-indigo-600 text-white' : `${textClass} hover:bg-indigo-500/10`}`}
-                    >
-                      {mode.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <button
+                onClick={handleThemeToggle}
+                className={`p-2 rounded-full border transition-all ${isDark ? 'bg-slate-800 border-white/10' : 'bg-white border-slate-200'}`}
+              >
+                {isDark ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} className="text-slate-600" />}
+              </button>
               <button onClick={() => setIsMenuOpen(!isMenuOpen)} className={`p-2 rounded-lg ${headingClass} hover:bg-white/10`}>
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -449,9 +345,9 @@ const Portfolio = () => {
 
           {/* Mobile Menu Dropdown */}
           {isMenuOpen && (
-            <div className={`md:hidden absolute left-0 right-0 top-full p-4 border-b shadow-xl backdrop-blur-xl animate-in slide-in-from-top-2 z-40 ${theme.headerBg}`}>
+            <div className={`md:hidden absolute left-0 right-0 top-full p-4 border-b shadow-xl backdrop-blur-xl animate-in slide-in-from-top-2 z-40 ${isDark ? 'bg-slate-950/95 border-white/10' : 'bg-white/95 border-slate-200'}`}>
               <nav className="flex flex-col space-y-1">
-                {['overview', 'experience', 'works', 'ai-stack', 'awards', 'AI Assistant', 'contact'].map((tab) => (
+                {['overview', 'experience', 'works', 'awards', 'AI Assistant', 'contact'].map((tab) => (
                   <button
                     key={tab}
                     onClick={() => handleTabChange(tab)}
@@ -459,8 +355,7 @@ const Portfolio = () => {
                       }`}
                   >
                     {tab === 'AI Assistant' && <Sparkles size={16} />}
-                    {tab === 'ai-stack' && <Wrench size={16} />}
-                    {tab === 'awards' ? 'Awards & Testimonials' : tab.charAt(0).toUpperCase() + tab.slice(1).replace('-', ' ')}
+                    {tab === 'awards' ? 'Awards & Testimonials' : tab.charAt(0).toUpperCase() + tab.slice(1)}
                     {activeTab === tab && <ChevronRight size={16} className="ml-auto" />}
                   </button>
                 ))}
@@ -981,150 +876,11 @@ const Portfolio = () => {
                   </div>
                 </div>
               </div>
-
-              {/* AI Projects from GitHub */}
-              <div>
-                <h3 className={`text-lg font-bold ${headingClass} mb-4 flex items-center gap-2`}><Code2 size={20} className="text-purple-500" /> AI Projects & Experiments (GitHub)</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-purple-900/10 to-slate-900 border-white/5' : 'bg-white border-slate-200'}`}>
-                    <Brain className="text-purple-400 mb-4" size={32} />
-                    <h3 className={`text-xl font-bold ${headingClass} mb-2`}>RAG-Powered QA System</h3>
-                    <p className={`text-sm ${subTextClass} mb-4`}>Implemented retrieval-augmented generation pipeline combining LLMs with vector embeddings. Enables fast, accurate question answering over large document collections with context awareness.</p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="text-[10px] px-2 py-1 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20">LangChain</span>
-                      <span className="text-[10px] px-2 py-1 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20">Embeddings</span>
-                      <span className="text-[10px] px-2 py-1 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20">Claude</span>
-                    </div>
-                  </div>
-                  <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-pink-900/10 to-slate-900 border-white/5' : 'bg-white border-slate-200'}`}>
-                    <MessageSquare className="text-pink-400 mb-4" size={32} />
-                    <h3 className={`text-xl font-bold ${headingClass} mb-2`}>Multi-Turn Chatbot Framework</h3>
-                    <p className={`text-sm ${subTextClass} mb-4`}>Built flexible conversational AI framework with context management, intent routing, and dynamic response generation. Supports multiple LLM backends with fallback mechanisms for resilience.</p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="text-[10px] px-2 py-1 rounded bg-pink-500/10 text-pink-400 border border-pink-500/20">NLP</span>
-                      <span className="text-[10px] px-2 py-1 rounded bg-pink-500/10 text-pink-400 border border-pink-500/20">Dialogue</span>
-                      <span className="text-[10px] px-2 py-1 rounded bg-pink-500/10 text-pink-400 border border-pink-500/20">Gemini</span>
-                    </div>
-                  </div>
-                  <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-orange-900/10 to-slate-900 border-white/5' : 'bg-white border-slate-200'}`}>
-                    <BarChart2 className="text-orange-400 mb-4" size={32} />
-                    <h3 className={`text-xl font-bold ${headingClass} mb-2`}>Data Analytics & Insights Pipeline</h3>
-                    <p className={`text-sm ${subTextClass} mb-4`}>End-to-end analytics platform ingesting multi-source data, transforming with SQL/Python, and visualizing insights via interactive dashboards. Tracks KPIs for model performance and business impact.</p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="text-[10px] px-2 py-1 rounded bg-orange-500/10 text-orange-400 border border-orange-500/20">SQL</span>
-                      <span className="text-[10px] px-2 py-1 rounded bg-orange-500/10 text-orange-400 border border-orange-500/20">Python</span>
-                      <span className="text-[10px] px-2 py-1 rounded bg-orange-500/10 text-orange-400 border border-orange-500/20">Visualization</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* --- AI STACK PAGE --- */}
-          {activeTab === 'ai-stack' && (
-            <div className="animate-in fade-in zoom-in duration-300 py-4">
-              <div className="mb-8">
-                <h2 className={`text-3xl font-bold ${headingClass}`}>AI Tech Stack & Tools</h2>
-                <p className={`${subTextClass} mt-2`}>Complete inventory of AI platforms, models, and tools I actively work with.</p>
-              </div>
-
-              {/* AI Platforms & Tools */}
-              <div className="mb-12">
-                <h3 className={`text-2xl font-bold ${headingClass} mb-6 flex items-center gap-2`}><Wrench size={24} className="text-blue-500" /> AI Platforms & Tools</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {[
-                    { name: 'Lovable', desc: 'UI & Component Generation', icon: '🎨' },
-                    { name: 'GitHub Copilot', desc: 'Code Assistance & Pair Programming', icon: '⚙️' },
-                    { name: 'Emergent', desc: 'Research & Brainstorming', icon: '🧠' },
-                    { name: 'Gemma', desc: 'Model Inference & Fine-tuning', icon: '🤖' },
-                    { name: 'Microsoft Copilot', desc: 'Multi-Modal Assistant', icon: '🔮' },
-                    { name: 'Perplexity AI', desc: 'Knowledge & Web Research', icon: '🔍' },
-                    { name: 'MixPanel', desc: 'User Analytics & Behavior Tracking', icon: '📊' },
-                    { name: 'Hugging Face', desc: 'Open Source Models & Datasets', icon: '🤗' }
-                  ].map((tool, idx) => (
-                    <div key={idx} className={`rounded-2xl p-6 border transition-all hover:scale-105 ${isDark ? 'bg-blue-900/10 border-blue-500/20 hover:bg-blue-900/20' : 'bg-blue-50 border-blue-200 hover:shadow-lg'}`}>
-                      <div className="text-3xl mb-2">{tool.icon}</div>
-                      <h4 className={`font-bold ${headingClass} mb-1`}>{tool.name}</h4>
-                      <p className={`text-sm ${subTextClass}`}>{tool.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* AI Models & LLMs */}
-              <div>
-                <h3 className={`text-2xl font-bold ${headingClass} mb-6 flex items-center gap-2`}><Brain size={24} className="text-indigo-500" /> AI Models & LLMs</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  
-                  {/* Claude */}
-                  <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-slate-800 to-slate-900 border-white/5' : 'bg-white border-slate-200'}`}>
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-12 h-12 rounded-full bg-black flex items-center justify-center text-white font-bold text-lg">C</div>
-                      <h4 className={`text-xl font-bold ${headingClass}`}>Claude (Anthropic)</h4>
-                    </div>
-                    <p className={`text-sm ${subTextClass} mb-4`}>Advanced reasoning and long-context understanding for complex tasks.</p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="text-[10px] px-3 py-1 rounded-full bg-slate-700 text-slate-200 border border-slate-600">Opus</span>
-                      <span className="text-[10px] px-3 py-1 rounded-full bg-slate-700 text-slate-200 border border-slate-600">Sonnet</span>
-                      <span className="text-[10px] px-3 py-1 rounded-full bg-slate-700 text-slate-200 border border-slate-600">Haiku</span>
-                    </div>
-                  </div>
-
-                  {/* ChatGPT / OpenAI */}
-                  <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-green-900/10 to-slate-900 border-green-500/20' : 'bg-green-50 border-green-200'}`}>
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center text-white font-bold text-lg">G</div>
-                      <h4 className={`text-xl font-bold ${headingClass}`}>ChatGPT / OpenAI</h4>
-                    </div>
-                    <p className={`text-sm ${subTextClass} mb-4`}>Versatile models for conversation, coding, and content generation.</p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className={`text-[10px] px-3 py-1 rounded-full ${isDark ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-green-100 text-green-700 border border-green-300'}`}>GPT-3.5</span>
-                      <span className={`text-[10px] px-3 py-1 rounded-full ${isDark ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-green-100 text-green-700 border border-green-300'}`}>GPT-4</span>
-                      <span className={`text-[10px] px-3 py-1 rounded-full ${isDark ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-green-100 text-green-700 border border-green-300'}`}>GPT-4o</span>
-                      <span className={`text-[10px] px-3 py-1 rounded-full ${isDark ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-green-100 text-green-700 border border-green-300'}`}>o1</span>
-                      <span className={`text-[10px] px-3 py-1 rounded-full ${isDark ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-green-100 text-green-700 border border-green-300'}`}>O1-pro</span>
-                      <span className={`text-[10px] px-3 py-1 rounded-full font-semibold ${isDark ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/40' : 'bg-yellow-100 text-yellow-700 border border-yellow-300'}`}>GPT-5 ✨</span>
-                      <span className={`text-[10px] px-3 py-1 rounded-full font-semibold ${isDark ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/40' : 'bg-yellow-100 text-yellow-700 border border-yellow-300'}`}>GPT-5.2</span>
-                      <span className={`text-[10px] px-3 py-1 rounded-full font-semibold ${isDark ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/40' : 'bg-yellow-100 text-yellow-700 border border-yellow-300'}`}>GPT-5.4 ⭐</span>
-                    </div>
-                  </div>
-
-                  {/* Google Gemini */}
-                  <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-blue-900/10 to-slate-900 border-blue-500/20' : 'bg-blue-50 border-blue-200'}`}>
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-lg">G</div>
-                      <h4 className={`text-xl font-bold ${headingClass}`}>Google Gemini</h4>
-                    </div>
-                    <p className={`text-sm ${subTextClass} mb-4`}>Multi-modal models with strong vision and long-context capabilities.</p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className={`text-[10px] px-3 py-1 rounded-full ${isDark ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'bg-blue-100 text-blue-700 border border-blue-300'}`}>1.5 Pro</span>
-                      <span className={`text-[10px] px-3 py-1 rounded-full ${isDark ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'bg-blue-100 text-blue-700 border border-blue-300'}`}>1.5 Flash</span>
-                      <span className={`text-[10px] px-3 py-1 rounded-full ${isDark ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'bg-blue-100 text-blue-700 border border-blue-300'}`}>2.0</span>
-                      <span className={`text-[10px] px-3 py-1 rounded-full font-semibold ${isDark ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40' : 'bg-cyan-100 text-cyan-700 border border-cyan-300'}`}>3.0 🚀</span>
-                    </div>
-                  </div>
-
-                  {/* Specialized Models */}
-                  <div className={`rounded-3xl p-8 border ${isDark ? 'bg-gradient-to-br from-purple-900/10 to-slate-900 border-purple-500/20' : 'bg-purple-50 border-purple-200'}`}>
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="text-3xl">🎬</div>
-                      <h4 className={`text-xl font-bold ${headingClass}`}>Video & Specialized</h4>
-                    </div>
-                    <p className={`text-sm ${subTextClass} mb-4`}>Specialized models for video generation, image processing, and domain tasks.</p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className={`text-[10px] px-3 py-1 rounded-full ${isDark ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' : 'bg-purple-100 text-purple-700 border border-purple-300'}`}>Higgsfield AI</span>
-                      <span className={`text-[10px] px-3 py-1 rounded-full ${isDark ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' : 'bg-purple-100 text-purple-700 border border-purple-300'}`}>Runway</span>
-                      <span className={`text-[10px] px-3 py-1 rounded-full ${isDark ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' : 'bg-purple-100 text-purple-700 border border-purple-300'}`}>Pika</span>
-                      <span className={`text-[10px] px-3 py-1 rounded-full ${isDark ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' : 'bg-purple-100 text-purple-700 border border-purple-300'}`}>Deepseek</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           )}
 
           {/* --- AWARDS PAGE --- */}
+          {activeTab === 'awards' && (
             <div className="animate-in fade-in zoom-in duration-300 py-4 max-w-4xl mx-auto">
               <h2 className={`text-3xl font-bold ${headingClass} mb-6`}>Honors & Recommendations</h2>
 
