@@ -134,6 +134,8 @@ DO NOT explain. DO NOT elaborate. FACTS ONLY.
   const [isChatLoading, setIsChatLoading] = useState(false);
   const [copiedIndex, setCopiedIndex] = useState(null);
   const chatEndRef = useRef(null);
+  const chatSessionTurns = useRef(0);
+  const chatOpenTime = useRef(null);
 
   const suggestedQuestions = [
     "AI/ML experience?",
@@ -188,7 +190,24 @@ DO NOT explain. DO NOT elaborate. FACTS ONLY.
     }
 
     trackEvent('page_view', { page_title: 'Portfolio Home' });
-    return () => clearInterval(timer);
+
+    // Scroll depth tracking
+    const scrollDepthFired = new Set();
+    const handleScroll = () => {
+      const scrollPct = Math.round((window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100);
+      [25, 50, 75, 90].forEach(threshold => {
+        if (scrollPct >= threshold && !scrollDepthFired.has(threshold)) {
+          scrollDepthFired.add(threshold);
+          trackEvent('scroll_depth', { percent: threshold, section: document.title });
+        }
+      });
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      clearInterval(timer);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -221,6 +240,13 @@ DO NOT explain. DO NOT elaborate. FACTS ONLY.
   };
 
   const handleDownload = (format) => {
+    trackEvent('resume_download', {
+      file_name: 'Ashfaque_Resume',
+      file_extension: format,
+      download_timestamp: new Date().toISOString(),
+      referrer_section: activeTab
+    });
+    // Also fire GA4 standard file_download event for built-in report compatibility
     trackEvent('file_download', {
       file_name: 'Ashfaque_Resume',
       file_extension: format
@@ -248,9 +274,28 @@ DO NOT explain. DO NOT elaborate. FACTS ONLY.
 
     const userMessage = chatInput;
     setChatInput('');
+    chatSessionTurns.current += 1;
     setChatHistory(prev => [...prev, { role: 'user', text: userMessage, model: 'You' }]);
     setIsChatLoading(true);
-    trackEvent('ai_assistant_query', { query_length: userMessage.length });
+
+    // Classify topic from message for topic analytics
+    const topicKeywords = {
+      'AI/ML': ['ai', 'ml', 'machine learning', 'chatbot', 'nlp', 'llm', 'dialogflow', 'genai', 'rag', 'ccai'],
+      'AT&T': ['att', 'at&t', 'helios', 'virtual assistant', 'telecom'],
+      'Hackathon': ['hackathon', 'hack', 'innovation jam', 'award', 'win'],
+      'Certifications': ['cert', 'certification', 'safe', 'azure', 'cspo', 'credential'],
+      'Skills': ['skill', 'python', 'sql', 'react', 'power bi', 'tech stack'],
+      'Experience': ['experience', 'years', 'career', 'job', 'work', 'role'],
+    };
+    const lowerMsg = userMessage.toLowerCase();
+    const detectedTopic = Object.entries(topicKeywords).find(([, kws]) => kws.some(kw => lowerMsg.includes(kw)))?.[0] || 'General';
+
+    trackEvent('chat_message_sent', {
+      query_length: userMessage.length,
+      topic: detectedTopic,
+      turn_number: chatSessionTurns.current,
+      session_duration_sec: chatOpenTime.current ? Math.round((Date.now() - chatOpenTime.current) / 1000) : 0
+    });
 
     let success = false;
     let lastError = null;
@@ -302,6 +347,12 @@ DO NOT explain. DO NOT elaborate. FACTS ONLY.
           
           console.log(`[Chat] ✅ SUCCESS - Response received from ${endpoint}`);
           setChatHistory(prev => [...prev, { role: 'model', text: truncatedResponse, model: model }]);
+          trackEvent('chat_response_received', {
+            model_used: model,
+            response_length: truncatedResponse.length,
+            endpoint_index: llmEndpoints.indexOf(endpoint),
+            turn_number: chatSessionTurns.current
+          });
           success = true;
           break;
         } else {
@@ -323,6 +374,11 @@ DO NOT explain. DO NOT elaborate. FACTS ONLY.
         role: 'model', 
         text: `Connection Failed: ${errorMsg}. Please check browser console (F12) for detailed logs.` 
       }]);
+      trackEvent('chat_error', {
+        error_message: errorMsg.substring(0, 100),
+        endpoints_tried: llmEndpoints.length,
+        turn_number: chatSessionTurns.current
+      });
     }
 
     setIsChatLoading(false);
@@ -1133,7 +1189,7 @@ DO NOT explain. DO NOT elaborate. FACTS ONLY.
               {/* Personal GitHub Projects */}
               <div>
                 <h3 className={`text-lg font-bold ${headingClass} mb-2 flex items-center gap-2`}><Code2 size={20} className="text-purple-500" /> Personal Projects & Experiments</h3>
-                <p className={`text-sm ${subTextClass} mb-4`}>Independent builds, AI experiments, and personal side projects from <a href="https://github.com/ashfaque-rifaye" target="_blank" rel="noreferrer" className="text-indigo-400 hover:text-indigo-300 underline underline-offset-2">github.com/ashfaque-rifaye</a></p>
+                <p className={`text-sm ${subTextClass} mb-4`}>Independent builds, AI experiments, and personal side projects from <a href="https://github.com/ashfaque-rifaye" target="_blank" rel="noreferrer" onClick={() => trackEvent('social_link_click', { platform: 'GitHub', location: 'works_section' })} className="text-indigo-400 hover:text-indigo-300 underline underline-offset-2">github.com/ashfaque-rifaye</a></p>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                   {[
                     {
@@ -1323,8 +1379,8 @@ DO NOT explain. DO NOT elaborate. FACTS ONLY.
           <div className="max-w-6xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className={`text-sm ${subTextClass}`}>© {new Date().getFullYear()} Ashfaque Rifaye. All rights reserved.</p>
             <div className="flex gap-6">
-              <a href="https://www.linkedin.com/in/ashfaque-rifaye/" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-indigo-500 hover:text-indigo-400"><Linkedin size={16} /> LinkedIn</a>
-              <a href="mailto:ashfaque_rifaye@outlook.com" className="flex items-center gap-2 text-sm text-indigo-500 hover:text-indigo-400"><Mail size={16} /> Email</a>
+              <a href="https://www.linkedin.com/in/ashfaque-rifaye/" target="_blank" rel="noreferrer" onClick={() => trackEvent('social_link_click', { platform: 'LinkedIn', location: 'footer' })} className="flex items-center gap-2 text-sm text-indigo-500 hover:text-indigo-400"><Linkedin size={16} /> LinkedIn</a>
+              <a href="mailto:ashfaque_rifaye@outlook.com" onClick={() => trackEvent('social_link_click', { platform: 'Email', location: 'footer' })} className="flex items-center gap-2 text-sm text-indigo-500 hover:text-indigo-400"><Mail size={16} /> Email</a>
             </div>
           </div>
         </footer>
@@ -1373,6 +1429,7 @@ DO NOT explain. DO NOT elaborate. FACTS ONLY.
                               navigator.clipboard.writeText(msg.text);
                               setCopiedIndex(i);
                               setTimeout(() => setCopiedIndex(null), 2000);
+                              trackEvent('chat_response_copied', { message_index: i, response_length: msg.text.length });
                             }}
                             className="hover:opacity-100 opacity-50 transition-opacity"
                             title="Copy message"
@@ -1412,6 +1469,7 @@ DO NOT explain. DO NOT elaborate. FACTS ONLY.
                       key={idx}
                       onClick={() => {
                         setChatInput(q);
+                        trackEvent('chat_suggested_question_clicked', { question: q, question_index: idx });
                         // Auto-submit after setting input
                         setTimeout(() => {
                           const form = document.querySelector('form[data-chat-form]');
@@ -1453,7 +1511,20 @@ DO NOT explain. DO NOT elaborate. FACTS ONLY.
 
         {/* Floating Button */}
         <button
-          onClick={() => setIsChatWidgetOpen(prev => !prev)}
+          onClick={() => {
+            const willOpen = !isChatWidgetOpen;
+            setIsChatWidgetOpen(prev => !prev);
+            if (willOpen) {
+              chatOpenTime.current = Date.now();
+              chatSessionTurns.current = 0;
+              trackEvent('chat_opened', { referrer_section: activeTab });
+            } else {
+              trackEvent('chat_closed', {
+                turns_in_session: chatSessionTurns.current,
+                session_duration_sec: chatOpenTime.current ? Math.round((Date.now() - chatOpenTime.current) / 1000) : 0
+              });
+            }
+          }}
           className={`w-14 h-14 rounded-full bg-gradient-to-br from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white shadow-2xl flex items-center justify-center transition-all duration-300 ${isChatWidgetOpen ? 'rotate-90' : 'animate-pulse'}`}
           aria-label="Chat with Ashfaque's AI Twin"
         >
