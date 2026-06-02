@@ -2,7 +2,127 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==================================================================
+   PALETTE ENGINE
+   Each palette defines neutral tokens + accent/alt ramps as RGB
+   channel triplets (so Tailwind's <alpha-value> works). Dark values
+   live on .dark; light values on :root. The live switcher sets
+   data-palette on <html>.
+   ================================================================== */
+
 @layer base {
+  :root {
+    /* default accent ramp (light theme neutrals shared across palettes) */
+    --cream: 251 250 247;
+    --paper: 255 255 255;
+    --sand: 244 242 236;
+    --line: 229 226 218;
+    --ink: 24 24 27;
+    --muted: 107 107 102;
+
+    /* dark neutrals (overridden per-palette below) */
+    --espresso: 11 20 24;
+    --bark: 15 29 35;
+    --stump: 22 40 47;
+    --ash: 232 238 240;
+    --subtle: 124 154 163;
+    --linedark: 31 52 60;
+
+    /* accent (teal & amber default) */
+    --accent-300: 247 197 138;
+    --accent-400: 245 176 96;
+    --accent-500: 242 160 61;
+    --accent-600: 217 138 45;
+    --accent-700: 178 110 32;
+    --alt-400: 94 234 212;
+    --alt-500: 45 212 191;
+    --alt-600: 20 184 166;
+  }
+
+  /* ---- LIGHT THEME accent grades (one per palette) ---- */
+  :root[data-palette="teal"] {
+    --accent-300: 251 191 36; --accent-400: 245 158 11; --accent-500: 217 119 6;
+    --accent-600: 180 83 9; --accent-700: 146 64 14;
+    --alt-400: 45 212 191; --alt-500: 20 184 166; --alt-600: 13 148 136;
+    --line: 229 224 212; --sand: 244 240 232;
+  }
+  :root[data-palette="cyan"] {
+    --accent-300: 103 232 249; --accent-400: 34 211 238; --accent-500: 8 145 178;
+    --accent-600: 14 116 144; --accent-700: 21 94 117;
+    --alt-400: 129 140 248; --alt-500: 99 102 241; --alt-600: 79 70 229;
+    --line: 224 227 234; --sand: 240 243 248;
+  }
+  :root[data-palette="aubergine"] {
+    --accent-300: 244 114 182; --accent-400: 236 72 153; --accent-500: 219 39 119;
+    --accent-600: 190 24 93; --accent-700: 157 23 77;
+    --alt-400: 245 200 110; --alt-500: 232 180 90; --alt-600: 202 138 42;
+    --line: 232 224 236; --sand: 245 240 248;
+  }
+  :root[data-palette="emerald"] {
+    --accent-300: 110 231 183; --accent-400: 52 211 153; --accent-500: 16 163 110;
+    --accent-600: 5 150 105; --accent-700: 4 120 87;
+    --alt-400: 167 243 208; --alt-500: 110 231 183; --alt-600: 52 211 153;
+    --line: 226 230 228; --sand: 240 244 242;
+  }
+
+  /* ---- DARK THEME: deep graded bases + glowing accents ---- */
+  .dark {
+    /* fallback = teal */
+    --espresso: 11 20 24; --bark: 15 29 35; --stump: 22 40 47;
+    --ash: 232 238 240; --subtle: 124 154 163; --linedark: 31 52 60;
+    --accent-300: 247 197 138; --accent-400: 245 176 96; --accent-500: 242 160 61;
+    --accent-600: 217 138 45; --accent-700: 178 110 32;
+    --alt-400: 94 234 212; --alt-500: 45 212 191; --alt-600: 20 184 166;
+  }
+
+  .dark[data-palette="teal"] {
+    --espresso: 11 20 24;   /* #0B1418 deep midnight teal */
+    --bark: 15 29 35;       /* #0F1D23 */
+    --stump: 23 42 50;
+    --ash: 232 238 240;
+    --subtle: 124 154 163;
+    --linedark: 32 54 62;
+    --accent-300: 247 197 138; --accent-400: 245 176 96; --accent-500: 242 160 61; /* #F2A03D amber */
+    --accent-600: 217 138 45; --accent-700: 178 110 32;
+    --alt-400: 94 234 212; --alt-500: 45 212 191; --alt-600: 20 184 166; /* teal */
+  }
+
+  .dark[data-palette="cyan"] {
+    --espresso: 8 11 17;    /* #080B11 near-black blue */
+    --bark: 14 20 29;       /* #0E141D */
+    --stump: 21 29 42;
+    --ash: 227 233 242;
+    --subtle: 107 124 147;
+    --linedark: 30 40 56;
+    --accent-300: 103 232 249; --accent-400: 34 211 238; --accent-500: 34 211 238; /* #22D3EE cyan */
+    --accent-600: 14 165 196; --accent-700: 14 116 144;
+    --alt-400: 129 140 248; --alt-500: 99 102 241; --alt-600: 79 70 229; /* indigo */
+  }
+
+  .dark[data-palette="aubergine"] {
+    --espresso: 20 14 26;   /* #140E1A aubergine */
+    --bark: 28 20 38;       /* #1C1426 */
+    --stump: 38 28 50;
+    --ash: 237 231 242;
+    --subtle: 139 124 153;
+    --linedark: 50 38 64;
+    --accent-300: 244 114 182; --accent-400: 236 82 155; --accent-500: 224 82 155; /* #E0529B magenta */
+    --accent-600: 190 50 120; --accent-700: 157 30 90;
+    --alt-400: 245 200 110; --alt-500: 232 180 90; --alt-600: 202 138 42; /* gold */
+  }
+
+  .dark[data-palette="emerald"] {
+    --espresso: 13 15 14;   /* #0D0F0E true charcoal */
+    --bark: 21 25 23;       /* #151917 */
+    --stump: 30 36 33;
+    --ash: 231 234 232;
+    --subtle: 126 139 133;
+    --linedark: 42 50 46;
+    --accent-300: 110 231 183; --accent-400: 52 211 153; --accent-500: 47 191 113; /* #2FBF71 emerald */
+    --accent-600: 16 150 90; --accent-700: 6 120 70;
+    --alt-400: 167 243 208; --alt-500: 110 231 183; --alt-600: 52 211 153; /* mint */
+  }
+
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
@@ -10,32 +130,33 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Serif display headings (editorial feel) */
   h1, h2, h3, h4 {
     font-family: '"Source Serif 4"', Georgia, Cambria, serif;
     font-optical-sizing: auto;
     letter-spacing: -0.015em;
   }
 
-  /* Warm, branded text selection */
   ::selection {
-    background-color: rgba(218, 106, 48, 0.24);
+    background-color: rgb(var(--accent-500) / 0.26);
     color: inherit;
+  }
+
+  /* Smoothly cross-fade colors when switching palette/theme */
+  body, .palette-transition * {
+    transition: background-color 0.45s ease, border-color 0.45s ease, color 0.45s ease;
   }
 }
 
 @layer components {
-  /* Ember→gold gradient text accent */
+  /* Accent gradient text */
   .text-gradient-coral {
-    background-image: linear-gradient(105deg, #be521d 0%, #da6a30 40%, #e0a23b 100%);
+    background-image: linear-gradient(105deg, rgb(var(--accent-700)), rgb(var(--accent-500)) 45%, rgb(var(--alt-500)));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
-
-  /* Animated gradient text (cinematic shimmer through the headline) */
   .text-gradient-animate {
-    background-image: linear-gradient(105deg, #be521d, #da6a30, #e0a23b, #da6a30, #be521d);
+    background-image: linear-gradient(105deg, rgb(var(--accent-600)), rgb(var(--accent-400)), rgb(var(--alt-500)), rgb(var(--accent-400)), rgb(var(--accent-600)));
     background-size: 220% auto;
     -webkit-background-clip: text;
     background-clip: text;
@@ -43,7 +164,6 @@
     animation: gradient 7s ease infinite;
   }
 
-  /* Scroll-reveal primitive — toggled by an IntersectionObserver in App.jsx */
   .reveal {
     opacity: 0;
     transform: translateY(26px);
@@ -57,118 +177,42 @@
     transform: none;
   }
 
-  /* Hairline gradient divider */
   .rule-gradient {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(218,106,48,0.5), transparent);
+    background: linear-gradient(90deg, transparent, rgb(var(--accent-500) / 0.5), transparent);
   }
 }
 
 @layer utilities {
-  /* Cinematic film grain overlay */
-  .grain-overlay {
-    position: fixed;
-    inset: -50%;
-    width: 200%;
-    height: 200%;
-    pointer-events: none;
-    z-index: 60;
-    opacity: 0.05;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    animation: grain 8s steps(10) infinite;
-  }
-  .dark .grain-overlay {
-    opacity: 0.08;
-  }
-
-  /* Cursor spotlight (driven by --mx / --my custom props set in JS) */
-  .spotlight {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    background: radial-gradient(
-      600px circle at var(--mx, 50%) var(--my, 0%),
-      rgba(218, 106, 48, 0.10),
-      transparent 45%
-    );
-    transition: background 0.2s ease-out;
-  }
-  .dark .spotlight {
-    background: radial-gradient(
-      600px circle at var(--mx, 50%) var(--my, 0%),
-      rgba(224, 162, 59, 0.10),
-      transparent 45%
-    );
-  }
-
-  /* Vignette — darkened cinematic edges (dark mode only) */
-  .vignette {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 2;
-    box-shadow: inset 0 0 200px 40px rgba(0, 0, 0, 0.55);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  .dark .vignette {
-    opacity: 1;
-  }
-
-  /* Dotted backdrop texture */
+  /* Soft dotted backdrop */
   .bg-dot-grid {
     background-image: radial-gradient(currentColor 1px, transparent 1px);
-    background-size: 22px 22px;
+    background-size: 24px 24px;
   }
 }
 
-/* Custom Scrollbar — warm tones */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(107, 100, 85, 0.4);
+  background: rgb(var(--subtle) / 0.4);
   border-radius: 999px;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(107, 100, 85, 0.65);
-  background-clip: padding-box;
-}
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--subtle) / 0.65); background-clip: padding-box; }
 
-/* Hide scrollbar utility */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Respect reduced motion */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .reveal {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-  .grain-overlay,
-  .text-gradient-animate {
-    animation: none !important;
-  }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .text-gradient-animate { animation: none !important; }
 }

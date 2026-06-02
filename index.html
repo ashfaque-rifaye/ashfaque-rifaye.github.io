@@ -31,14 +31,20 @@
       rel="stylesheet"
     />
 
-    <!-- No-flash theme init (must run before paint) -->
+    <!-- No-flash theme + palette init (must run before paint) -->
     <script>
       (function () {
         try {
           var t = localStorage.getItem('theme');
-          var dark = t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          // dark is the default unless the user explicitly chose light
+          var dark = t !== 'light';
           if (dark) document.documentElement.classList.add('dark');
-        } catch (e) {}
+          var p = localStorage.getItem('palette') || 'teal';
+          document.documentElement.setAttribute('data-palette', p);
+        } catch (e) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.setAttribute('data-palette', 'teal');
+        }
       })();
     </script>
   </head>

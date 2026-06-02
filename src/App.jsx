@@ -4,6 +4,7 @@ import {
   Briefcase, ShieldCheck, TrendingUp, Award, Cpu, Target, Bot, GraduationCap,
   CheckCircle, Brain, ChevronRight, Trophy, Zap, Globe, Code2,
   MessageSquare, BarChart2, Star, Quote, Mail, Linkedin, Github, Send, Copy, Check,
+  Search, Palette, FileText, PenLine, ExternalLink, CornerDownLeft,
 } from 'lucide-react';
 
 /* ------------------------------------------------------------------ */
@@ -54,6 +55,7 @@ const NAV = [
   { id: 'experience', label: 'Experience' },
   { id: 'works', label: 'Works' },
   { id: 'awards', label: 'Awards' },
+  { id: 'writing', label: 'Writing' },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -171,6 +173,17 @@ const HACKATHONS = [
     title: 'AT&T Helios — Zero Friction Convergence',
     desc: 'Solved the fragmented bundle experience at AT&T by creating a seamless one-click workflow. Customers can add mobile devices, phone plans, wireless plans, and fiber plans in a single cart flow — including trade-in, BYOD, and multi-bundle options — instead of navigating each step manually.',
     tags: ['AI-Fueled', 'One-Click Bundle', 'CX Innovation'],
+    caseStudy: {
+      role: 'Product Lead · AT&T Innovation Jam 2025',
+      problem: 'Buying a converged bundle (mobile + fiber + accessories) meant navigating several disconnected flows, with trade-in, BYOD and eligibility checks each living in their own silo — a major source of drop-off.',
+      approach: 'Designed an AI-fueled single-cart experience that assembles devices, plans, fiber and trade-in in one guided flow, with real-time eligibility and bundle recommendations surfaced inline.',
+      metrics: [
+        { value: 'Best in Show', label: 'AT&T Innovation Jam' },
+        { value: '1-click', label: 'bundle assembly' },
+        { value: '4 LOBs', label: 'unified in one cart' },
+      ],
+      stack: ['React', 'Generative AI', 'Recommendation', 'UX Prototyping'],
+    },
   },
   {
     icon: Globe,
@@ -178,18 +191,117 @@ const HACKATHONS = [
     title: 'Hyper-Personalized International Travel',
     desc: 'Leveraged AI-driven predictive modeling to deliver hyper-personalized experiences by analyzing customer travel patterns and media preferences. Simplified plan activation through mobile apps and websites with interactive tools for plan comparison, coverage checks, and troubleshooting support.',
     tags: ['AI Predictive Modeling', 'Travel CX', 'Personalization'],
+    caseStudy: {
+      role: 'Product Lead · AT&T Hackathon 2025',
+      problem: 'International roaming activation was confusing and reactive — customers discovered plans too late, leading to bill shock, support contacts, and poor trip experiences.',
+      approach: 'Built predictive models over travel patterns and media preferences to proactively recommend the right international plan, plus interactive tools for plan comparison, coverage checks and self-serve troubleshooting.',
+      metrics: [
+        { value: '1st Place', label: 'AT&T Hackathon' },
+        { value: 'Most Impactful', label: 'business solution' },
+        { value: 'Proactive', label: 'plan activation' },
+      ],
+      stack: ['Predictive Modeling', 'AI/ML', 'Personalization', 'Mobile + Web'],
+    },
   },
 ];
 
 const ATT_DELIVERABLES = [
-  { icon: MessageSquare, title: 'GenAI Virtual Assistant', desc: 'RAG-powered CCAI implementation serving 1.5M+ monthly users. 350+ intents, 55% containment, $4.2M annual savings.', tags: ['Dialogflow', 'RAG', 'CCAI'] },
-  { icon: Sparkles, title: 'Retail Hyper-Personalization', desc: '15% uplift in product recommendation CTR through AI-driven personalization and data analytics across retail channels.', tags: ['Analytics', 'AI/ML'] },
-  { icon: TrendingUp, title: 'AI Performance Analytics Suite', desc: 'Real-time monitoring across 6 channels. Power BI dashboards tracking 15+ KPIs including CSAT, containment, and NPS.', tags: ['Power BI', 'SQL'] },
+  {
+    icon: MessageSquare, title: 'GenAI Virtual Assistant', desc: 'RAG-powered CCAI implementation serving 1.5M+ monthly users. 350+ intents, 55% containment, $4.2M annual savings.', tags: ['Dialogflow', 'RAG', 'CCAI'],
+    caseStudy: {
+      role: 'Product Owner · AT&T Consumer Technology & Experience',
+      problem: 'Customer care was carrying high volumes of repetitive contacts across chat, voice, WhatsApp and RCS, with long handle times and costly live-agent escalations.',
+      approach: 'Owned the end-to-end GenAI Virtual Assistant on Google CCAI/Dialogflow — 350+ intents, 1,200+ training phrases and RAG-powered knowledge retrieval — deployed omnichannel with human-in-the-loop review for low-confidence answers.',
+      metrics: [
+        { value: '1.5M+', label: 'monthly interactions' },
+        { value: '55%', label: 'containment rate' },
+        { value: '$4.2M', label: 'annual savings' },
+        { value: '-28%', label: 'agent escalations' },
+      ],
+      stack: ['Google CCAI', 'Dialogflow CX', 'RAG', 'REST APIs', 'Power BI'],
+    },
+  },
+  {
+    icon: Sparkles, title: 'Retail Hyper-Personalization', desc: '15% uplift in product recommendation CTR through AI-driven personalization and data analytics across retail channels.', tags: ['Analytics', 'AI/ML'],
+    caseStudy: {
+      role: 'Product / Analytics · AT&T Retail',
+      problem: 'Generic product recommendations across retail channels were under-converting and ignoring individual customer context.',
+      approach: 'Drove an AI-driven personalization layer informed by behavioural analytics, tuning recommendation surfaces against CTR and conversion.',
+      metrics: [
+        { value: '+15%', label: 'recommendation CTR' },
+        { value: 'Multi-channel', label: 'retail coverage' },
+      ],
+      stack: ['AI/ML', 'Analytics', 'Personalization'],
+    },
+  },
+  {
+    icon: TrendingUp, title: 'AI Performance Analytics Suite', desc: 'Real-time monitoring across 6 channels. Power BI dashboards tracking 15+ KPIs including CSAT, containment, and NPS.', tags: ['Power BI', 'SQL'],
+    caseStudy: {
+      role: 'Product / Data · AT&T CTX',
+      problem: 'AI assistant performance was hard to see across channels, making it slow to spot regressions in containment, accuracy and CSAT.',
+      approach: 'Built real-time Power BI dashboards over 15+ KPIs across 6 channels, giving the team a single source of truth for containment, intent accuracy, fallback and NPS.',
+      metrics: [
+        { value: '15+', label: 'KPIs tracked' },
+        { value: '6', label: 'channels monitored' },
+        { value: '+8', label: 'NPS points' },
+      ],
+      stack: ['Power BI', 'SQL', 'Data Modelling'],
+    },
+  },
 ];
 
 const VERIZON_PROJECTS = [
-  { icon: Zap, title: 'Omni Universal Cart', desc: '11% order fulfillment growth and 13% reduced cart abandonment through a unified omnichannel cart experience.', tags: ['Omnichannel', 'E-Commerce'] },
-  { icon: BarChart2, title: 'Hum+ Wi-Fi Plan', desc: '$100K+ ARR with 23% attach rate. Revenue-generating add-on through strategic planning and digital sales optimization.', tags: ['Strategy', 'Revenue'] },
+  {
+    icon: Zap, title: 'Omni Universal Cart', desc: '11% order fulfillment growth and 13% reduced cart abandonment through a unified omnichannel cart experience.', tags: ['Omnichannel', 'E-Commerce'],
+    caseStudy: {
+      role: 'Consultant · Verizon Consumer Group',
+      problem: 'Fragmented carts across retail, web and assisted channels caused abandonment and inconsistent fulfillment.',
+      approach: 'Helped define and deliver a unified omnichannel cart, coordinating UX, data science and engineering in a SAFe framework.',
+      metrics: [
+        { value: '+11%', label: 'order growth' },
+        { value: '-13%', label: 'cart abandonment' },
+      ],
+      stack: ['Omnichannel', 'E-Commerce', 'SAFe Agile'],
+    },
+  },
+  {
+    icon: BarChart2, title: 'Hum+ Wi-Fi Plan', desc: '$100K+ ARR with 23% attach rate. Revenue-generating add-on through strategic planning and digital sales optimization.', tags: ['Strategy', 'Revenue'],
+    caseStudy: {
+      role: 'Consultant · Verizon Digital & Assisted Sales',
+      problem: 'A new connectivity add-on needed a go-to-market and digital sales motion that would actually attach at scale.',
+      approach: 'Shaped positioning and the digital sales flow, optimizing the attach funnel through experimentation.',
+      metrics: [
+        { value: '$100K+', label: 'ARR' },
+        { value: '23%', label: 'attach rate' },
+      ],
+      stack: ['Strategy', 'Digital Sales', 'A/B Testing'],
+    },
+  },
+];
+
+const IMPACT_METRICS = [
+  { value: '1.5M+', label: 'Monthly AI interactions', sub: 'GenAI Virtual Assistant' },
+  { value: '$4.2M', label: 'Annual cost savings', sub: 'Automation & containment' },
+  { value: '55%', label: 'Containment rate', sub: '350+ intents, RAG-powered' },
+  { value: '9+', label: 'Years in product & AI', sub: 'Telecom · Retail · CX' },
+];
+
+const WRITING_POSTS = [
+  {
+    title: 'Designing a RAG-powered virtual assistant that actually contains contacts',
+    blurb: 'What it really takes to move containment past 50% — intent design, retrieval quality, and the human-in-the-loop guardrails that keep trust intact.',
+    tag: 'Conversational AI', date: '2025', readTime: '6 min', href: null,
+  },
+  {
+    title: 'From BRD to backlog: shipping AI features inside a SAFe enterprise',
+    blurb: 'How I translate business strategy into AI roadmaps that engineering can actually deliver — without drowning in documentation.',
+    tag: 'AI Product', date: '2025', readTime: '5 min', href: null,
+  },
+  {
+    title: 'Measuring an AI assistant: the 15 KPIs I put on every dashboard',
+    blurb: 'Containment is not enough. The metric set I use to catch regressions in accuracy, CSAT and cost before customers feel them.',
+    tag: 'Analytics', date: '2024', readTime: '7 min', href: null,
+  },
 ];
 
 const PERSONAL_PROJECTS = [
@@ -284,6 +396,13 @@ function trackEvent(eventName, params = {}) {
   }
 }
 
+const PALETTES = [
+  { id: 'teal', label: 'Teal & Amber', swatch: '#F2A03D', swatch2: '#2DD4BF' },
+  { id: 'cyan', label: 'Obsidian & Cyan', swatch: '#22D3EE', swatch2: '#6366F1' },
+  { id: 'aubergine', label: 'Aubergine & Gold', swatch: '#E0529B', swatch2: '#E8B45A' },
+  { id: 'emerald', label: 'Charcoal & Emerald', swatch: '#2FBF71', swatch2: '#A7F3D0' },
+];
+
 function useTheme() {
   const [theme, setTheme] = useState(() =>
     typeof document !== 'undefined' && document.documentElement.classList.contains('dark') ? 'dark' : 'light'
@@ -291,13 +410,30 @@ function useTheme() {
   const toggle = useCallback(() => {
     setTheme((prev) => {
       const next = prev === 'dark' ? 'light' : 'dark';
+      document.documentElement.classList.add('palette-transition');
       document.documentElement.classList.toggle('dark', next === 'dark');
       try { localStorage.setItem('theme', next); } catch (e) { /* ignore */ }
       trackEvent('toggle_theme', { mode: next });
+      window.setTimeout(() => document.documentElement.classList.remove('palette-transition'), 500);
       return next;
     });
   }, []);
   return { theme, toggle };
+}
+
+function usePalette() {
+  const [palette, setPalette] = useState(() =>
+    (typeof document !== 'undefined' && document.documentElement.getAttribute('data-palette')) || 'teal'
+  );
+  const choose = useCallback((id) => {
+    document.documentElement.classList.add('palette-transition');
+    document.documentElement.setAttribute('data-palette', id);
+    try { localStorage.setItem('palette', id); } catch (e) { /* ignore */ }
+    trackEvent('select_palette', { palette: id });
+    setPalette(id);
+    window.setTimeout(() => document.documentElement.classList.remove('palette-transition'), 500);
+  }, []);
+  return { palette, choose };
 }
 
 function useTypewriter(text, speed = 45) {
@@ -368,33 +504,17 @@ function useCountUp(value, duration = 1500) {
   return [ref, display];
 }
 
-/* Cursor spotlight + scroll progress, mounted once at the app root. */
-function useCinematicEffects() {
+/* Scroll progress for the top reading bar. */
+function useScrollProgress() {
   const [progress, setProgress] = useState(0);
   useEffect(() => {
-    const root = document.documentElement;
-    let raf = 0;
-    const onMove = (e) => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        root.style.setProperty('--mx', `${e.clientX}px`);
-        root.style.setProperty('--my', `${e.clientY}px`);
-        raf = 0;
-      });
-    };
     const onScroll = () => {
       const h = document.documentElement.scrollHeight - window.innerHeight;
       setProgress(h > 0 ? Math.min(window.scrollY / h, 1) : 0);
     };
-    const fine = window.matchMedia('(pointer: fine)').matches;
-    if (fine && !prefersReducedMotion()) window.addEventListener('mousemove', onMove, { passive: true });
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
-    return () => {
-      window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('scroll', onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
   return progress;
 }
@@ -528,11 +648,15 @@ function ChipTag({ children }) {
 /* ------------------------------------------------------------------ */
 export default function Portfolio() {
   const { theme, toggle } = useTheme();
-  const scrollProgress = useCinematicEffects();
+  const { palette, choose } = usePalette();
+  const scrollProgress = useScrollProgress();
   const [activeTab, setActiveTab] = useState('overview');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isPaletteOpen, setIsPaletteOpen] = useState(false);
+  const [isCmdOpen, setIsCmdOpen] = useState(false);
+  const [activeProject, setActiveProject] = useState(null);
 
   // chat
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -592,6 +716,22 @@ export default function Portfolio() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [activeTab]);
+
+  /* --- ⌘K / Ctrl+K command palette + Esc to close overlays --- */
+  useEffect(() => {
+    const onKey = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsCmdOpen((o) => !o);
+      } else if (e.key === 'Escape') {
+        setIsCmdOpen(false);
+        setIsPaletteOpen(false);
+        setActiveProject(null);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   /* --- handlers --- */
   const handleTab = (tab) => {
@@ -704,25 +844,18 @@ export default function Portfolio() {
   return (
     <div className="relative min-h-screen bg-claude-cream font-sans text-claude-ink antialiased dark:bg-claude-espresso dark:text-claude-ash">
       {/* Scroll progress bar */}
-      <div className="fixed inset-x-0 top-0 z-[70] h-[3px]">
+      <div className="fixed inset-x-0 top-0 z-[70] h-[2px]">
         <div
-          className="h-full origin-left bg-gradient-to-r from-coral-600 via-coral-400 to-gold-400 shadow-glow"
+          className="h-full origin-left bg-gradient-to-r from-coral-600 via-coral-400 to-gold-400"
           style={{ transform: `scaleX(${scrollProgress})` }}
         />
       </div>
 
-      {/* Cinematic overlays */}
-      <div className="grain-overlay" aria-hidden="true" />
-      <div className="spotlight" aria-hidden="true" />
-      <div className="vignette" aria-hidden="true" />
-
-      {/* Ambient background */}
+      {/* Ambient background — clean graded glow (no grain/vignette) */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute inset-0 animate-bg-pan bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(218,106,48,0.10),transparent_60%)] dark:bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(218,106,48,0.16),transparent_60%)]" />
-        <div className="absolute -left-[12%] -top-[10%] h-[48%] w-[48%] rounded-full bg-coral-400/25 blur-[140px] animate-aurora-slow dark:bg-coral-500/20" />
-        <div className="absolute -bottom-[18%] -right-[12%] h-[48%] w-[48%] rounded-full bg-gold-400/20 blur-[150px] animate-aurora-slow dark:bg-gold-600/15" style={{ animationDelay: '-9s' }} />
-        <div className="absolute left-[30%] top-[40%] h-[30%] w-[30%] rounded-full bg-coral-600/10 blur-[120px] animate-aurora-slow dark:bg-coral-700/15" style={{ animationDelay: '-14s' }} />
-        <div className="absolute inset-0 bg-dot-grid text-claude-ink/[0.04] dark:text-claude-ash/[0.03]" />
+        <div className="absolute -left-[14%] -top-[12%] h-[50%] w-[50%] rounded-full bg-coral-400/12 blur-[150px] animate-aurora-slow dark:bg-coral-500/14" />
+        <div className="absolute -bottom-[20%] -right-[14%] h-[50%] w-[50%] rounded-full bg-gold-500/10 blur-[160px] animate-aurora-slow dark:bg-gold-500/12" style={{ animationDelay: '-11s' }} />
+        <div className="absolute inset-0 bg-dot-grid text-claude-ink/[0.03] dark:text-claude-ash/[0.025]" />
       </div>
 
       <div className="relative z-10 flex min-h-screen flex-col">
@@ -757,11 +890,20 @@ export default function Portfolio() {
                   </button>
                 ))}
               </nav>
+              <button
+                onClick={() => setIsCmdOpen(true)}
+                aria-label="Open command palette"
+                className="inline-flex items-center gap-1.5 rounded-full border border-claude-line bg-claude-paper/70 px-3 py-1.5 text-xs font-medium text-claude-muted transition-colors hover:border-coral-400 hover:text-coral-700 dark:border-claude-linedark dark:bg-claude-bark/70 dark:text-claude-subtle dark:hover:text-coral-300"
+              >
+                <Search size={13} /> <span className="font-mono">⌘K</span>
+              </button>
+              <PaletteMenu palette={palette} choose={choose} isOpen={isPaletteOpen} setIsOpen={setIsPaletteOpen} />
               <ThemeToggle theme={theme} onToggle={toggle} />
             </div>
 
             {/* Mobile actions */}
             <div className="flex items-center gap-2 md:hidden">
+              <PaletteMenu palette={palette} choose={choose} isOpen={isPaletteOpen} setIsOpen={setIsPaletteOpen} />
               <ThemeToggle theme={theme} onToggle={toggle} />
               <button
                 onClick={() => setIsMenuOpen((o) => !o)}
@@ -796,10 +938,11 @@ export default function Portfolio() {
 
         {/* ---------------- MAIN ---------------- */}
         <main className="mx-auto w-full max-w-6xl flex-grow px-4 py-8 md:px-8 md:py-12">
-          {activeTab === 'overview' && <Overview isAdmin={isAdmin} typed={typed} onResume={handleResumeDownload} onContact={() => handleTab('contact')} />}
+          {activeTab === 'overview' && <Overview isAdmin={isAdmin} typed={typed} onResume={handleResumeDownload} onContact={() => handleTab('contact')} onWorks={() => handleTab('works')} />}
           {activeTab === 'experience' && <Experience />}
-          {activeTab === 'works' && <Works theme={theme} />}
+          {activeTab === 'works' && <Works theme={theme} onOpenProject={setActiveProject} />}
           {activeTab === 'awards' && <Awards />}
+          {activeTab === 'writing' && <Writing />}
           {activeTab === 'contact' && <Contact formData={formData} setFormData={setFormData} onSubmit={handleContactSubmit} onResume={handleResumeDownload} />}
         </main>
 
@@ -841,6 +984,21 @@ export default function Portfolio() {
         copiedIndex={copiedIndex}
         setCopiedIndex={setCopiedIndex}
       />
+
+      {/* ---------------- COMMAND PALETTE (⌘K) ---------------- */}
+      <CommandPalette
+        isOpen={isCmdOpen}
+        onClose={() => setIsCmdOpen(false)}
+        onNavigate={handleTab}
+        onResume={handleResumeDownload}
+        onChat={() => { setIsCmdOpen(false); if (!isChatOpen) toggleChat(); }}
+        onTheme={toggle}
+        palette={palette}
+        choosePalette={choose}
+      />
+
+      {/* ---------------- PROJECT CASE-STUDY MODAL ---------------- */}
+      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
     </div>
   );
 }
@@ -866,13 +1024,13 @@ function FooterLink({ href, icon: Icon, label, location }) {
 /* ------------------------------------------------------------------ */
 /*  OVERVIEW                                                          */
 /* ------------------------------------------------------------------ */
-function Overview({ isAdmin, typed, onResume, onContact }) {
+function Overview({ isAdmin, typed, onResume, onContact, onWorks }) {
   return (
     <div className="space-y-6 md:space-y-8">
       {/* Hero */}
       <section className={cx('group/hero relative overflow-hidden rounded-[2rem] p-6 md:p-14', SURFACE, 'shadow-lift animate-fade-in-up')}>
-        {/* cinematic glow + texture inside hero */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_80%_at_85%_-10%,rgba(218,106,48,0.16),transparent_60%)]" />
+        {/* graded glow */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_80%_at_85%_-10%,rgb(var(--accent-500)/0.16),transparent_60%)]" />
         <div className="pointer-events-none absolute -right-12 -top-12 opacity-[0.06] dark:opacity-[0.09]">
           <Brain size={240} className="text-coral-600 animate-float" />
         </div>
@@ -915,6 +1073,12 @@ function Overview({ isAdmin, typed, onResume, onContact }) {
               >
                 Get in touch <ArrowRight size={16} />
               </button>
+              <button
+                onClick={onWorks}
+                className="inline-flex items-center gap-1.5 px-2 py-3 text-sm font-semibold text-coral-700 transition-colors hover:text-coral-600 dark:text-coral-300"
+              >
+                View selected work <ArrowRight size={15} />
+              </button>
             </div>
 
             <div className="mt-7 inline-flex items-center rounded-xl border border-claude-line bg-claude-sand/60 px-4 py-2 font-mono text-xs text-coral-700 dark:border-claude-linedark dark:bg-claude-stump/60 dark:text-coral-300 md:text-sm">
@@ -924,6 +1088,11 @@ function Overview({ isAdmin, typed, onResume, onContact }) {
           </div>
         </div>
       </section>
+
+      {/* Impact metrics band */}
+      <Reveal>
+        <ImpactBand />
+      </Reveal>
 
       {/* Stats */}
       <section className="grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -1067,6 +1236,293 @@ function Overview({ isAdmin, typed, onResume, onContact }) {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Palette switcher (header dropdown)                                */
+/* ------------------------------------------------------------------ */
+function PaletteMenu({ palette, choose, isOpen, setIsOpen }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const onDoc = (e) => { if (ref.current && !ref.current.contains(e.target)) setIsOpen(false); };
+    document.addEventListener('mousedown', onDoc);
+    return () => document.removeEventListener('mousedown', onDoc);
+  }, [isOpen, setIsOpen]);
+  const current = PALETTES.find((p) => p.id === palette) || PALETTES[0];
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setIsOpen((o) => !o)}
+        aria-label="Change color palette"
+        className="group relative grid h-9 w-9 place-items-center rounded-full border border-claude-line bg-claude-paper transition-colors hover:border-coral-400 dark:border-claude-linedark dark:bg-claude-stump"
+      >
+        <span
+          className="h-4 w-4 rounded-full ring-2 ring-white/40"
+          style={{ background: `linear-gradient(135deg, ${current.swatch}, ${current.swatch2})` }}
+        />
+      </button>
+      {isOpen && (
+        <div className="absolute right-0 z-50 mt-2 w-60 origin-top-right overflow-hidden rounded-2xl border border-claude-line bg-claude-paper p-1.5 shadow-lift animate-scale-in dark:border-claude-linedark dark:bg-claude-bark">
+          <p className={cx('px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider', MUTED)}>Cinematic palette</p>
+          {PALETTES.map((p) => (
+            <button
+              key={p.id}
+              onClick={() => { choose(p.id); setIsOpen(false); }}
+              className={cx(
+                'flex w-full items-center gap-3 rounded-xl px-2.5 py-2 text-left text-sm transition-colors',
+                palette === p.id ? 'bg-coral-500/10 text-coral-700 dark:text-coral-300' : 'text-claude-ink hover:bg-claude-sand/70 dark:text-claude-ash dark:hover:bg-claude-stump/70'
+              )}
+            >
+              <span className="h-5 w-5 shrink-0 rounded-full ring-1 ring-black/10" style={{ background: `linear-gradient(135deg, ${p.swatch}, ${p.swatch2})` }} />
+              <span className="flex-1 font-medium">{p.label}</span>
+              {palette === p.id && <Check size={14} className="text-coral-600 dark:text-coral-400" />}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Impact metrics band                                               */
+/* ------------------------------------------------------------------ */
+function ImpactMetric({ metric }) {
+  const [ref, display] = useCountUp(metric.value);
+  return (
+    <div className="relative px-4 py-5 text-center">
+      <p ref={ref} className="font-serif text-3xl font-semibold tabular-nums text-white md:text-4xl">{display}</p>
+      <p className="mt-1 text-xs font-semibold text-white/90 md:text-sm">{metric.label}</p>
+      <p className="mt-0.5 text-[11px] text-white/60">{metric.sub}</p>
+    </div>
+  );
+}
+
+function ImpactBand() {
+  return (
+    <section className="relative overflow-hidden rounded-[2rem] shadow-lift">
+      {/* graded accent background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-coral-700 via-coral-600 to-coral-500" />
+      <div className="absolute inset-0 bg-[radial-gradient(60%_120%_at_15%_0%,rgb(var(--alt-500)/0.5),transparent_55%)]" />
+      <div className="absolute inset-0 bg-dot-grid text-white/10" />
+      <div className="relative grid grid-cols-2 divide-white/15 md:grid-cols-4 md:divide-x">
+        {IMPACT_METRICS.map((m) => <ImpactMetric key={m.label} metric={m} />)}
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Command palette (⌘K)                                              */
+/* ------------------------------------------------------------------ */
+function CommandPalette({ isOpen, onClose, onNavigate, onResume, onChat, onTheme, palette, choosePalette }) {
+  const [query, setQuery] = useState('');
+  const inputRef = useRef(null);
+  const [active, setActive] = useState(0);
+
+  const commands = React.useMemo(() => {
+    const nav = NAV.map((n) => ({
+      id: `nav-${n.id}`, label: `Go to ${n.label}`, hint: 'Section', icon: CornerDownLeft,
+      run: () => { onNavigate(n.id); onClose(); },
+    }));
+    const actions = [
+      { id: 'resume', label: 'Download résumé (PDF)', hint: 'Action', icon: Download, run: () => { onResume(); onClose(); } },
+      { id: 'chat', label: 'Ask the AI Twin', hint: 'Action', icon: Bot, run: () => { onChat(); } },
+      { id: 'theme', label: 'Toggle light / dark', hint: 'Theme', icon: Sun, run: () => { onTheme(); } },
+      { id: 'email', label: 'Email Ashfaque', hint: 'Contact', icon: Mail, run: () => { window.location.href = `mailto:${SOCIALS.email}`; onClose(); } },
+      { id: 'linkedin', label: 'Open LinkedIn', hint: 'Contact', icon: Linkedin, run: () => { window.open(SOCIALS.linkedin, '_blank'); onClose(); } },
+      { id: 'github', label: 'Open GitHub', hint: 'Contact', icon: Github, run: () => { window.open(SOCIALS.github, '_blank'); onClose(); } },
+    ];
+    const palettes = PALETTES.map((p) => ({
+      id: `pal-${p.id}`, label: `Palette: ${p.label}`, hint: 'Palette', icon: Palette,
+      run: () => { choosePalette(p.id); },
+    }));
+    return [...nav, ...actions, ...palettes];
+  }, [onNavigate, onClose, onResume, onChat, onTheme, choosePalette]);
+
+  const filtered = commands.filter((c) => c.label.toLowerCase().includes(query.toLowerCase()));
+
+  useEffect(() => {
+    if (isOpen) {
+      setQuery('');
+      setActive(0);
+      const t = setTimeout(() => inputRef.current?.focus(), 30);
+      return () => clearTimeout(t);
+    }
+    return undefined;
+  }, [isOpen]);
+
+  useEffect(() => { setActive(0); }, [query]);
+
+  if (!isOpen) return null;
+
+  const onKeyDown = (e) => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); setActive((a) => Math.min(a + 1, filtered.length - 1)); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive((a) => Math.max(a - 1, 0)); }
+    else if (e.key === 'Enter') { e.preventDefault(); filtered[active]?.run(); }
+  };
+
+  return (
+    <div className="fixed inset-0 z-[90] flex items-start justify-center p-4 pt-[12vh]">
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-fade-in" onClick={onClose} />
+      <div className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-claude-line bg-claude-paper shadow-lift animate-scale-in dark:border-claude-linedark dark:bg-claude-bark">
+        <div className="flex items-center gap-3 border-b border-claude-line px-4 py-3 dark:border-claude-linedark">
+          <Search size={18} className={MUTED} />
+          <input
+            ref={inputRef}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={onKeyDown}
+            placeholder="Type a command or search…"
+            className="flex-1 bg-transparent text-sm text-claude-ink outline-none placeholder:text-claude-muted/70 dark:text-claude-ash"
+          />
+          <kbd className={cx('rounded-md border border-claude-line px-1.5 py-0.5 font-mono text-[10px] dark:border-claude-linedark', MUTED)}>Esc</kbd>
+        </div>
+        <div className="max-h-[50vh] overflow-y-auto p-1.5">
+          {filtered.length === 0 && <p className={cx('px-3 py-6 text-center text-sm', MUTED)}>No matching commands.</p>}
+          {filtered.map((c, i) => (
+            <button
+              key={c.id}
+              onMouseEnter={() => setActive(i)}
+              onClick={() => c.run()}
+              className={cx(
+                'flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors',
+                i === active ? 'bg-coral-500/10 text-coral-700 dark:text-coral-300' : 'text-claude-ink dark:text-claude-ash'
+              )}
+            >
+              <c.icon size={16} className="shrink-0 opacity-70" />
+              <span className="flex-1">{c.label}</span>
+              <span className={cx('text-[10px] uppercase tracking-wide', MUTED)}>{c.hint}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Project case-study modal                                          */
+/* ------------------------------------------------------------------ */
+function ProjectModal({ project, onClose }) {
+  useEffect(() => {
+    if (!project) return undefined;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, [project]);
+
+  if (!project) return null;
+  const cs = project.caseStudy || {};
+  const Icon = project.icon || Sparkles;
+  return (
+    <div className="fixed inset-0 z-[90] flex items-end justify-center p-0 sm:items-center sm:p-4">
+      <div className="absolute inset-0 bg-black/55 backdrop-blur-sm animate-fade-in" onClick={onClose} />
+      <div className="relative max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-t-3xl border border-claude-line bg-claude-paper shadow-lift animate-scale-in dark:border-claude-linedark dark:bg-claude-bark sm:rounded-3xl">
+        {/* header */}
+        <div className="relative overflow-hidden border-b border-claude-line p-6 dark:border-claude-linedark md:p-8">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_120%_at_90%_0%,rgb(var(--accent-500)/0.16),transparent_60%)]" />
+          <button
+            onClick={onClose}
+            aria-label="Close"
+            className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full border border-claude-line bg-claude-paper/80 text-claude-muted transition-colors hover:text-coral-600 dark:border-claude-linedark dark:bg-claude-bark/80"
+          >
+            <X size={16} />
+          </button>
+          <span className="relative inline-grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-coral-500/20 to-gold-500/10 text-coral-600 dark:text-coral-400">
+            <Icon size={24} />
+          </span>
+          {project.badge && (
+            <span className="relative ml-3 inline-flex items-center rounded-full border border-coral-500/30 bg-coral-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-coral-700 dark:text-coral-300">{project.badge}</span>
+          )}
+          <h3 className={cx('relative mt-4 font-serif text-2xl font-semibold', HEADING)}>{project.title}</h3>
+          {cs.role && <p className="relative mt-1 text-sm font-medium text-coral-700 dark:text-coral-300">{cs.role}</p>}
+        </div>
+
+        {/* metrics */}
+        {cs.metrics && (
+          <div className="grid grid-cols-2 gap-px border-b border-claude-line bg-claude-line/60 sm:grid-cols-4 dark:border-claude-linedark dark:bg-claude-linedark/60">
+            {cs.metrics.map((m) => (
+              <div key={m.label} className="bg-claude-paper p-4 text-center dark:bg-claude-bark">
+                <p className={cx('font-serif text-xl font-semibold', HEADING)}>{m.value}</p>
+                <p className={cx('mt-0.5 text-[11px]', MUTED)}>{m.label}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* body */}
+        <div className="space-y-5 p-6 md:p-8">
+          {cs.problem && (
+            <div>
+              <h4 className={cx('mb-1.5 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider', MUTED)}>
+                <Target size={13} className="text-coral-600 dark:text-coral-400" /> The problem
+              </h4>
+              <p className={cx('text-sm leading-relaxed', MUTED)}>{cs.problem}</p>
+            </div>
+          )}
+          {cs.approach && (
+            <div>
+              <h4 className={cx('mb-1.5 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider', MUTED)}>
+                <Sparkles size={13} className="text-coral-600 dark:text-coral-400" /> My approach
+              </h4>
+              <p className={cx('text-sm leading-relaxed', MUTED)}>{cs.approach}</p>
+            </div>
+          )}
+          {cs.stack && (
+            <div>
+              <h4 className={cx('mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider', MUTED)}>
+                <Cpu size={13} className="text-coral-600 dark:text-coral-400" /> Stack &amp; methods
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {cs.stack.map((s) => <ChipTag key={s}>{s}</ChipTag>)}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Writing / Insights                                                */
+/* ------------------------------------------------------------------ */
+function Writing() {
+  return (
+    <div className="mx-auto max-w-4xl">
+      <Reveal>
+        <SectionHeading eyebrow="Insights" title="Writing & Notes" intro="Short pieces on conversational AI, AI product management, and measuring what ships. (Full articles coming soon.)" />
+      </Reveal>
+      <div className="mt-10 space-y-4">
+        {WRITING_POSTS.map((post, i) => (
+          <Reveal key={post.title} delay={i * 80}>
+            <article className={cx(CARD, 'group p-6 transition-all hover:-translate-y-0.5 hover:border-coral-300 hover:shadow-lift dark:hover:border-coral-500/40 md:p-7')}>
+              <div className="mb-2 flex flex-wrap items-center gap-2 text-[11px]">
+                <span className="rounded-full bg-coral-500/10 px-2.5 py-0.5 font-semibold uppercase tracking-wide text-coral-700 dark:text-coral-300">{post.tag}</span>
+                <span className={MUTED}>{post.date}</span>
+                <span className={cx('opacity-50', MUTED)}>·</span>
+                <span className={MUTED}>{post.readTime} read</span>
+              </div>
+              <h3 className={cx('font-serif text-xl font-semibold transition-colors group-hover:text-coral-700 dark:group-hover:text-coral-300', HEADING)}>{post.title}</h3>
+              <p className={cx('mt-2 text-sm leading-relaxed', MUTED)}>{post.blurb}</p>
+              <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-coral-700 dark:text-coral-300">
+                {post.href ? 'Read article' : 'Coming soon'}
+                {post.href && <ArrowUpRight size={13} className="transition-transform group-hover:translate-x-0.5" />}
+              </span>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+      <Reveal>
+        <p className={cx('mt-8 text-center text-sm', MUTED)}>
+          More writing on{' '}
+          <a href={SOCIALS.linkedin} target="_blank" rel="noreferrer" className="font-medium text-coral-700 underline underline-offset-2 dark:text-coral-300">LinkedIn</a>.
+        </p>
+      </Reveal>
     </div>
   );
 }
@@ -1257,15 +1713,25 @@ function Experience() {
 /* ------------------------------------------------------------------ */
 /*  WORKS                                                             */
 /* ------------------------------------------------------------------ */
-function ProjectCard({ icon: Icon, title, desc, tags, badge }) {
+function ProjectCard({ icon: Icon, title, desc, tags, badge, onOpen, project }) {
   const tiltRef = useTilt(6);
+  const clickable = !!(onOpen && project?.caseStudy);
+  const handle = clickable ? () => { onOpen(project); trackEvent('open_case_study', { project: title }); } : undefined;
   return (
     <div
       ref={tiltRef}
-      className={cx(CARD, 'group relative h-full overflow-hidden p-6 transition-[transform,box-shadow,border-color] duration-300 will-change-transform hover:border-coral-300 hover:shadow-lift dark:hover:border-coral-500/40 md:p-8')}
+      onClick={handle}
+      onKeyDown={clickable ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handle(); } } : undefined}
+      role={clickable ? 'button' : undefined}
+      tabIndex={clickable ? 0 : undefined}
+      className={cx(
+        CARD,
+        'group relative h-full overflow-hidden p-6 transition-[transform,box-shadow,border-color] duration-300 will-change-transform hover:border-coral-300 hover:shadow-lift focus:outline-none focus-visible:ring-2 focus-visible:ring-coral-500/50 dark:hover:border-coral-500/40 md:p-8',
+        clickable && 'cursor-pointer'
+      )}
     >
       {/* radial hover glow */}
-      <span className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(40%_50%_at_50%_0%,rgba(218,106,48,0.14),transparent_70%)]" />
+      <span className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(40%_50%_at_50%_0%,rgb(var(--accent-500)/0.14),transparent_70%)]" />
       {badge && (
         <span className="absolute right-4 top-4 rounded-full border border-coral-500/30 bg-coral-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-coral-700 dark:text-coral-300">
           {badge}
@@ -1279,15 +1745,20 @@ function ProjectCard({ icon: Icon, title, desc, tags, badge }) {
       <div className="relative mt-4 flex flex-wrap gap-2">
         {tags.map((t) => <ChipTag key={t}>{t}</ChipTag>)}
       </div>
+      {clickable && (
+        <span className="relative mt-4 inline-flex items-center gap-1 text-xs font-semibold text-coral-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:text-coral-300">
+          View case study <ArrowRight size={13} />
+        </span>
+      )}
     </div>
   );
 }
 
-function Works({ theme }) {
+function Works({ theme, onOpenProject }) {
   return (
     <div className="space-y-12">
       <Reveal>
-        <SectionHeading eyebrow="Portfolio" title="Featured Projects & Hackathons" intro="Delivering business value through AI, automation, and innovation." />
+        <SectionHeading eyebrow="Portfolio" title="Featured Projects & Hackathons" intro="Delivering business value through AI, automation, and innovation. Tap a featured card to open its case study." />
       </Reveal>
 
       {/* Hackathons */}
@@ -1297,7 +1768,7 @@ function Works({ theme }) {
         </h3>
         <div className="grid gap-6 md:grid-cols-2">
           {HACKATHONS.map((p, i) => (
-            <Reveal key={p.title} delay={i * 80}><ProjectCard {...p} /></Reveal>
+            <Reveal key={p.title} delay={i * 80}><ProjectCard {...p} project={p} onOpen={onOpenProject} /></Reveal>
           ))}
         </div>
       </section>
@@ -1359,7 +1830,7 @@ function Works({ theme }) {
         </h3>
         <div className="grid gap-6 md:grid-cols-3">
           {ATT_DELIVERABLES.map((p, i) => (
-            <Reveal key={p.title} delay={i * 80}><ProjectCard {...p} /></Reveal>
+            <Reveal key={p.title} delay={i * 80}><ProjectCard {...p} project={p} onOpen={onOpenProject} /></Reveal>
           ))}
         </div>
       </section>
@@ -1371,7 +1842,7 @@ function Works({ theme }) {
         </h3>
         <div className="grid gap-6 md:grid-cols-2">
           {VERIZON_PROJECTS.map((p, i) => (
-            <Reveal key={p.title} delay={i * 80}><ProjectCard {...p} /></Reveal>
+            <Reveal key={p.title} delay={i * 80}><ProjectCard {...p} project={p} onOpen={onOpenProject} /></Reveal>
           ))}
         </div>
       </section>

@@ -13,61 +13,50 @@ export default {
       },
       colors: {
         /* ----------------------------------------------------------------
-           Custom cinematic palette — "Ember & Gold on warm obsidian".
-           (Token keys kept stable; values are a fully redesigned, original
-           palette — no longer the literal Claude brand hex codes.)
+           All colors are driven by CSS variables (channel triplets) so the
+           live palette switcher can re-grade the whole site at runtime.
+           Defined in src/index.css under :root + [data-palette="..."].
         ---------------------------------------------------------------- */
         claude: {
-          cream: '#f5f1e8',     // light page background (warm ivory)
-          paper: '#fffdf8',     // light raised surface / cards
-          sand: '#ebe4d5',      // light secondary surface
-          line: '#e0d8c7',      // light border
-          ink: '#1c1813',       // light primary text (warm near-black)
-          muted: '#6b6455',     // light secondary text
-          espresso: '#13110d',  // dark page background (warm obsidian)
-          bark: '#1d1a14',      // dark raised surface / cards
-          stump: '#28241c',     // dark secondary surface
-          ash: '#f3eee2',       // dark primary text (warm off-white)
-          subtle: '#a79e8c',    // dark secondary text
-          linedark: '#363026',  // dark border
+          cream: 'rgb(var(--cream) / <alpha-value>)',
+          paper: 'rgb(var(--paper) / <alpha-value>)',
+          sand: 'rgb(var(--sand) / <alpha-value>)',
+          line: 'rgb(var(--line) / <alpha-value>)',
+          ink: 'rgb(var(--ink) / <alpha-value>)',
+          muted: 'rgb(var(--muted) / <alpha-value>)',
+          espresso: 'rgb(var(--espresso) / <alpha-value>)',
+          bark: 'rgb(var(--bark) / <alpha-value>)',
+          stump: 'rgb(var(--stump) / <alpha-value>)',
+          ash: 'rgb(var(--ash) / <alpha-value>)',
+          subtle: 'rgb(var(--subtle) / <alpha-value>)',
+          linedark: 'rgb(var(--linedark) / <alpha-value>)',
         },
-        // Primary accent — warm ember (vivid amber-orange), full ramp
+        // Primary accent ramp (light->dark: 300 lightest … 700 darkest)
         coral: {
-          DEFAULT: '#da6a30',
-          50: '#fcf4ee',
-          100: '#f8e3d2',
-          200: '#f1c4a0',
-          300: '#e9a06e',
-          400: '#e2814a',
-          500: '#da6a30',
-          600: '#be521d',
-          700: '#9b4018',
-          800: '#793216',
-          900: '#5a2713',
+          DEFAULT: 'rgb(var(--accent-500) / <alpha-value>)',
+          300: 'rgb(var(--accent-300) / <alpha-value>)',
+          400: 'rgb(var(--accent-400) / <alpha-value>)',
+          500: 'rgb(var(--accent-500) / <alpha-value>)',
+          600: 'rgb(var(--accent-600) / <alpha-value>)',
+          700: 'rgb(var(--accent-700) / <alpha-value>)',
         },
-        // Secondary accent — warm gold (for cinematic duotone gradients/highlights)
+        // Secondary accent (palette's "alt" highlight) for duotone gradients
         gold: {
-          DEFAULT: '#e0a23b',
-          200: '#f6dca8',
-          300: '#f2ce7e',
-          400: '#ebba56',
-          500: '#e0a23b',
-          600: '#c9852a',
-          700: '#a3681f',
+          DEFAULT: 'rgb(var(--alt-500) / <alpha-value>)',
+          400: 'rgb(var(--alt-400) / <alpha-value>)',
+          500: 'rgb(var(--alt-500) / <alpha-value>)',
+          600: 'rgb(var(--alt-600) / <alpha-value>)',
         },
       },
       boxShadow: {
-        soft: '0 1px 2px rgba(19,17,13,0.05), 0 6px 20px -6px rgba(19,17,13,0.10)',
-        lift: '0 2px 4px rgba(19,17,13,0.06), 0 18px 44px -12px rgba(19,17,13,0.24)',
-        glow: '0 12px 40px -10px rgba(190,82,29,0.45)',
-        'glow-lg': '0 18px 60px -12px rgba(218,106,48,0.55)',
+        soft: '0 1px 2px rgba(0,0,0,0.05), 0 6px 20px -6px rgba(0,0,0,0.10)',
+        lift: '0 2px 4px rgba(0,0,0,0.06), 0 18px 44px -12px rgba(0,0,0,0.28)',
+        glow: '0 12px 40px -10px rgb(var(--accent-500) / 0.45)',
+        'glow-lg': '0 18px 60px -12px rgb(var(--accent-500) / 0.55)',
         ring: 'inset 0 0 0 1px rgba(255,255,255,0.04)',
       },
       keyframes: {
-        'fade-in': {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
+        'fade-in': { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
         'fade-in-up': {
           '0%': { opacity: '0', transform: 'translateY(18px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
@@ -93,24 +82,10 @@ export default {
           '0%, 100%': { 'background-position': '0% 50%' },
           '50%': { 'background-position': '100% 50%' },
         },
-        shimmer: {
-          '100%': { transform: 'translateX(100%)' },
-        },
+        shimmer: { '100%': { transform: 'translateX(100%)' } },
         'pulse-slow': {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.5' },
-        },
-        grain: {
-          '0%, 100%': { transform: 'translate(0, 0)' },
-          '10%': { transform: 'translate(-5%, -5%)' },
-          '20%': { transform: 'translate(-10%, 5%)' },
-          '30%': { transform: 'translate(5%, -10%)' },
-          '40%': { transform: 'translate(-5%, 12%)' },
-          '50%': { transform: 'translate(-10%, 5%)' },
-          '60%': { transform: 'translate(12%, 0%)' },
-          '70%': { transform: 'translate(0%, 8%)' },
-          '80%': { transform: 'translate(-12%, 0%)' },
-          '90%': { transform: 'translate(8%, 5%)' },
         },
         'bg-pan': {
           '0%, 100%': { 'background-position': '0% 0%' },
@@ -120,15 +95,14 @@ export default {
       animation: {
         'fade-in': 'fade-in 0.6s ease-out both',
         'fade-in-up': 'fade-in-up 0.7s cubic-bezier(0.22,1,0.36,1) both',
-        'scale-in': 'scale-in 0.5s cubic-bezier(0.22,1,0.36,1) both',
+        'scale-in': 'scale-in 0.4s cubic-bezier(0.22,1,0.36,1) both',
         'slide-in': 'slide-in 0.5s ease-out both',
-        float: 'float 6s ease-in-out infinite',
-        'aurora-slow': 'aurora 20s ease-in-out infinite',
+        float: 'float 7s ease-in-out infinite',
+        'aurora-slow': 'aurora 22s ease-in-out infinite',
         gradient: 'gradient 6s ease infinite',
         shimmer: 'shimmer 2s infinite',
         'pulse-slow': 'pulse-slow 4s ease-in-out infinite',
-        grain: 'grain 8s steps(10) infinite',
-        'bg-pan': 'bg-pan 18s ease-in-out infinite',
+        'bg-pan': 'bg-pan 20s ease-in-out infinite',
       },
     },
   },
