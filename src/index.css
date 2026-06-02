@@ -2,27 +2,173 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: transparent; 
-}
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1; 
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8; 
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Serif display headings (editorial feel) */
+  h1, h2, h3, h4 {
+    font-family: '"Source Serif 4"', Georgia, Cambria, serif;
+    font-optical-sizing: auto;
+    letter-spacing: -0.015em;
+  }
+
+  /* Warm, branded text selection */
+  ::selection {
+    background-color: rgba(218, 106, 48, 0.24);
+    color: inherit;
+  }
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
+@layer components {
+  /* Ember→gold gradient text accent */
+  .text-gradient-coral {
+    background-image: linear-gradient(105deg, #be521d 0%, #da6a30 40%, #e0a23b 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Animated gradient text (cinematic shimmer through the headline) */
+  .text-gradient-animate {
+    background-image: linear-gradient(105deg, #be521d, #da6a30, #e0a23b, #da6a30, #be521d);
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradient 7s ease infinite;
+  }
+
+  /* Scroll-reveal primitive — toggled by an IntersectionObserver in App.jsx */
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Hairline gradient divider */
+  .rule-gradient {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(218,106,48,0.5), transparent);
+  }
+}
+
+@layer utilities {
+  /* Cinematic film grain overlay */
+  .grain-overlay {
+    position: fixed;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    pointer-events: none;
+    z-index: 60;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grain 8s steps(10) infinite;
+  }
+  .dark .grain-overlay {
+    opacity: 0.08;
+  }
+
+  /* Cursor spotlight (driven by --mx / --my custom props set in JS) */
+  .spotlight {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: radial-gradient(
+      600px circle at var(--mx, 50%) var(--my, 0%),
+      rgba(218, 106, 48, 0.10),
+      transparent 45%
+    );
+    transition: background 0.2s ease-out;
+  }
+  .dark .spotlight {
+    background: radial-gradient(
+      600px circle at var(--mx, 50%) var(--my, 0%),
+      rgba(224, 162, 59, 0.10),
+      transparent 45%
+    );
+  }
+
+  /* Vignette — darkened cinematic edges (dark mode only) */
+  .vignette {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    box-shadow: inset 0 0 200px 40px rgba(0, 0, 0, 0.55);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .dark .vignette {
+    opacity: 1;
+  }
+
+  /* Dotted backdrop texture */
+  .bg-dot-grid {
+    background-image: radial-gradient(currentColor 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+}
+
+/* Custom Scrollbar — warm tones */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(107, 100, 85, 0.4);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 100, 85, 0.65);
+  background-clip: padding-box;
+}
+
+/* Hide scrollbar utility */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-/* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .grain-overlay,
+  .text-gradient-animate {
+    animation: none !important;
+  }
 }
