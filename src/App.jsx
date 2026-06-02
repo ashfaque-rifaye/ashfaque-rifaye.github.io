@@ -851,11 +851,10 @@ export default function Portfolio() {
         />
       </div>
 
-      {/* Ambient background — clean graded glow (no grain/vignette) */}
+      {/* Ambient background — subtle, fixed corner washes (no harsh blobs) */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute -left-[14%] -top-[12%] h-[50%] w-[50%] rounded-full bg-coral-400/12 blur-[150px] animate-aurora-slow dark:bg-coral-500/14" />
-        <div className="absolute -bottom-[20%] -right-[14%] h-[50%] w-[50%] rounded-full bg-gold-500/10 blur-[160px] animate-aurora-slow dark:bg-gold-500/12" style={{ animationDelay: '-11s' }} />
-        <div className="absolute inset-0 bg-dot-grid text-claude-ink/[0.03] dark:text-claude-ash/[0.025]" />
+        <div className="absolute -left-[20%] -top-[20%] h-[45%] w-[45%] rounded-full bg-coral-500/[0.07] blur-[120px] dark:bg-coral-500/[0.10]" />
+        <div className="absolute -bottom-[25%] -right-[20%] h-[45%] w-[45%] rounded-full bg-gold-500/[0.05] blur-[130px] dark:bg-gold-500/[0.08]" />
       </div>
 
       <div className="relative z-10 flex min-h-screen flex-col">
@@ -1028,13 +1027,7 @@ function Overview({ isAdmin, typed, onResume, onContact, onWorks }) {
   return (
     <div className="space-y-6 md:space-y-8">
       {/* Hero */}
-      <section className={cx('group/hero relative overflow-hidden rounded-[2rem] p-6 md:p-14', SURFACE, 'shadow-lift animate-fade-in-up')}>
-        {/* graded glow */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_80%_at_85%_-10%,rgb(var(--accent-500)/0.16),transparent_60%)]" />
-        <div className="pointer-events-none absolute -right-12 -top-12 opacity-[0.06] dark:opacity-[0.09]">
-          <Brain size={240} className="text-coral-600 animate-float" />
-        </div>
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px rule-gradient" />
+      <section className={cx('relative overflow-hidden rounded-[2rem] p-6 md:p-12', SURFACE, 'shadow-soft animate-fade-in-up')}>
         <div className="relative z-10 grid gap-8 md:grid-cols-[auto,1fr] md:items-center">
           <Avatar />
           <div>
@@ -1544,10 +1537,9 @@ function StatCard({ stat }) {
 
 function Avatar() {
   return (
-    <div className="group relative shrink-0">
-      {/* glowing gradient ring */}
-      <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-gold-400 via-coral-500 to-coral-700 opacity-70 blur-[6px] transition-opacity duration-500 group-hover:opacity-100" />
-      <div className="relative h-24 w-24 overflow-hidden rounded-full bg-gradient-to-br from-gold-400 via-coral-500 to-coral-700 p-[3px] shadow-lift md:h-28 md:w-28">
+    <div className="group relative h-24 w-24 shrink-0 md:h-28 md:w-28">
+      {/* gradient ring border (kept within the avatar's circular bounds) */}
+      <div className="relative h-full w-full overflow-hidden rounded-full bg-gradient-to-br from-gold-400 via-coral-500 to-coral-700 p-[3px] shadow-soft">
         <div className="h-full w-full overflow-hidden rounded-full">
         {AVATAR_SRC ? (
           <img src={AVATAR_SRC} alt="Ashfaque Rifaye" className="h-full w-full object-cover" />

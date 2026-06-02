@@ -76,50 +76,50 @@
   }
 
   .dark[data-palette="teal"] {
-    --espresso: 11 20 24;   /* #0B1418 deep midnight teal */
-    --bark: 15 29 35;       /* #0F1D23 */
-    --stump: 23 42 50;
-    --ash: 232 238 240;
-    --subtle: 124 154 163;
-    --linedark: 32 54 62;
-    --accent-300: 247 197 138; --accent-400: 245 176 96; --accent-500: 242 160 61; /* #F2A03D amber */
-    --accent-600: 217 138 45; --accent-700: 178 110 32;
+    --espresso: 12 26 31;   /* deep teal (stronger cast) */
+    --bark: 17 37 44;
+    --stump: 26 52 61;
+    --ash: 233 240 242;
+    --subtle: 128 164 173;
+    --linedark: 36 64 73;
+    --accent-300: 250 200 140; --accent-400: 247 178 92; --accent-500: 245 162 61; /* amber */
+    --accent-600: 222 138 40; --accent-700: 184 108 28;
     --alt-400: 94 234 212; --alt-500: 45 212 191; --alt-600: 20 184 166; /* teal */
   }
 
   .dark[data-palette="cyan"] {
-    --espresso: 8 11 17;    /* #080B11 near-black blue */
-    --bark: 14 20 29;       /* #0E141D */
-    --stump: 21 29 42;
-    --ash: 227 233 242;
-    --subtle: 107 124 147;
-    --linedark: 30 40 56;
-    --accent-300: 103 232 249; --accent-400: 34 211 238; --accent-500: 34 211 238; /* #22D3EE cyan */
-    --accent-600: 14 165 196; --accent-700: 14 116 144;
-    --alt-400: 129 140 248; --alt-500: 99 102 241; --alt-600: 79 70 229; /* indigo */
+    --espresso: 9 14 26;    /* deep navy-blue */
+    --bark: 14 22 40;
+    --stump: 22 33 56;
+    --ash: 226 234 245;
+    --subtle: 116 134 163;
+    --linedark: 31 46 74;
+    --accent-300: 125 235 251; --accent-400: 45 216 240; --accent-500: 34 211 238; /* cyan */
+    --accent-600: 8 165 200; --accent-700: 12 120 150;
+    --alt-400: 139 149 252; --alt-500: 109 112 245; --alt-600: 84 76 235; /* indigo */
   }
 
   .dark[data-palette="aubergine"] {
-    --espresso: 20 14 26;   /* #140E1A aubergine */
-    --bark: 28 20 38;       /* #1C1426 */
-    --stump: 38 28 50;
-    --ash: 237 231 242;
-    --subtle: 139 124 153;
-    --linedark: 50 38 64;
-    --accent-300: 244 114 182; --accent-400: 236 82 155; --accent-500: 224 82 155; /* #E0529B magenta */
-    --accent-600: 190 50 120; --accent-700: 157 30 90;
-    --alt-400: 245 200 110; --alt-500: 232 180 90; --alt-600: 202 138 42; /* gold */
+    --espresso: 26 15 33;   /* rich aubergine */
+    --bark: 36 22 47;
+    --stump: 48 31 62;
+    --ash: 240 232 246;
+    --subtle: 154 134 168;
+    --linedark: 62 44 80;
+    --accent-300: 246 124 188; --accent-400: 238 92 164; --accent-500: 230 86 160; /* magenta */
+    --accent-600: 198 52 128; --accent-700: 160 32 96;
+    --alt-400: 248 206 120; --alt-500: 236 186 96; --alt-600: 208 144 48; /* gold */
   }
 
   .dark[data-palette="emerald"] {
-    --espresso: 13 15 14;   /* #0D0F0E true charcoal */
-    --bark: 21 25 23;       /* #151917 */
-    --stump: 30 36 33;
-    --ash: 231 234 232;
-    --subtle: 126 139 133;
-    --linedark: 42 50 46;
-    --accent-300: 110 231 183; --accent-400: 52 211 153; --accent-500: 47 191 113; /* #2FBF71 emerald */
-    --accent-600: 16 150 90; --accent-700: 6 120 70;
+    --espresso: 12 20 16;   /* deep forest charcoal */
+    --bark: 18 29 23;
+    --stump: 27 42 34;
+    --ash: 230 238 233;
+    --subtle: 124 146 134;
+    --linedark: 38 56 46;
+    --accent-300: 120 235 190; --accent-400: 58 217 160; --accent-500: 45 197 118; /* emerald */
+    --accent-600: 16 158 95; --accent-700: 6 126 74;
     --alt-400: 167 243 208; --alt-500: 110 231 183; --alt-600: 52 211 153; /* mint */
   }
 
@@ -131,9 +131,8 @@
   }
 
   h1, h2, h3, h4 {
-    font-family: '"Source Serif 4"', Georgia, Cambria, serif;
-    font-optical-sizing: auto;
-    letter-spacing: -0.015em;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    letter-spacing: -0.02em;
   }
 
   ::selection {

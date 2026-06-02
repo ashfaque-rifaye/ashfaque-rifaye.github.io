@@ -8,8 +8,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        // Inter everywhere (original site font). "serif" is aliased to Inter
+        // so existing font-serif class usages still render Inter — no serif.
         sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
-        serif: ['"Source Serif 4"', 'Georgia', 'Cambria', 'serif'],
+        serif: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
       },
       colors: {
         /* ----------------------------------------------------------------
