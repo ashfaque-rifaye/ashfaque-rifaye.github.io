@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import {
   Sun, Moon, Menu, X, MapPin, Download, ArrowUpRight, ArrowRight, Sparkles,
   Briefcase, ShieldCheck, TrendingUp, Award, Cpu, Target, Bot, GraduationCap,
   CheckCircle, Brain, ChevronRight, Trophy, Zap, Globe, Code2,
   MessageSquare, BarChart2, Star, Quote, Mail, Linkedin, Github, Send, Copy, Check,
-  Search, Palette, FileText, PenLine, ExternalLink, CornerDownLeft,
+  Search, Palette, FileText, PenLine, ExternalLink, CornerDownLeft, Play,
 } from 'lucide-react';
 
 /* ------------------------------------------------------------------ */
@@ -305,6 +306,15 @@ const WRITING_POSTS = [
 ];
 
 const PERSONAL_PROJECTS = [
+  {
+    name: 'NebulaX',
+    lang: 'TypeScript',
+    desc: 'Self-correcting agent swarm: define an Intelligence Mission in plain language and an autonomous AI swarm senses the web, cross-checks sources, resolves conflicting data, and turns analysis into prototypes and ranked build plans — routed to GitHub, Jira, and Figma.',
+    tags: ['Agent Swarm', 'React 19', 'TypeScript', 'LLM'],
+    github: 'https://github.com/ashfaque-rifaye/nebulaX',
+    youtube: 'hDhJHZPzrPc',
+    featured: true,
+  },
   { name: 'AI for Bharat Hackathon', lang: 'Python', desc: 'Hackathon submission exploring AI-driven solutions addressing India-specific challenges. Built end-to-end with a Python ML pipeline and a conversational interface.', tags: ['Python', 'AI/ML', 'NLP'] },
   { name: 'AI Mock Interview', lang: 'React', desc: 'AI-powered mock interview platform that simulates real interview scenarios, evaluates responses using LLMs, and provides structured feedback to help candidates prepare.', tags: ['LLM', 'Interview AI', 'React'] },
   { name: 'Productivity Hub', lang: 'Python', desc: 'Multi-agent productivity system hosted on Google Cloud, orchestrating specialized AI agents for task management, research, scheduling, and knowledge retrieval.', tags: ['Multi-Agent', 'GCP', 'Python'] },
@@ -1281,6 +1291,48 @@ function PaletteMenu({ palette, choose, isOpen, setIsOpen }) {
 }
 
 /* ------------------------------------------------------------------ */
+/*  YouTube video lightbox                                            */
+/* ------------------------------------------------------------------ */
+function VideoModal({ videoId, onClose }) {
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [onClose]);
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+      style={{ background: 'rgba(0,0,0,0.88)', backdropFilter: 'blur(6px)' }}
+      onClick={onClose}
+    >
+      <div className="relative w-full max-w-4xl" onClick={(e) => e.stopPropagation()}>
+        <button
+          onClick={onClose}
+          aria-label="Close video"
+          className="absolute -top-10 right-0 flex items-center gap-1.5 text-sm font-medium text-white/60 transition-colors hover:text-white"
+        >
+          <X size={16} /> Close
+        </button>
+        <div className="aspect-video overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/10">
+          <iframe
+            className="h-full w-full border-0"
+            src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
+            title="NebulaX demo"
+            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            allowFullScreen
+          />
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Impact metrics band                                               */
 /* ------------------------------------------------------------------ */
 function ImpactMetric({ metric }) {
@@ -1746,6 +1798,112 @@ function ProjectCard({ icon: Icon, title, desc, tags, badge, onOpen, project }) 
   );
 }
 
+function PersonalProjectsGrid() {
+  const [activeVideo, setActiveVideo] = useState(null);
+  return (
+    <>
+      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {PERSONAL_PROJECTS.map((proj, i) => {
+          if (proj.featured) {
+            return (
+              <Reveal key={proj.name} delay={0} className="md:col-span-2 lg:col-span-3">
+                <div className={cx(CARD, 'group overflow-hidden')}>
+                  <div className="flex flex-col gap-6 p-6 md:flex-row md:items-start">
+                    {/* YouTube thumbnail / play area */}
+                    <button
+                      onClick={() => { setActiveVideo(proj.youtube); trackEvent('project_video_click', { project: proj.name }); }}
+                      aria-label={`Watch ${proj.name} demo`}
+                      className="relative shrink-0 w-full overflow-hidden rounded-xl md:w-72 lg:w-80"
+                    >
+                      <img
+                        src={`https://img.youtube.com/vi/${proj.youtube}/hqdefault.jpg`}
+                        alt={`${proj.name} demo thumbnail`}
+                        className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105 md:h-48"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/35 transition-colors hover:bg-black/50">
+                        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 shadow-xl transition-transform hover:scale-110">
+                          <Play size={22} className="ml-1 text-black" />
+                        </span>
+                      </div>
+                      <span className="absolute bottom-2.5 left-2.5 rounded-md bg-black/60 px-2 py-0.5 text-[10px] font-semibold text-white">Watch Demo</span>
+                    </button>
+
+                    {/* Info */}
+                    <div className="flex flex-1 flex-col">
+                      <div className="mb-3 flex items-start justify-between gap-3">
+                        <div className="flex items-center gap-2">
+                          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-coral-500/10 text-coral-600 dark:text-coral-400">
+                            <Code2 size={18} />
+                          </span>
+                          <span className={cx('rounded-md bg-claude-line/60 px-2 py-0.5 font-mono text-[10px] dark:bg-claude-linedark', MUTED)}>{proj.lang}</span>
+                        </div>
+                        <span className="shrink-0 rounded-full bg-coral-500/10 px-2.5 py-1 text-[10px] font-semibold text-coral-600 dark:text-coral-400">Featured</span>
+                      </div>
+                      <h4 className={cx('mb-2 text-base font-semibold', HEADING)}>{proj.name}</h4>
+                      <p className={cx('mb-4 flex-1 text-sm leading-relaxed', MUTED)}>{proj.desc}</p>
+                      <div className="mb-4 flex flex-wrap gap-1.5">
+                        {proj.tags.map((t) => (
+                          <span key={t} className={TAG}>{t}</span>
+                        ))}
+                      </div>
+                      <div className="flex flex-wrap gap-2.5">
+                        <button
+                          onClick={() => { setActiveVideo(proj.youtube); trackEvent('project_video_click', { project: proj.name }); }}
+                          className="flex items-center gap-1.5 rounded-lg bg-coral-500/10 px-3.5 py-2 text-xs font-semibold text-coral-700 transition-colors hover:bg-coral-500/20 dark:text-coral-300"
+                        >
+                          <Play size={12} className="ml-0.5" /> Watch Demo
+                        </button>
+                        <a
+                          href={proj.github}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={() => trackEvent('project_click', { project: proj.name })}
+                          className={cx('flex items-center gap-1.5 rounded-lg border px-3.5 py-2 text-xs font-semibold transition-colors hover:border-coral-300 dark:hover:border-coral-500/40', SURFACE)}
+                        >
+                          <Github size={12} /> GitHub <ArrowUpRight size={10} />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            );
+          }
+          return (
+            <Reveal key={proj.name} delay={(i % 3) * 80}>
+              <a
+                href={proj.github || SOCIALS.github}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackEvent('project_click', { project: proj.name })}
+                className={cx(CARD, CARD_HOVER, 'group flex h-full flex-col p-5')}
+              >
+                <div className="mb-3 flex items-start justify-between">
+                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-coral-500/10 text-coral-600 dark:text-coral-400">
+                    <Code2 size={20} />
+                  </span>
+                  <span className={cx('rounded-md bg-claude-line/60 px-2 py-0.5 font-mono text-[10px] dark:bg-claude-linedark', MUTED)}>{proj.lang}</span>
+                </div>
+                <h4 className={cx('flex items-center gap-1 text-sm font-semibold', HEADING)}>
+                  {proj.name}
+                  <ArrowUpRight size={14} className="text-coral-500 opacity-0 transition-opacity group-hover:opacity-100" />
+                </h4>
+                <p className={cx('mt-2 flex-grow text-xs leading-relaxed', MUTED)}>{proj.desc}</p>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {proj.tags.map((t) => (
+                    <span key={t} className="rounded-md border border-claude-line bg-claude-sand/50 px-2 py-0.5 text-[10px] text-claude-muted dark:border-claude-linedark dark:bg-claude-stump/50 dark:text-claude-subtle">{t}</span>
+                  ))}
+                </div>
+              </a>
+            </Reveal>
+          );
+        })}
+      </div>
+      {activeVideo && <VideoModal videoId={activeVideo} onClose={() => setActiveVideo(null)} />}
+    </>
+  );
+}
+
 function Works({ theme, onOpenProject }) {
   return (
     <div className="space-y-12">
@@ -1850,36 +2008,7 @@ function Works({ theme, onOpenProject }) {
             github.com/ashfaque-rifaye
           </a>
         </p>
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {PERSONAL_PROJECTS.map((proj, i) => (
-            <Reveal key={proj.name} delay={(i % 3) * 80}>
-              <a
-                href={SOCIALS.github}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => trackEvent('project_click', { project: proj.name })}
-                className={cx(CARD, CARD_HOVER, 'group flex h-full flex-col p-5')}
-              >
-                <div className="mb-3 flex items-start justify-between">
-                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-coral-500/10 text-coral-600 dark:text-coral-400">
-                    <Code2 size={20} />
-                  </span>
-                  <span className={cx('rounded-md bg-claude-line/60 px-2 py-0.5 font-mono text-[10px] dark:bg-claude-linedark', MUTED)}>{proj.lang}</span>
-                </div>
-                <h4 className={cx('flex items-center gap-1 text-sm font-semibold', HEADING)}>
-                  {proj.name}
-                  <ArrowUpRight size={14} className="text-coral-500 opacity-0 transition-opacity group-hover:opacity-100" />
-                </h4>
-                <p className={cx('mt-2 flex-grow text-xs leading-relaxed', MUTED)}>{proj.desc}</p>
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {proj.tags.map((t) => (
-                    <span key={t} className="rounded-md border border-claude-line bg-claude-sand/50 px-2 py-0.5 text-[10px] text-claude-muted dark:border-claude-linedark dark:bg-claude-stump/50 dark:text-claude-subtle">{t}</span>
-                  ))}
-                </div>
-              </a>
-            </Reveal>
-          ))}
-        </div>
+        <PersonalProjectsGrid />
       </section>
     </div>
   );
