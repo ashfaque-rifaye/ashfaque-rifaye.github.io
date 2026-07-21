@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, ArrowUpRight, Code2, Github, Play } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Code2, ExternalLink, Github, Play } from 'lucide-react';
 import { FEATURED_WORK, PERSONAL_PROJECTS } from '../data/projects';
 import { SOCIALS } from '../data/profile';
 import type { PersonalProject, WorkItem } from '../data/types';
@@ -89,17 +89,30 @@ function FeaturedPersonal({ proj, onVideo }: { proj: PersonalProject; onVideo: (
               <Tag key={t} accent>{t}</Tag>
             ))}
           </div>
-          {proj.github && (
-            <div className="mt-5">
-              <a
-                href={proj.github}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => trackEvent('project_click', { project: proj.name })}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-surface px-3.5 py-2 text-xs font-semibold transition-colors hover:border-accent-500/40"
-              >
-                <Github size={13} aria-hidden /> View source <ArrowUpRight size={11} aria-hidden />
-              </a>
+          {(proj.github || proj.demo) && (
+            <div className="mt-5 flex flex-wrap gap-2.5">
+              {proj.demo && (
+                <a
+                  href={proj.demo}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => trackEvent('project_click', { project: `${proj.name} (live demo)` })}
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-accent px-3.5 py-2 text-xs font-semibold text-accent-ink transition-all hover:brightness-105"
+                >
+                  <ExternalLink size={13} aria-hidden /> Live demo
+                </a>
+              )}
+              {proj.github && (
+                <a
+                  href={proj.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => trackEvent('project_click', { project: proj.name })}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-surface px-3.5 py-2 text-xs font-semibold transition-colors hover:border-accent-500/40"
+                >
+                  <Github size={13} aria-hidden /> View source <ArrowUpRight size={11} aria-hidden />
+                </a>
+              )}
             </div>
           )}
         </div>
@@ -111,7 +124,7 @@ function FeaturedPersonal({ proj, onVideo }: { proj: PersonalProject; onVideo: (
 export function Work() {
   const [activeCase, setActiveCase] = useState<WorkItem | null>(null);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
-  const featured = PERSONAL_PROJECTS.find((p) => p.featured);
+  const featured = PERSONAL_PROJECTS.filter((p) => p.featured);
   const rest = PERSONAL_PROJECTS.filter((p) => !p.featured);
 
   return (
@@ -145,10 +158,14 @@ export function Work() {
         </a>
       </p>
 
-      {featured && (
-        <Reveal className="mb-5">
-          <FeaturedPersonal proj={featured} onVideo={setActiveVideo} />
-        </Reveal>
+      {featured.length > 0 && (
+        <div className="mb-5 space-y-5">
+          {featured.map((proj, i) => (
+            <Reveal key={proj.name} delay={i * 70}>
+              <FeaturedPersonal proj={proj} onVideo={setActiveVideo} />
+            </Reveal>
+          ))}
+        </div>
       )}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

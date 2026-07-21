@@ -130,6 +130,16 @@ export const FEATURED_WORK: WorkItem[] = [
 
 export const PERSONAL_PROJECTS: PersonalProject[] = [
   {
+    name: 'ClimaTwin',
+    lang: 'TypeScript',
+    desc: 'AI-powered urban climate decision-intelligence platform built during a GenAI cohort: pick any location, view live microclimate data, design interventions for heat, flood, air quality, and green infrastructure within a budget, then simulate measurable impact and export a planning report.',
+    tags: ['Digital Twin', 'Gemini 2.5', 'FastAPI', 'React 19', 'BigQuery ML'],
+    github: 'https://github.com/ashfaque-rifaye/clima-twin',
+    youtube: 'mLN7ojhJgFw',
+    demo: 'https://climatwin-980129431310.asia-south1.run.app/',
+    featured: true,
+  },
+  {
     name: 'NebulaX',
     lang: 'TypeScript',
     desc: 'Self-correcting agent swarm: define an Intelligence Mission in plain language and an autonomous AI swarm senses the web, cross-checks sources, resolves conflicting data, and turns analysis into prototypes and ranked build plans — routed to GitHub, Jira, and Figma.',

@@ -44,6 +44,7 @@ export interface PersonalProject {
   tags: string[];
   github?: string;
   youtube?: string;
+  demo?: string;
   featured?: boolean;
 }
 
