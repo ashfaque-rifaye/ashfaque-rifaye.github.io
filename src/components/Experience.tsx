@@ -33,7 +33,7 @@ function RoleCard({ job }: { job: Role }) {
       <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {job.metrics.map((m) => (
           <div key={m.label} className="rounded-xl border border-line bg-raised px-3.5 py-3">
-            <p className="text-lg font-semibold tabular-nums tracking-tight text-accent-text">{m.value}</p>
+            <p className="text-gradient-accent text-lg font-semibold tabular-nums tracking-tight">{m.value}</p>
             <p className="mt-0.5 text-[11px] leading-tight text-faint">{m.label}</p>
           </div>
         ))}

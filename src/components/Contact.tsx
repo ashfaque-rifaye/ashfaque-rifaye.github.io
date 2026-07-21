@@ -21,7 +21,7 @@ function ContactRow({
 }) {
   const content = (
     <>
-      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-accent-500/10 text-accent-text">
+      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-chip text-accent-text">
         <Icon size={18} aria-hidden />
       </span>
       <span className="min-w-0">
@@ -123,7 +123,7 @@ export function Contact({ onResume }: { onResume: () => void }) {
             </div>
             <button
               type="submit"
-              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-accent-ink shadow-glow transition-all hover:brightness-105 active:scale-[0.98]"
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-accent px-5 py-3 text-sm font-semibold text-accent-ink shadow-glow transition-all hover:brightness-105 active:scale-[0.98]"
             >
               Send message <Send size={16} aria-hidden className="transition-transform group-hover:translate-x-0.5" />
             </button>

@@ -94,9 +94,9 @@ export function ChatWidget({ activeSection, openSignal = 0 }: { activeSection: s
           style={{ maxHeight: 'min(600px, calc(100vh - 8rem))' }}
         >
           {/* header */}
-          <div className="flex items-center justify-between border-b border-line bg-gradient-to-r from-accent-500/10 to-transparent p-4">
+          <div className="flex items-center justify-between border-b border-line bg-gradient-to-r from-accent-500/12 via-accent-400/6 to-alt/8 p-4">
             <div className="flex items-center gap-2.5">
-              <span className="grid h-9 w-9 place-items-center rounded-full bg-accent text-accent-ink shadow-glow">
+              <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-accent text-accent-ink shadow-glow">
                 <Bot size={17} aria-hidden />
               </span>
               <div>
@@ -117,7 +117,7 @@ export function ChatWidget({ activeSection, openSignal = 0 }: { activeSection: s
                   className={cx(
                     'max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed',
                     msg.role === 'user'
-                      ? 'rounded-br-md bg-accent text-accent-ink'
+                      ? 'rounded-br-md bg-gradient-accent text-accent-ink'
                       : 'rounded-bl-md border border-line bg-raised text-ink'
                   )}
                 >
@@ -194,7 +194,7 @@ export function ChatWidget({ activeSection, openSignal = 0 }: { activeSection: s
               type="submit"
               disabled={loading}
               aria-label="Send message"
-              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-accent text-accent-ink transition-all hover:brightness-105 disabled:opacity-50"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-accent text-accent-ink transition-all hover:brightness-105 disabled:opacity-50"
             >
               <Send size={16} aria-hidden />
             </button>
@@ -207,7 +207,7 @@ export function ChatWidget({ activeSection, openSignal = 0 }: { activeSection: s
         onClick={toggle}
         aria-label={isOpen ? 'Close chat' : "Chat with Ashfaque's AI Twin"}
         className={cx(
-          'grid h-[52px] w-[52px] place-items-center rounded-full bg-accent text-accent-ink shadow-glow transition-all duration-300 hover:scale-105 active:scale-95',
+          'grid h-[52px] w-[52px] place-items-center rounded-full bg-gradient-accent text-accent-ink shadow-glow transition-all duration-300 hover:scale-105 active:scale-95',
           isOpen && 'rotate-90'
         )}
       >

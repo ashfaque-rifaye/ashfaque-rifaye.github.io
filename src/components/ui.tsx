@@ -78,7 +78,7 @@ export function Section({
     <section id={id} aria-labelledby={`${id}-title`} className={cx('scroll-mt-24 py-16 md:py-24', className)}>
       <Reveal>
         <p className="mb-3 flex items-center gap-2.5 font-mono text-xs font-semibold uppercase tracking-[0.2em] text-accent-text">
-          <span aria-hidden className="h-px w-8 bg-accent-500/60" />
+          <span aria-hidden className="h-px w-8 bg-gradient-to-r from-accent-500 to-alt" />
           {eyebrow}
         </p>
         <h2 id={`${id}-title`} className="max-w-2xl text-3xl font-semibold tracking-tight md:text-4xl">

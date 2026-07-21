@@ -29,7 +29,7 @@ export function Expertise() {
       <Reveal className="mt-5">
         <div className={cx(CARD, 'p-6 md:p-7')}>
           <div className="mb-5 flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-accent-500/10 text-accent-text">
+            <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-chip text-accent-text">
               <Brain size={20} aria-hidden />
             </span>
             <div>

@@ -24,7 +24,7 @@ function WorkCard({ item, onOpen }: { item: WorkItem; onOpen: (item: WorkItem) =
         className="pointer-events-none absolute -inset-px bg-[radial-gradient(45%_50%_at_50%_0%,rgb(var(--accent-500)/0.10),transparent_70%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
       />
       <div className="relative flex items-start justify-between gap-3">
-        <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent-500/10 text-accent-text">
+        <span className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-chip text-accent-text">
           <item.icon size={22} aria-hidden />
         </span>
         {item.badge && (
@@ -162,7 +162,7 @@ export function Work() {
               className={cx(CARD, CARD_HOVER, 'group flex h-full flex-col p-5')}
             >
               <div className="mb-3 flex items-start justify-between">
-                <span className="grid h-9 w-9 place-items-center rounded-lg bg-accent-500/10 text-accent-text">
+                <span className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-chip text-accent-text">
                   <Code2 size={17} aria-hidden />
                 </span>
                 <span className="rounded-md bg-raised px-2 py-0.5 font-mono text-[10px] text-faint">{proj.lang}</span>

@@ -39,7 +39,7 @@ export function Nav({
 
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:px-8">
         <a href="#hero" className="group flex items-center gap-3" aria-label="Back to top">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-accent text-accent-ink shadow-glow transition-transform group-hover:scale-105">
+          <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-accent text-accent-ink shadow-glow transition-transform group-hover:scale-105">
             <span className="display-accent !text-accent-ink text-lg leading-none">A</span>
           </span>
           <span className="hidden flex-col text-left sm:flex">
@@ -84,7 +84,7 @@ export function Nav({
           </button>
           <button
             onClick={onResume}
-            className="hidden items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-ink shadow-glow transition-all hover:brightness-105 active:scale-95 md:inline-flex"
+            className="hidden items-center gap-2 rounded-full bg-gradient-accent px-4 py-2 text-sm font-semibold text-accent-ink shadow-glow transition-all hover:brightness-105 active:scale-95 md:inline-flex"
           >
             <Download size={14} aria-hidden /> Resume
           </button>
@@ -120,7 +120,7 @@ export function Nav({
           ))}
           <button
             onClick={() => { setMenuOpen(false); onResume(); }}
-            className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-4 py-3 text-sm font-semibold text-accent-ink"
+            className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-accent px-4 py-3 text-sm font-semibold text-accent-ink"
           >
             <Download size={15} aria-hidden /> Download Resume
           </button>

@@ -16,7 +16,7 @@ export function Recognition() {
           <Reveal key={award.title} delay={(i % 2) * 70} className={i === AWARDS.length - 1 ? 'md:col-span-2' : ''}>
             <div className={cx(CARD, CARD_HOVER, 'group h-full p-6')}>
               <div className="flex items-start gap-4">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent-500/10 text-accent-text transition-colors group-hover:bg-accent-500/20">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-chip text-accent-text transition-colors group-hover:bg-gradient-chip-strong">
                   <award.icon size={22} aria-hidden />
                 </span>
                 <div>
@@ -41,7 +41,7 @@ export function Recognition() {
             "{TESTIMONIAL.quote}"
           </blockquote>
           <figcaption className="relative mt-6 flex items-center gap-3">
-            <span aria-hidden className="grid h-11 w-11 place-items-center rounded-full bg-accent-500/15 font-semibold text-accent-text">
+            <span aria-hidden className="grid h-11 w-11 place-items-center rounded-full bg-gradient-chip-strong font-semibold text-accent-text">
               {TESTIMONIAL.initials}
             </span>
             <span>

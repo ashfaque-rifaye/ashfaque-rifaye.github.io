@@ -40,7 +40,7 @@ export function CaseStudyModal({ item, onClose }: { item: WorkItem | null; onClo
           >
             <X size={16} aria-hidden />
           </button>
-          <span className="relative inline-grid h-12 w-12 place-items-center rounded-xl bg-accent-500/10 text-accent-text">
+          <span className="relative inline-grid h-12 w-12 place-items-center rounded-xl bg-gradient-chip text-accent-text">
             <item.icon size={24} aria-hidden />
           </span>
           {item.badge && (
@@ -56,7 +56,7 @@ export function CaseStudyModal({ item, onClose }: { item: WorkItem | null; onClo
         <div className="grid grid-cols-2 gap-px border-b border-line bg-line/60 sm:grid-cols-4">
           {cs.metrics.map((m) => (
             <div key={m.label} className="bg-surface p-4 text-center">
-              <p className="text-lg font-semibold tabular-nums tracking-tight">{m.value}</p>
+              <p className="text-gradient-accent text-lg font-semibold tabular-nums tracking-tight">{m.value}</p>
               <p className="mt-0.5 text-[11px] text-faint">{m.label}</p>
             </div>
           ))}
