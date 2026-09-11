@@ -14,7 +14,11 @@ export function Trajectory() {
       <div className="wrap">
         <SectionHead
           id="path-title"
-          title="Career trajectory"
+          title={
+            <>
+              Career <span className="text-grad-ai">trajectory</span>
+            </>
+          }
           intro="Engineering first, then customers and revenue, then AI products at scale. Each step added a layer the next one needed."
           action={<ArrowLink to="/about/">Read the full story</ArrowLink>}
         />

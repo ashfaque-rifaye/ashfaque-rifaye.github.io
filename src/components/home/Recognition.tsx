@@ -9,7 +9,7 @@ export function Recognition() {
       <div className="wrap">
         <SectionHead
           id="awards-title"
-          title="Recognition"
+          title={<span className="text-grad">Recognition</span>}
           intro="Innovation awards for new product ideas, and team awards for products that shipped."
         />
         <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-16">

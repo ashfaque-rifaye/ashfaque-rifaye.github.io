@@ -7,11 +7,15 @@ import { SectionHead } from '../ui/SectionHead';
 export function LabTeaser() {
   const featured = LAB_PROJECTS.filter((p) => p.featured);
   return (
-    <section aria-labelledby="lab-title" className="section pt-0">
+    <section aria-labelledby="lab-title" className="section">
       <div className="wrap">
         <SectionHead
           id="lab-title"
-          title="From the AI Lab"
+          title={
+            <>
+              From the <span className="text-grad">AI Lab</span>
+            </>
+          }
           intro="Experiments outside the day job, each started from a product question I wanted answered with working software."
           action={<ArrowLink to="/lab/">Explore the AI Lab</ArrowLink>}
         />

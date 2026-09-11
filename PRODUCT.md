@@ -33,18 +33,19 @@ Precise, candid, quietly confident. Senior without being stiff.
 
 ## Anti-references
 
-- Generic developer portfolios: skill-logo walls, "Hi, I'm…" heroes, typewriter effects, neon gradients, particle fields, 3D AI brains, stock "futuristic" imagery.
+- Generic developer portfolios: skill-logo walls, "Hi, I'm…" heroes, typewriter effects, particle fields, 3D AI brains, stock "futuristic" imagery.
 - Corporate-blue LinkedIn clones.
-- SaaS landing-page templates: gradient text, glass cards everywhere, identical icon-card grids, a tracked uppercase eyebrow above every section.
-- Anything that makes him look like he is applying for a frontend role (CSS showing off, 17 animation effects, gimmicks that delay content).
+- Colour without purpose: gradients on body text, effects that hurt contrast, identical icon-card grids, a tracked uppercase eyebrow above every section.
+- Anything that makes him look like he is applying for a frontend role (CSS showing off, gimmicks that delay content).
 
 ## Design Principles
 
 1. **Evidence over adjectives.** Every claim carries a number, a source or an artifact. If a fact is not verified, it is not published (placeholders are dev-only).
 2. **Show how he thinks.** Case studies expose decisions, trade-offs and lessons, not just outcomes.
 3. **Product first, technology second.** AI is presented as a means; the problem and the metric lead.
-4. **Restraint is the premium signal.** One accent, generous space, motion only where it explains something.
-5. **Fast and honest.** Prerendered pages, no layout shift, graceful fallbacks, no dead ends.
+4. **Colourful, never at the cost of reading.** A gradient-rich spectrum in light and dark (the owner's direction), with solid body text, generous space and motion only where it explains something.
+5. **Show it working.** Video demos, live apps, an AI Twin that answers and acts, and a Hiring Agent that does real work for the visitor. The site itself is evidence of AI product skill.
+6. **Fast and honest.** Prerendered pages, no layout shift, graceful fallbacks, no dead ends.
 
 ## Accessibility & Inclusion
 

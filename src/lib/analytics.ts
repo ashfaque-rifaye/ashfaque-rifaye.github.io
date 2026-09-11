@@ -21,10 +21,20 @@ export type AnalyticsEvent =
   | { name: 'social_link_click'; params: { platform: string; location: string } }
   | { name: 'email_copied'; params: { location: string } }
   | { name: 'case_study_open'; params: { slug: string; location: string } }
-  | { name: 'project_link_click'; params: { project: string; link_type: 'github' | 'demo' | 'video' } }
+  | { name: 'project_link_click'; params: { project: string; link_type: 'github' | 'demo' | 'video' | 'live' } }
   | { name: 'project_video_play'; params: { project: string } }
+  | { name: 'demo_play'; params: { demo: string; location: string } }
+  | { name: 'demo_request'; params: { demo: string; location: string } }
+  | { name: 'theme_changed'; params: { theme: 'light' | 'dark'; location: string } }
   | { name: 'command_palette_opened'; params: Record<string, never> }
   | { name: 'command_palette_action'; params: { action: string } }
+  | { name: 'search_ask_ai'; params: { query_length: number } }
+  | { name: 'chat_nudge_shown'; params: Record<string, never> }
+  | { name: 'chat_nudge_clicked'; params: { choice: 'ask' | 'agent' | 'dismiss' } }
+  | { name: 'chat_action'; params: { action: string; auto: 'yes' | 'no' } }
+  | { name: 'agent_run_started'; params: { source: 'paste' | 'sample' | 'chat' | 'link'; jd_length: number } }
+  | { name: 'agent_run_completed'; params: { fit_score: number; requirements: number; via_llm: 'yes' | 'no'; duration_ms: number } }
+  | { name: 'agent_action'; params: { action: 'email' | 'ics' | 'brief_md' | 'copy' | 'print' | 'open_proof' } }
   | { name: 'chat_opened'; params: { location: string } }
   | { name: 'chat_closed'; params: { turns_in_session: number } }
   | { name: 'chat_message_sent'; params: { query_length: number; topic: string; turn_number: number } }

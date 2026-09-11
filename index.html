@@ -1,19 +1,26 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#100f0d" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0d0e17" />
     <meta name="author" content="Ashfaque Rifaye" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <script>
-      /* Entrance motion only when someone is watching: skipped for hidden
-         tabs and reduced-motion users, and always cleared after 3s so an
-         animation can never leave content hidden. */
+      /* Before first paint: apply the saved theme (dark unless the visitor
+         chose light), then allow entrance motion only when someone is
+         watching (visible tab, no reduced-motion preference). The motion
+         class is always cleared after 3s so content can never stay hidden. */
       (function () {
+        var root = document.documentElement;
         try {
-          var root = document.documentElement;
+          var theme = localStorage.getItem('theme') === 'light' ? 'light' : 'dark';
+          root.setAttribute('data-theme', theme);
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', theme === 'light' ? '#f9f9fc' : '#0d0e17');
+        } catch (e) {}
+        try {
           if (document.visibilityState === 'visible' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             root.classList.add('motion');
             setTimeout(function () { root.classList.remove('motion'); }, 3000);

@@ -70,6 +70,22 @@ export interface CaseStudyMeta {
   tags: string[];
 }
 
+export interface Demo {
+  id: string;
+  title: string;
+  project: string;
+  context: string;
+  summary: string;
+  duration: string;
+  /** youtube: embedded on play; file: self-hosted MP4; request: poster only, on request. */
+  kind: 'youtube' | 'file' | 'request';
+  youtubeId?: string;
+  src?: string;
+  poster?: string;
+  tags: string[];
+  links: { live?: string; github?: string; caseStudy?: string; lab?: string };
+}
+
 export interface WorkLedgerItem {
   name: string;
   company: string;

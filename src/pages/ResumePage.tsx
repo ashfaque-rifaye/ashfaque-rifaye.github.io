@@ -18,7 +18,7 @@ export function ResumePage() {
   return (
     <>
       <PageHeader
-        title="Résumé"
+        title={<span className="text-grad">Résumé</span>}
         lede={`Two pages: experience, results, innovation work and certifications. Updated ${RESUME.updated}.`}
       >
         <div className="flex flex-wrap gap-3">

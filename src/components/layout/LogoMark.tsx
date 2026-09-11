@@ -1,0 +1,20 @@
+import { useId } from 'react';
+
+/** The gradient "A" mark (same drawing as the favicon). */
+export function LogoMark({ size = 32 }: { size?: number }) {
+  const gid = `logo-${useId().replace(/:/g, '')}`;
+  return (
+    <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden className="shrink-0 drop-shadow-[0_6px_14px_oklch(var(--g-2)/0.45)]">
+      <defs>
+        <linearGradient id={gid} x1="4" y1="4" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#f97316" />
+          <stop offset="0.5" stopColor="#ec4899" />
+          <stop offset="1" stopColor="#7c3aed" />
+        </linearGradient>
+      </defs>
+      <rect width="64" height="64" rx="16" fill={`url(#${gid})`} />
+      <path fill="#fff" fillRule="evenodd" d="M17.2 46 27.7 18h3.4l10.5 28h-5.2L34 39.1h-9.2L22.4 46h-5.2Zm9.1-11.4h6.2l-3.1-9Z" />
+      <circle cx="48" cy="42.5" r="3.6" fill="#fff" fillOpacity="0.9" />
+    </svg>
+  );
+}

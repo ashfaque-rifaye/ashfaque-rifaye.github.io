@@ -32,7 +32,11 @@ export function ContactPage() {
 
   return (
     <div className="pb-[var(--section)]">
-      <PageHeader title="Let’s talk" lede={`${HIRE_CTA.question} ${HIRE_CTA.line}`} />
+      <PageHeader title={
+          <>
+            Let’s <span className="text-grad">talk</span>
+          </>
+        } lede={`${HIRE_CTA.question} ${HIRE_CTA.line}`} />
 
       <section aria-label="Contact details" className="wrap">
         <div className="grid gap-14 border-t border-line pt-12 lg:grid-cols-12 lg:gap-16">

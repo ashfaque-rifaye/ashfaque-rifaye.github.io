@@ -34,6 +34,18 @@ export const PAGES: PageMeta[] = [
     ogType: 'article',
   })),
   {
+    path: '/demos/',
+    title: `Demos | ${SITE}`,
+    description:
+      'Video walkthroughs and live apps: ClimaTwin, a self-correcting agent swarm, DeviceFlex and an AI Hiring Agent you can run on this site.',
+  },
+  {
+    path: '/agent/',
+    title: `Hiring Agent | ${SITE}`,
+    description:
+      'Paste a job description: an AI agent maps each requirement to evidence from Ashfaque Rifaye’s work, scores the fit honestly, and drafts your outreach and a calendar invite.',
+  },
+  {
     path: '/lab/',
     title: `AI Lab | ${SITE}`,
     description:

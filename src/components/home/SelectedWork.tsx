@@ -18,7 +18,11 @@ export function SelectedWork({ headingLevel = 'h2' }: { headingLevel?: 'h2' | 'h
       <div className="wrap">
         <SectionHead
           id="work-title"
-          title="Selected work"
+          title={
+            <>
+              Selected <span className="text-grad">work</span>
+            </>
+          }
           intro="Three case studies, each showing a different muscle: scaling an enterprise AI product, commercial experimentation, and inventing a product from an ambiguous problem."
           action={<ArrowLink to="/work/">All work</ArrowLink>}
         />

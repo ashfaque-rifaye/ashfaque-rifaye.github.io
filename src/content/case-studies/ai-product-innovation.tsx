@@ -8,8 +8,7 @@ import { ArrowAnchor } from '../../components/ui/Links';
 import { Todo } from '../../components/ui/Todo';
 import { VideoEmbed } from '../../components/ui/VideoEmbed';
 
-/** Set to the YouTube video id once the demo is uploaded (unlisted is fine). */
-const DEVICEFLEX_DEMO_YOUTUBE_ID = '';
+/* The walkthrough plays once DEVICEFLEX_VIDEO_PUBLIC is set in content/demos.ts. */
 const DEVICEFLEX_REPO = 'https://github.com/ashfaque-rifaye/deviceflex-device-protection';
 
 export const aiProductInnovation: CaseStudyContent = {
@@ -326,14 +325,7 @@ export const aiProductInnovation: CaseStudyContent = {
               the product is designed to live inside it.
             </p>
           </div>
-          <VideoEmbed
-            youtubeId={DEVICEFLEX_DEMO_YOUTUBE_ID || undefined}
-            title="DeviceFlex walkthrough"
-            poster="/media/deviceflex-poster.webp"
-            project="DeviceFlex"
-            duration="5 min"
-          />
-          <Todo>Upload the demo (unlisted YouTube is fine) and set DEVICEFLEX_DEMO_YOUTUBE_ID in this file.</Todo>
+          <VideoEmbed demoId="deviceflex" location="case_study" />
           <SubHead>What is real, seeded and absent</SubHead>
           <Ledger
             rows={[

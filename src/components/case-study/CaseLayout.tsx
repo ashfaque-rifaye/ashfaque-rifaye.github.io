@@ -37,39 +37,47 @@ export function CaseLayout({ content }: { content: CaseStudyContent }) {
 
   return (
     <article>
-      <header className="wrap pt-[clamp(3rem,2rem+4vw,6rem)]">
-        <nav aria-label="Breadcrumb" className="t-label fade-up">
-          <Link to="/work/" className="text-ink-2 no-underline transition-colors hover:text-ink">
-            Work
-          </Link>
-          <span aria-hidden className="mx-2 text-ink-4">/</span>
-          <span>Case study {content.number}</span>
-        </nav>
-        <h1 className="t-h1 fade-up mt-6 max-w-[20ch]" style={vars({ '--d': '60ms' })}>
-          {meta.title}
-        </h1>
-        <p className="t-lead fade-up mt-6" style={vars({ '--d': '120ms' })}>
-          {meta.subtitle}
-        </p>
+      <div className="relative overflow-hidden">
+        <div aria-hidden className="mesh mesh-soft">
+          <i />
+          <i />
+          <i />
+          <i />
+        </div>
+        <header className="wrap relative pt-[clamp(3rem,2rem+4vw,6rem)]">
+          <nav aria-label="Breadcrumb" className="t-label fade-up">
+            <Link to="/work/" className="text-ink-2 no-underline transition-colors hover:text-ink">
+              Work
+            </Link>
+            <span aria-hidden className="mx-2 text-ink-4">/</span>
+            <span>Case study {content.number}</span>
+          </nav>
+          <h1 className="t-h1 fade-up mt-6 max-w-[20ch]" style={vars({ '--d': '60ms' })}>
+            {meta.title}
+          </h1>
+          <p className="t-lead fade-up mt-6" style={vars({ '--d': '120ms' })}>
+            {meta.subtitle}
+          </p>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-16">
-          <div className="prose-case lg:col-span-7">{content.lede}</div>
-          <dl className="titleblock self-start lg:col-span-5">
-            {content.facts.map((f) => (
-              <div key={f.key}>
-                <dt className="t-label">{f.key}</dt>
-                <dd>{f.value}</dd>
-              </div>
+          <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-16">
+            <div className="prose-case lg:col-span-7">{content.lede}</div>
+            <dl className="titleblock self-start lg:col-span-5">
+              {content.facts.map((f) => (
+                <div key={f.key}>
+                  <dt className="t-label">{f.key}</dt>
+                  <dd>{f.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <dl className="mt-14 grid grid-cols-2 gap-x-6 gap-y-10 border-y border-line py-10 lg:grid-cols-4">
+            {content.keyMetrics.map((m) => (
+              <Readout key={m.label} metric={m} size="md" />
             ))}
           </dl>
-        </div>
-
-        <dl className="mt-14 grid grid-cols-2 gap-x-6 gap-y-10 border-y border-line py-10 lg:grid-cols-4">
-          {content.keyMetrics.map((m) => (
-            <Readout key={m.label} metric={m} size="md" />
-          ))}
-        </dl>
-      </header>
+        </header>
+      </div>
 
       <div className="wrap mt-14 grid gap-10 lg:mt-20 lg:grid-cols-[13.5rem_minmax(0,1fr)] lg:gap-16 xl:gap-24">
         <Contents sections={content.sections} active={active} />
@@ -82,7 +90,7 @@ export function CaseLayout({ content }: { content: CaseStudyContent }) {
               className="border-t border-line pb-16 pt-10 first:border-t-0 first:pt-0 md:pb-20"
             >
               <div className="flex items-baseline gap-4">
-                <span className="t-label text-accent">{pad(i + 1)}</span>
+                <span className="text-grad font-mono text-[0.8125rem] font-semibold">{pad(i + 1)}</span>
                 <h2 id={`${s.id}-title`} className="t-h2 !text-[clamp(1.5rem,1.2rem+1.2vw,2.25rem)]">
                   {s.title}
                 </h2>

@@ -11,7 +11,7 @@ export function WorkPage() {
   return (
     <>
       <PageHeader
-        title="Work"
+        title={<span className="text-grad">Work</span>}
         lede="Three case studies, each showing a different muscle. They cover the problem, the decisions and trade-offs, the architecture, the delivery and the numbers, plus what I would do differently."
       />
 

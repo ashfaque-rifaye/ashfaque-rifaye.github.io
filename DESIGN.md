@@ -1,78 +1,75 @@
-# Design System
+# Design system
 
-Visual language for ashfaque-rifaye.github.io. Strategy and audience live in [PRODUCT.md](PRODUCT.md).
+## Direction
 
-## Theme
+**Colourful, gradient-rich, light and dark.** This is the owner's explicit direction (September 2026), replacing an earlier restrained, dark-only, single-accent system. The brand spectrum runs amber → orange → pink → violet → blue → cyan, keeping the amber and teal of the original site. Colour is used generously but always in service of reading: gradients carry headlines, numbers, primary actions and ambient light; body text stays solid ink.
 
-**"The spec sheet."** A graphite drafting sheet with warm paper-white ink and a single signal-orange mark. The motifs come from Ashfaque's own path (mechanical engineering → software → AI products): title blocks, figure numbers, hairline rules, dimensioned diagrams. Calm, exact, readable. Dark only, by design.
+Structure stays calm: generous space, a clear type scale, framed diagrams on a faint grid, and title blocks for key facts (from Ashfaque's mechanical-engineering roots).
 
-Named reference: *Leica / instrument-faceplate restraint* (graphite, warm white, one signal color used like a status LED), not SaaS-dark-neon and not editorial serif.
+## Themes
 
-## Color
+- **Dark is the default.** Light is one click away (header toggle, ⌘K palette, or ask the AI Twin). The choice persists in `localStorage` under `theme`.
+- `index.html` sets `data-theme` on `<html>` before first paint, so there is no flash; `<html data-theme="dark">` is the no-JS default.
+- Every colour is a token that switches with `[data-theme]`, so components never need `dark:` variants for the base palette.
 
-OKLCH throughout. Neutrals are tinted very slightly toward the accent hue. Tokens are defined as channel triplets in `src/styles.css` and exposed to Tailwind with `<alpha-value>`.
+## Colour tokens
 
-| Token | OKLCH | Role |
+OKLCH channel triplets in `src/styles.css`, exposed to Tailwind with `<alpha-value>` (`bg-bg-2`, `text-ink-3`, `bg-tone-violet/10`, …).
+
+| Token | Use |
+| --- | --- |
+| `bg`, `bg-2`, `bg-3` | Page, cards, insets and hovers (cool indigo neutrals) |
+| `line`, `line-2` | Hairlines and stronger borders |
+| `ink`, `ink-2`, `ink-3`, `ink-4` | Text: primary, secondary, tertiary, decorative only |
+| `accent`, `accent-hi`, `accent-ink` | Solid signal colour (orange) for small details |
+| `--g-1` … `--g-7` (`tone-*` in Tailwind) | The spectrum: orange, pink, violet, blue, cyan, amber, emerald |
+
+Light mode uses deeper stops (600–700 level) so coloured text and gradient headings pass contrast on white; dark mode uses luminous 400-level stops.
+
+### Gradients
+
+| Variable / class | Stops | Use |
 | --- | --- | --- |
-| `bg` | `0.145 0.004 60` | Page ground (near-black graphite) |
-| `bg-2` | `0.178 0.005 60` | Raised surface (panels, cards) |
-| `bg-3` | `0.215 0.006 60` | Highest surface (hover, inputs) |
-| `line` | `0.285 0.007 60` | Hairline borders and rules |
-| `line-2` | `0.38 0.008 60` | Emphasised hairlines, diagram strokes |
-| `ink` | `0.945 0.011 80` | Primary text (warm paper-white) |
-| `ink-2` | `0.80 0.010 75` | Secondary text (≈ 10:1 on `bg`) |
-| `ink-3` | `0.655 0.010 70` | Metadata (≈ 5.9:1 on `bg`, AA for body) |
-| `ink-4` | `0.50 0.008 65` | Decorative only, never for text |
-| `accent` | `0.705 0.185 42` | Signal orange (≈ 6.9:1 on `bg`) |
-| `accent-hi` | `0.78 0.155 48` | Accent hover |
-| `accent-ink` | `0.16 0.02 42` | Text on accent fills |
+| `--grad-brand` · `.text-grad`, `.bg-grad-brand` | orange → pink → violet | Headline keywords, large numerals, rules, bullets |
+| `--grad-ai` · `.text-grad-ai`, `.bg-grad-ai` | violet → blue → cyan | AI and agent elements, secondary numerals |
+| `--grad-spectrum` · `.text-grad-spectrum`, `.ring-grad` | amber → … → cyan | The hero phrase, gradient borders, top bars |
+| `--grad-cta` · `.btn-primary`, `.bg-grad-cta` | deep orange → magenta → violet | Primary buttons, chat bubbles, the AI Twin orb |
 
-**Strategy: Restrained.** Accent covers ≤ 10% of any view: the primary CTA, active nav marker, figure numbers, focus rings, one emphasised phrase per page, diagram signal paths. Metrics are set in `ink`, not accent. No gradient text anywhere.
+`--grad-cta` uses 700-level stops so white text passes 4.5:1 on every part of the button.
+
+### Ambient colour
+
+- `.mesh` (four blurred blobs) behind the hero, every page header and feature panels; `.mesh-soft` for inner pages. Intensity is the `--mesh-o` token (lower on narrow screens and chosen so body text keeps ≥ 4.5:1), and the mesh fades out at the bottom so it never ends in a hard edge.
+- `.dot-grid` for texture in the hero; `.band` for a tinted section.
+
+## Contrast rules
+
+- Body text is solid `ink`/`ink-2`, never gradient. Gradient text is for large type (≥ 24px) and numerals only.
+- Small coloured text (status badges, action confirmations) uses tones that pass 4.5:1 in both themes.
+- Focus is a 2px violet outline with offset on every interactive element.
 
 ## Typography
 
-Two families, self-hosted via Fontsource (no third-party font requests):
+- **Archivo** (variable width and weight) for everything; **Martian Mono** for labels, keyboard hints, tool names and figure numbers. Both self-hosted.
+- Scale: `.t-display`, `.t-h1`, `.t-h2`, `.t-h3`, `.t-lead`, `.t-body`, `.t-small`, `.t-label`, `.t-num`, `.t-num-sm` (the last two are gradient numerals).
 
-- **Archivo Variable** (wght 100–900, wdth 62–125). One family carries display and body; hierarchy comes from *width* as well as size and weight. Display runs expanded (`font-stretch: 108–118%`), body runs at 100%.
-- **Martian Mono Variable** for technical labels only: figure captions, title-block keys, dates, diagram node labels. Never for paragraphs or section eyebrows.
+## Shape and depth
 
-| Role | Size | Leading | Weight / width | Notes |
-| --- | --- | --- | --- | --- |
-| Display (hero h1) | `clamp(2.5rem, 1.6rem + 3.6vw, 4.75rem)` | 1.02 | 540 / 108% | `-0.035em`, `text-wrap: balance` |
-| H1 (page) | `clamp(2.25rem, 1.5rem + 3vw, 4rem)` | 1.04 | 540 / 110% | |
-| H2 (section) | `clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem)` | 1.08 | 540 / 110% | |
-| H3 | `clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem)` | 1.2 | 600 / 104% | |
-| Lead | `1.25rem` | 1.55 | 400 | max 60ch |
-| Body | `1.0625rem` | 1.7 | 410 | max 68ch, `+0.005em` (light-on-dark compensation) |
-| Small | `0.9375rem` | 1.6 | 420 | |
-| Label (mono) | `0.75rem` | 1.4 | 450 / 90% | uppercase, `0.08em`, ≤ 4 words |
-| Numeral | `clamp(2.25rem, 1.7rem + 2.4vw, 3.75rem)` | 1 | 520 / 118% | `tabular-nums`, `-0.03em` |
-
-## Layout
-
-- Container: `max-width: 1240px`, gutter `clamp(1.25rem, 4vw, 3rem)`.
-- Section rhythm: `clamp(5rem, 3rem + 6vw, 9rem)` between sections; tight groupings (8–16px) inside.
-- Grid: 12 columns on desktop, content blocks span asymmetric ranges (e.g. 5/7, 4/8). Stacks on mobile.
-- Radius: `4px` on panels and buttons (drafted, not pill-shaped). Pills are not used.
-- Borders over shadows: depth comes from surface lightness and 1px hairlines.
-- Z-index scale: `header 40` → `overlay 50` → `dialog 60` → `toast 70`.
+- Radii: buttons 14px, cards 20px (feature panels 24–32px), chips full.
+- `.panel` cards with a soft shadow; `.card-lift` raises a card and tints its border on hover; `.glass` for floating surfaces.
 
 ## Components
 
-- **Title block**: key/value metadata grid in hairline cells (hero, case-study header).
-- **Readout**: a metric with its numeral, label and source line. Used in the impact band and case-study measurement.
-- **Figure**: framed diagram on a faint drafting grid, with a mono `Fig. n.n` caption and a text equivalent.
-- **Case section**: numbered heading (the case-study structure is a true sequence, so numbers carry meaning there only).
-- **Decision block**: Decision / Why / Trade-off, set as a three-row ledger, not a card grid.
-- **Buttons**: primary (accent fill, `accent-ink` text), secondary (hairline outline), text link with arrow. Verb + object labels.
-- **Dev placeholder**: dashed box, rendered only in `vite dev`; production omits it. All open items are listed in the local, git-ignored `CONTENT-TODO.md`.
+- **Buttons:** `.btn-primary` (gradient, glow), `.btn-secondary` (glass outline), `.btn-ai` + `.ring-grad` (spectrum ring, for AI actions).
+- **Header:** logo mark, nav with an "AI" sparkle on the Hiring Agent, ⌘K search box, theme toggle, résumé button.
+- **Search palette (⌘K / Ctrl K):** pages, case studies, demos (play directly), AI Lab, agent samples and actions; any query can go to the AI Twin.
+- **AI Twin:** floating gradient orb with a one-time greeting; a non-modal panel that answers, shows the model, and runs allowlisted actions (with a visible "done" trace).
+- **Demo cards and player:** poster, gradient play orb, duration chip; full-screen player for YouTube (privacy-enhanced) or self-hosted MP4.
+- **Hiring Agent:** plan and live trace timeline, gradient score ring, strong / partial / gap badges, requirement map, action panel.
+- **Figures and title blocks:** framed diagrams on a faint grid with a colour wash; title blocks with a spectrum top bar.
+- **Dev placeholder:** dashed box rendered only in `vite dev`; open items live in the local, git-ignored `CONTENT-TODO.md`.
 
 ## Motion
 
-- Easing: `cubic-bezier(0.16, 1, 0.3, 1)` (expo-out) for entrances, `cubic-bezier(0.25, 1, 0.5, 1)` for state changes. No bounce.
-- Signature moment: the hero headline lines rise out of a clip mask (700ms, 70ms stagger) on first load.
-- Diagrams draw their connectors once when scrolled into view (stroke-dashoffset, 900ms).
-- Hover: hairline brightens, arrow nudges 3px, surface steps up one level (150–200ms).
-- Route change: content fades up 8px over 320ms.
-- Ambient: one slow accent glow drift in the hero (40s loop), paused off-screen.
-- `prefers-reduced-motion: reduce` turns all of the above into instant state changes. Content is visible by default; motion only enhances it.
+- Hero words rise in once; blocks below the fold fade up once; diagram connectors draw in. The mesh drifts slowly; the AI Twin orb shifts hue; play orbs pulse.
+- Entrance motion runs only for a visible tab and is cleared after 3 seconds. `prefers-reduced-motion` disables all of it; content is never hidden behind an animation.

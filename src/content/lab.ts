@@ -105,15 +105,15 @@ export const LAB_PROJECTS: LabProject[] = [
     name: 'AI Twin',
     context: 'This site',
     oneLiner:
-      'A résumé assistant that answers recruiter questions from a verified fact sheet, with curated answers when the model gateway is down.',
+      'A résumé assistant that answers recruiter questions from a verified fact sheet and acts on the site (plays demos, opens pages, drafts email), plus a Hiring Agent that maps a job description to evidence.',
     question:
-      "Can a portfolio answer a recruiter's specific question faster than a PDF, without inventing anything?",
+      "Can a portfolio answer a recruiter's specific question faster than a PDF, and do the next step for them, without inventing anything?",
     learned: [
-      'Constrain the model to a verified fact sheet and have it say "I don\'t know" outside it.',
-      'Design the failure path first: curated answers keep the panel useful when the gateway is unreachable.',
-      'Browser-side keys are public, so scope and rate-limit them at the gateway.',
+      'Constrain the model to a verified fact sheet and have it say "I don\'t know" outside it; let it propose actions only from an allowlist.',
+      'Commands take a deterministic fast path; only open questions reach the model, which keeps answers fast and cheap.',
+      'Hedge model calls across two providers: the first answer wins, and curated answers cover a full outage.',
     ],
-    stack: ['React', 'OpenAI-compatible gateway', 'Gemini 2.0 Flash'],
+    stack: ['React', 'OpenAI-compatible gateway', 'Gemini 2.5 Flash', 'Qwen 2.5 72B'],
     status: 'Running on this site',
     links: {},
   },

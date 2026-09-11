@@ -46,7 +46,11 @@ export function AboutPage() {
   return (
     <>
       <PageHeader
-        title="The path to AI products"
+        title={
+          <>
+            The path to <span className="text-grad">AI products</span>
+          </>
+        }
         lede="I trained as a mechanical engineer, wrote production software for aircraft maintenance, ran commerce experiments at Verizon, and now own an enterprise AI product at AT&T. Each step added a layer the next one needed."
       />
 

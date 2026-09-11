@@ -5,8 +5,10 @@ import { SiteHeader } from './components/layout/SiteHeader';
 import { initAnalytics, trackPageView } from './lib/analytics';
 import { useScrollDepthTracking } from './lib/hooks';
 import { AboutPage } from './pages/AboutPage';
+import { AgentPage } from './pages/AgentPage';
 import { CaseStudyPage } from './pages/CaseStudyPage';
 import { ContactPage } from './pages/ContactPage';
+import { DemosPage } from './pages/DemosPage';
 import { HomePage } from './pages/HomePage';
 import { LabPage } from './pages/LabPage';
 import { NotFoundPage } from './pages/NotFoundPage';
@@ -62,6 +64,8 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/work" element={<WorkPage />} />
           <Route path="/work/:slug" element={<CaseStudyPage />} />
+          <Route path="/demos" element={<DemosPage />} />
+          <Route path="/agent" element={<AgentPage />} />
           <Route path="/lab" element={<LabPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/resume" element={<ResumePage />} />

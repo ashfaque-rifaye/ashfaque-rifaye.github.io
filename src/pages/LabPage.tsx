@@ -1,19 +1,27 @@
-import { Bot } from 'lucide-react';
+import { Bot, Wand2 } from 'lucide-react';
+import { orderedDemos } from '../components/home/DemoReel';
 import { PageHeader } from '../components/layout/PageHeader';
 import { HireCta } from '../components/sections/HireCta';
 import { ArrowAnchor, ArrowLink } from '../components/ui/Links';
 import { SectionHead } from '../components/ui/SectionHead';
 import { VideoEmbed } from '../components/ui/VideoEmbed';
+import { DemoCard } from '../components/video/DemoCard';
+import { demoById } from '../content/demos';
 import { LAB_PROJECTS, MORE_BUILDS } from '../content/lab';
 import type { LabProject } from '../content/types';
 import { trackEvent } from '../lib/analytics';
 import { useUi } from '../site/ui-state';
 
 export function LabPage() {
+  const playable = orderedDemos().filter((d) => d.kind !== 'request');
   return (
     <>
       <PageHeader
-        title="AI Lab"
+        title={
+          <>
+            AI <span className="text-grad">Lab</span>
+          </>
+        }
         lede="What I build outside the day job. Each experiment starts from a product question: where retrieval fails, when agents should defer to people, how much of an AI system should be deterministic, and what it costs to run."
       >
         <p className="text-[1rem] text-ink-2">
@@ -23,6 +31,17 @@ export function LabPage() {
           </ArrowLink>
         </p>
       </PageHeader>
+
+      <section aria-labelledby="lab-demos" className="wrap pb-6">
+        <h2 id="lab-demos" className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ink-3">
+          Watch first
+        </h2>
+        <div className="mt-4 grid gap-5 md:grid-cols-2">
+          {playable.map((d) => (
+            <DemoCard key={d.id} demo={d} location="lab_top" />
+          ))}
+        </div>
+      </section>
 
       <div className="wrap">
         {LAB_PROJECTS.map((p) => (
@@ -59,7 +78,8 @@ export function LabPage() {
 }
 
 function LabEntry({ project: p }: { project: LabProject }) {
-  const { openChat } = useUi();
+  const { openChat, runHiringAgent } = useUi();
+  const demo = demoById(p.slug);
   return (
     <article id={p.slug} aria-labelledby={`${p.slug}-name`} className="grid gap-8 border-t border-line py-12 md:py-16 lg:grid-cols-12 lg:gap-12">
       <div className="lg:col-span-4">
@@ -84,17 +104,23 @@ function LabEntry({ project: p }: { project: LabProject }) {
             </ArrowAnchor>
           )}
           {p.slug === 'ai-twin' && (
-            <button type="button" onClick={() => openChat('lab')} className="btn btn-primary">
-              <Bot size={17} aria-hidden />
-              Ask the AI Twin
-            </button>
+            <>
+              <button type="button" onClick={() => openChat('lab')} className="btn btn-primary">
+                <Bot size={17} aria-hidden />
+                Ask the AI Twin
+              </button>
+              <button type="button" onClick={() => runHiringAgent()} className="btn btn-ai ring-grad">
+                <Wand2 size={17} aria-hidden className="text-tone-violet" />
+                Open the Hiring Agent
+              </button>
+            </>
           )}
         </div>
       </div>
 
       <div className="min-w-0 lg:col-span-8">
         <p className="text-[clamp(1.125rem,1rem+0.4vw,1.3125rem)] leading-relaxed text-ink">{p.oneLiner}</p>
-        {p.links.youtube && <VideoEmbed youtubeId={p.links.youtube} title={`${p.name} walkthrough`} project={p.name} />}
+        {demo && demo.kind !== 'request' && <VideoEmbed demoId={demo.id} location="lab_entry" />}
         <div className="mt-8 grid gap-8 md:grid-cols-2 md:gap-10">
           <div>
             <h3 className="t-label">Why I built it</h3>
