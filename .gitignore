@@ -1,8 +1,17 @@
 node_modules
 dist
+dist-ssr
 
 # Local Claude Code tooling
 .claude/
+
+# Locally installed agent skills
+.agents/
+.github/skills/
+skills-lock.json
+
+# Private working notes (never published)
+CONTENT-TODO.md
 
 # Environment variables
 .env

@@ -2,36 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#faf9f7" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0a0a0c" media="(prefers-color-scheme: dark)" />
-
-    <title>Ashfaque Rifaye — AI Product Manager & Technical Business Analyst</title>
-    <meta
-      name="description"
-      content="AI Product Manager & Technical Business Analyst with 9+ years shipping AI at telecom scale. Product owner of AT&T's GenAI virtual assistant — 1.5M+ monthly interactions, 55% containment, $4.2M saved annually."
-    />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#100f0d" />
     <meta name="author" content="Ashfaque Rifaye" />
-    <link rel="canonical" href="https://ashfaque-rifaye.github.io/" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      /* Entrance motion only when someone is watching: skipped for hidden
+         tabs and reduced-motion users, and always cleared after 3s so an
+         animation can never leave content hidden. */
+      (function () {
+        try {
+          var root = document.documentElement;
+          if (document.visibilityState === 'visible' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            root.classList.add('motion');
+            setTimeout(function () { root.classList.remove('motion'); }, 3000);
+          }
+        } catch (e) {}
+      })();
+    </script>
 
-    <!-- Open Graph / social -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://ashfaque-rifaye.github.io/" />
-    <meta property="og:site_name" content="Ashfaque Rifaye" />
-    <meta property="og:title" content="Ashfaque Rifaye — AI Product Manager & Technical Business Analyst" />
-    <meta
-      property="og:description"
-      content="9+ years shipping AI products at telecom scale — GenAI virtual assistants, conversational AI, and enterprise automation. 1.5M+ monthly interactions, $4.2M saved annually."
-    />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Ashfaque Rifaye — AI Product Manager & Technical BA" />
-    <meta
-      name="twitter:description"
-      content="9+ years shipping AI products at telecom scale. Product owner of AT&T's GenAI virtual assistant."
-    />
+    <!--app-head-->
 
-    <!-- Structured data -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -39,50 +31,28 @@
         "name": "Ashfaque Rifaye",
         "url": "https://ashfaque-rifaye.github.io/",
         "email": "mailto:ashfaque_rifaye@outlook.com",
-        "jobTitle": "AI Product Manager & Technical Business Analyst",
+        "jobTitle": "AI Product Manager",
+        "description": "AI Product Manager and technical product leader building enterprise AI, GenAI and customer experience products across telecom and digital platforms.",
         "worksFor": { "@type": "Organization", "name": "AT&T Communications Services India" },
         "alumniOf": { "@type": "CollegeOrUniversity", "name": "Velammal Engineering College, Anna University" },
         "address": { "@type": "PostalAddress", "addressLocality": "Chennai", "addressCountry": "IN" },
-        "sameAs": [
-          "https://github.com/ashfaque-rifaye",
-          "https://www.linkedin.com/in/ashfaque-rifaye/"
-        ],
+        "sameAs": ["https://github.com/ashfaque-rifaye", "https://www.linkedin.com/in/ashfaque-rifaye/"],
         "knowsAbout": [
+          "AI Product Management",
+          "Technical Product Management",
           "Generative AI",
+          "Enterprise AI",
           "Conversational AI",
           "Retrieval-Augmented Generation",
-          "Google CCAI",
-          "Dialogflow CX",
-          "Product Management",
-          "Business Analysis",
-          "SAFe Agile"
+          "Agentic AI",
+          "Product Strategy",
+          "Customer Experience"
         ]
       }
     </script>
-
-    <!-- Fonts: Inter (UI) + Instrument Serif (display accent) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- No-flash theme init (must run before paint) -->
-    <script>
-      (function () {
-        try {
-          var t = localStorage.getItem('theme');
-          // dark is the default unless the user explicitly chose light
-          if (t !== 'light') document.documentElement.classList.add('dark');
-        } catch (e) {
-          document.documentElement.classList.add('dark');
-        }
-      })();
-    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><!--app-html--></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -1,59 +1,84 @@
-# Ashfaque Rifaye — AI Product Manager & Technical BA 👋
+# ashfaque-rifaye.github.io
 
-Welcome! I'm an **AI Technical Business Analyst & Product Manager** with **9+ years of experience** building intelligent products, GenAI solutions, and leading cross-functional teams.
+Portfolio of **Ashfaque Rifaye, AI Product Leader**: enterprise AI, GenAI and customer-experience products, told through case studies rather than a résumé dump.
 
-## 👤 About Me
+Live at <https://ashfaque-rifaye.github.io>.
 
-I specialize in translating complex business challenges into innovative AI-driven solutions. My expertise spans product strategy, requirements gathering, technical leadership, and go-to-market execution. I'm passionate about creating products that solve real problems and drive measurable impact.
+- Strategy, audience and principles: [PRODUCT.md](PRODUCT.md)
+- Visual system (tokens, type, motion): [DESIGN.md](DESIGN.md)
+- Open content items and decisions: `CONTENT-TODO.md`, a local notes file kept out of git (see `.gitignore`)
 
-**Currently:** AI/GenAI Technical Business Analyst | Product Strategy & Innovation  
-**Focus Areas:** Enterprise AI, Product Management, Technical Leadership, Requirements Engineering
+## Stack
 
-## 🛠️ Core Skills
+- **Vite 5 + React 18 + TypeScript** (strict), **Tailwind CSS 3** with OKLCH design tokens in `src/styles.css`
+- **React Router 7** for the multi-page structure
+- **Static prerender**: every route is rendered to its own `index.html` at build time (`scripts/prerender.mjs`), so each page has real HTML, its own `<title>`, description, canonical URL and social tags, and loads without waiting for JavaScript. The client then hydrates.
+- **Self-hosted fonts** via Fontsource (Archivo variable, Martian Mono variable); no third-party font requests
+- **GitHub Pages** deploy through GitHub Actions (`.github/workflows/deploy.yml`)
 
-**Product & Strategy**
-- Product Management & Strategy
-- Roadmap Planning & Prioritization
-- Requirements Engineering & Analysis
-- Stakeholder Management
-- Go-to-Market Strategy
+## Pages
 
-**AI & Technology**
-- GenAI & LLM Integration
-- AI/ML Product Development
-- Technical Architecture Review
-- API Design & Integration
-- Cloud Platforms (AWS, GCP, Azure)
+| Route | Page |
+| --- | --- |
+| `/` | Home: hero, selected impact, selected work, capabilities, principles, AI Lab, trajectory, recognition |
+| `/work/` | Case-study index and other shipped work |
+| `/work/att-genai-virtual-assistant/` | Case study 01 |
+| `/work/verizon-digital-commerce/` | Case study 02 |
+| `/work/ai-product-innovation/` | Case study 03 (DeviceFlex) |
+| `/lab/` | AI Lab experiments, including the AI Twin |
+| `/about/` | Story, by the numbers, skills, credentials |
+| `/resume/` | Résumé downloads and preview |
+| `/contact/` | Contact |
 
-**Leadership & Process**
-- Cross-Functional Team Leadership
-- Agile & Scrum Methodologies
-- Business Analysis & Process Optimization
-- Data-Driven Decision Making
-- Vendor & Technology Evaluation
+## Where things live
 
-## 💻 Technical Proficiencies
+```
+src/
+  content/            All copy and data (edit here, not in components)
+    case-studies/     One file per case study (sections are JSX)
+    profile.ts        Name, links, hero copy, résumé paths
+    metrics.ts        Impact numbers
+    lab.ts            AI Lab experiments
+    work.ts           Case-study index + other shipped work
+  pages/              One component per route
+  components/
+    home/             Home sections
+    case-study/       Reusable case-study template and blocks
+    diagrams/         Figure frame, flows, layered architecture, metric columns
+    layout/           Header, footer, page header, command palette (Ctrl/⌘ K)
+    chat/             AI Twin panel (code-split, loads on demand)
+    ui/               Buttons, links, readouts, reveal, video embed, dev placeholders
+  site/               Route metadata (SEO) and shared UI state
+  lib/                Analytics, hooks, chat client, utilities
+scripts/prerender.mjs Static HTML per route, 404.html and sitemap.xml
+```
 
-**Languages:** Python, JavaScript, SQL, Bash  
-**Platforms:** AWS, GCP, Azure, GitHub  
-**Tools:** Jira, Confluence, Figma, Tableau, Postman  
-**Frameworks:** React, Node.js, RESTful APIs, RAG Systems  
+### Adding a case study
 
-## 🌐 Connect With Me
+1. Add its metadata to `CASE_STUDIES` in `src/content/work.ts` (the route and SEO metadata derive from it).
+2. Create `src/content/case-studies/<slug>.tsx` exporting a `CaseStudyContent` (see the existing three).
+3. Register it in `src/pages/CaseStudyPage.tsx`.
 
-📱 **Portfolio:** https://ashfaque-rifaye.github.io  
-💼 **LinkedIn:** [linkedin.com/in/ashfaque-rifaye](https://linkedin.com/in/ashfaque-rifaye)  
-📧 **Email:** [Contact via portfolio](https://ashfaque-rifaye.github.io)  
-🐙 **GitHub:** [github.com/ashfaque-rifaye](https://github.com/ashfaque-rifaye)  
+### Placeholders
 
-## 📄 Resume & Downloads
+`<Todo>` boxes render only in `npm run dev`; production builds omit them. Open items are listed in the local, git-ignored `CONTENT-TODO.md`.
 
-🔗 **[Download Resume (PDF)](./resume.pdf)** — My full professional background and experience  
+## Commands
 
----
+```bash
+npm install
+npm run dev        # local dev server
+npm run build      # typecheck, client build, server build, prerender
+npm run preview    # serve the production build locally
+```
 
-## Let's Connect! 🤝
+## Deploy
 
-I'm always interested in discussing AI product innovation, technical leadership, and building solutions that create real impact. Feel free to reach out!
+Pushing to `main` triggers the GitHub Actions workflow, which builds and publishes `dist/` to GitHub Pages. Optional repository secrets:
 
-**Let's build something great together.**
+| Secret | Purpose |
+| --- | --- |
+| `VITE_GA_MEASUREMENT_ID` | Google Analytics 4. Without it, analytics is a no-op. |
+| `VITE_GATEWAY_API_KEY` | Key for the AI Twin's LLM gateway. Without it, the AI Twin uses its curated offline answers. |
+
+`VITE_` values are embedded in the client bundle, so treat them as public: scope and rate-limit the gateway key on the gateway side.
