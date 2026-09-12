@@ -89,7 +89,7 @@ Pushing to `main` triggers the GitHub Actions workflow, which builds and publish
 
 | Secret | Purpose |
 | --- | --- |
-| `VITE_GA_MEASUREMENT_ID` | Google Analytics 4. Without it, analytics is a no-op. |
+| `VITE_GA_MEASUREMENT_ID` | Google Analytics 4. Without it, analytics is a no-op. Page views after the first come from GA4 Enhanced Measurement ("Page changes based on browser history events"), so keep that setting on for the web stream. |
 | `VITE_GATEWAY_API_KEY` | Key for the LLM gateway used by the AI Twin and the Hiring Agent. Without it, the AI Twin uses curated offline answers and the agent runs on its rules engine and templates. |
 
 `VITE_` values are embedded in the client bundle, so treat them as public: scope and rate-limit the gateway key on the gateway side.

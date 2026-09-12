@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Route, Routes, useLocation } from 'react-router';
 import { SiteFooter } from './components/layout/SiteFooter';
 import { SiteHeader } from './components/layout/SiteHeader';
-import { initAnalytics, trackPageView } from './lib/analytics';
+import { initAnalytics } from './lib/analytics';
 import { useScrollDepthTracking } from './lib/hooks';
 import { AboutPage } from './pages/AboutPage';
 import { AgentPage } from './pages/AgentPage';
@@ -25,9 +25,10 @@ export default function App() {
     initAnalytics();
   }, []);
 
-  /* Client-side navigation: update <head>, report the page view, reset
-     scroll, move focus to the new content, and enable route transitions.
-     The first render keeps the prerendered <head> untouched. */
+  /* Client-side navigation: update <head>, reset scroll, move focus to the
+     new content, and enable route transitions. The first render keeps the
+     prerendered <head> untouched. GA4 reports the page view itself (see
+     initAnalytics). */
   useEffect(() => {
     const meta = metaFor(pathname);
     if (firstRender.current) {
@@ -37,7 +38,6 @@ export default function App() {
     }
     applyMeta(meta);
     document.documentElement.classList.add('nav-client');
-    trackPageView(pathname, meta.title);
     if (!window.location.hash) {
       window.scrollTo({ top: 0, left: 0 });
       document.getElementById('main')?.focus({ preventScroll: true });

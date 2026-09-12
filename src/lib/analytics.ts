@@ -15,7 +15,6 @@ declare global {
 /** Every event the site can emit, with its exact parameter shape
     (GA4 conventions: snake_case names ≤ 40 chars, scalar params). */
 export type AnalyticsEvent =
-  | { name: 'page_view'; params: { page_path: string; page_title: string } }
   | { name: 'scroll_depth'; params: { percent: 25 | 50 | 75 | 90; page_path: string } }
   | { name: 'resume_download'; params: { file_extension: 'pdf' | 'docx'; location: string } }
   | { name: 'social_link_click'; params: { platform: string; location: string } }
@@ -49,8 +48,10 @@ export function trackEvent<E extends AnalyticsEvent>(name: E['name'], params: E[
   }
 }
 
-/** Inject gtag.js once. The config call sends the first page_view;
-    later client-side navigations report their own via trackPageView. */
+/** Inject gtag.js once. The config call sends the first page_view. GA4's
+    Enhanced Measurement reports later client-side navigations ("page
+    changes based on browser history events", on for this data stream), so
+    the site sends no page_view of its own: that would count each one twice. */
 export function initAnalytics(): void {
   if (!GA_ENABLED || typeof window === 'undefined' || window.gtag) return;
   const s = document.createElement('script');
@@ -58,13 +59,11 @@ export function initAnalytics(): void {
   s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
   document.head.appendChild(s);
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function gtag(...args: unknown[]) {
-    window.dataLayer!.push(args);
+  /* gtag.js only runs entries that are `arguments` objects. A plain array
+     (from rest parameters) is silently ignored, so no hit is ever sent. */
+  window.gtag = function gtag() {
+    window.dataLayer!.push(arguments);
   };
   window.gtag('js', new Date());
   window.gtag('config', GA_MEASUREMENT_ID);
-}
-
-export function trackPageView(path: string, title: string): void {
-  trackEvent('page_view', { page_path: path, page_title: title });
 }
