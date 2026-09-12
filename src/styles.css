@@ -333,12 +333,23 @@
   .titleblock::before {
     content: ''; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--grad-spectrum);
   }
-  .titleblock > div {
+  .titleblock > div, .titleblock > dl > div {
     display: grid; grid-template-columns: 6.5rem 1fr; gap: 1rem; align-items: baseline;
     padding: 0.75rem 1.15rem; border-top: 1px solid oklch(var(--line));
   }
-  .titleblock > div:first-child { border-top: 0; padding-top: 1rem; }
+  .titleblock > div:first-child, .titleblock > dl > div:first-child { border-top: 0; padding-top: 1rem; }
   .titleblock dd { font-size: 0.9375rem; line-height: 1.45; color: oklch(var(--ink)); }
+
+  /* ---- spec sheet: skills with their proof (home) ---- */
+  .spec {
+    position: relative; overflow: hidden;
+    border: 1px solid oklch(var(--line)); border-radius: 24px;
+    background: oklch(var(--bg-2));
+    box-shadow: 0 1px 2px oklch(var(--shadow) / 0.05), 0 24px 60px -36px oklch(var(--g-3) / 0.4);
+  }
+  .spec::before {
+    content: ''; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--grad-spectrum);
+  }
 
   /* ---- figures: framed diagrams on a faint drafting grid ---- */
   .figure-frame {

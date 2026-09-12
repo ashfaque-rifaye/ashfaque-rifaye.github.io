@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Bot, X } from 'lucide-react';
+import { X } from 'lucide-react';
+import { AVATAR } from '../../content/profile';
 import { trackEvent } from '../../lib/analytics';
 import { cx, session } from '../../lib/utils';
 import { useUi } from '../../site/ui-state';
@@ -38,8 +39,17 @@ export function ChatLauncher({ open, onToggle }: { open: boolean; onToggle: () =
           >
             <X size={15} aria-hidden />
           </button>
-          <p className="text-[0.9375rem] font-semibold text-ink">Hi, I&rsquo;m Ashfaque&rsquo;s AI Twin.</p>
-          <p className="mt-1 text-[0.8125rem] leading-snug text-ink-2">
+          <div className="flex items-center gap-3">
+            <img
+              src={AVATAR.face}
+              alt=""
+              width={40}
+              height={40}
+              className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-tone-violet/40"
+            />
+            <p className="text-[0.9375rem] font-semibold leading-snug text-ink">Hi, I&rsquo;m Ashfaque&rsquo;s AI Twin.</p>
+          </div>
+          <p className="mt-2 text-[0.8125rem] leading-snug text-ink-2">
             Ask me anything about his work, or let my Hiring Agent match him to your role.
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
@@ -76,7 +86,11 @@ export function ChatLauncher({ open, onToggle }: { open: boolean; onToggle: () =
         title={open ? 'Close the AI Twin' : "Ask Ashfaque's AI Twin"}
         className={cx('twin-orb h-14 w-14 sm:h-[3.75rem] sm:w-[3.75rem]', open && 'max-sm:hidden')}
       >
-        {open ? <X size={22} aria-hidden /> : <Bot size={24} aria-hidden />}
+        {open ? (
+          <X size={22} aria-hidden />
+        ) : (
+          <img src={AVATAR.face} alt="" width={96} height={96} className="h-[calc(100%-6px)] w-[calc(100%-6px)] rounded-full object-cover" />
+        )}
         {!open && (
           <span aria-hidden className="absolute right-0 top-0 h-3.5 w-3.5 rounded-full border-2 border-bg bg-tone-emerald" />
         )}

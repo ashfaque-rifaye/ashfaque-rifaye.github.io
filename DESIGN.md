@@ -61,12 +61,14 @@ Light mode uses deeper stops (600–700 level) so coloured text and gradient hea
 ## Components
 
 - **Buttons:** `.btn-primary` (gradient, glow), `.btn-secondary` (glass outline), `.btn-ai` + `.ring-grad` (spectrum ring, for AI actions).
-- **Header:** logo mark, nav with an "AI" sparkle on the Hiring Agent, ⌘K search box, theme toggle, résumé button.
+- **Header:** logo mark, nav (Work, AI Lab, About, Contact), ⌘K search box, theme toggle, résumé button. Demos are folded into the AI Lab (its "Watch first" row links to `/demos/`), and the Hiring Agent is deliberately not a tab; the home page, AI Lab, Contact, footer, search and the AI Twin lead to it.
 - **Search palette (⌘K / Ctrl K):** pages, case studies, demos (play directly), AI Lab, agent samples and actions; any query can go to the AI Twin.
-- **AI Twin:** floating gradient orb with a one-time greeting; a non-modal panel that answers, shows the model, and runs allowlisted actions (with a visible "done" trace).
+- **AI Twin:** floating orb with Ashfaque's 3D avatar inside a gradient ring, and a one-time greeting; a non-modal panel that answers, shows the model, and runs allowlisted actions (with a visible "done" trace).
 - **Demo cards and player:** poster, gradient play orb, duration chip; full-screen player for YouTube (privacy-enhanced) or self-hosted MP4.
 - **Hiring Agent:** plan and live trace timeline, gradient score ring, strong / partial / gap badges, requirement map, action panel.
 - **Figures and title blocks:** framed diagrams on a faint grid with a colour wash; title blocks with a spectrum top bar.
+- **Avatar:** one 3D render cut into `public/media/avatar-card*.webp` (3:2; heads the hero title block and the About panel) and `avatar-face.webp` (the AI Twin's face).
+- **Skills spec sheet (home):** ruled rows of competency, proof with its figures in bold, and skill chips, under a spectrum top bar; certifications and education close it.
 - **Dev placeholder:** dashed box rendered only in `vite dev`; open items live in the local, git-ignored `CONTENT-TODO.md`.
 
 ## Motion

@@ -101,11 +101,28 @@ export const LAB_PROJECTS: LabProject[] = [
     },
   },
   {
+    slug: 'hiring-agent',
+    name: 'Hiring Agent',
+    context: 'This site',
+    oneLiner:
+      'Paste a job description: the agent reads each requirement, maps it to evidence from my record, scores the fit, and drafts an outreach email, a calendar invite and a brief for you to approve.',
+    question:
+      "Can an agent do a recruiter's first screen honestly: cite proof for every match and show the gaps instead of hiding them?",
+    learned: [
+      'The model perceives, code decides: the LLM reads the job description into a fixed skills vocabulary and writes the brief, while matching and scoring stay deterministic and explainable.',
+      'Conservative ratings make the score credible. Every skill states its basis, and a role outside my record scores low.',
+      'Every action is a draft the visitor approves: the email opens in their own mail app and the invite downloads as a file.',
+    ],
+    stack: ['React', 'TypeScript', 'Gemini 2.5 Flash', 'Qwen 2.5 72B', 'Rules engine'],
+    status: 'Running on this site',
+    links: {},
+  },
+  {
     slug: 'ai-twin',
     name: 'AI Twin',
     context: 'This site',
     oneLiner:
-      'A résumé assistant that answers recruiter questions from a verified fact sheet and acts on the site (plays demos, opens pages, drafts email), plus a Hiring Agent that maps a job description to evidence.',
+      'A résumé assistant that answers recruiter questions from a verified fact sheet and acts on the site: it plays demos, opens pages, drafts email and hands job descriptions to the Hiring Agent.',
     question:
       "Can a portfolio answer a recruiter's specific question faster than a PDF, and do the next step for them, without inventing anything?",
     learned: [

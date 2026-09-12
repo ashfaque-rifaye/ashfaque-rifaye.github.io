@@ -60,6 +60,9 @@ export const DEMOS: Demo[] = [
 
 export const demoById = (id: string) => DEMOS.find((d) => d.id === id);
 
+/** Playable demos lead, anything "on request" follows. */
+export const orderedDemos = () => [...DEMOS.filter((d) => d.kind !== 'request'), ...DEMOS.filter((d) => d.kind === 'request')];
+
 /** Poster for a demo card: local poster first, else the YouTube HD thumbnail. */
 export function demoPoster(d: Demo): string | undefined {
   if (d.poster) return d.poster;

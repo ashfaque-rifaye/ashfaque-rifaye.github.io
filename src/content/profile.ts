@@ -24,6 +24,15 @@ export const RESUME = {
   updated: 'September 2026',
 } as const;
 
+/* One 3D render (September 2026), cut into a 3:2 card for the hero title
+   block and the About panel, and a face crop for the AI Twin. */
+export const AVATAR = {
+  card: '/media/avatar-card.webp', // 864 × 576
+  cardSmall: '/media/avatar-card-576.webp', // 576 × 384
+  face: '/media/avatar-face.webp', // 192 × 192
+  alt: '3D avatar of Ashfaque Rifaye',
+} as const;
+
 export const HERO = {
   /** Headline in three parts; `mark` carries the signal underline. */
   lead: 'AI Product Leader building intelligent products that',

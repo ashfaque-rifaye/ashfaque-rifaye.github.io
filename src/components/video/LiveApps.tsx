@@ -1,48 +1,9 @@
 import { Link } from 'react-router';
 import { ArrowUpRight, Globe2, Wand2 } from 'lucide-react';
-import { DEMOS, LIVE_APPS } from '../../content/demos';
+import { LIVE_APPS } from '../../content/demos';
 import { trackEvent } from '../../lib/analytics';
-import { ArrowLink } from '../ui/Links';
-import { Reveal } from '../ui/Reveal';
-import { SectionHead } from '../ui/SectionHead';
-import { DemoCard } from '../video/DemoCard';
 
-/** Playable demos lead, anything "on request" follows. */
-export const orderedDemos = () => [...DEMOS.filter((d) => d.kind !== 'request'), ...DEMOS.filter((d) => d.kind === 'request')];
-
-export function DemoReel() {
-  const [feature, ...rest] = orderedDemos();
-  return (
-    <section id="demos" aria-labelledby="demos-title" className="section relative pb-0">
-      <div className="wrap">
-        <SectionHead
-          id="demos-title"
-          title={
-            <>
-              See it <span className="text-grad">working</span>
-            </>
-          }
-          intro="Video walkthroughs of products I have built, from an AI climate decision engine to a self-correcting agent swarm. Press play."
-          action={<ArrowLink to="/demos/">All demos and live apps</ArrowLink>}
-        />
-        <div className="mt-12 grid gap-5 lg:grid-cols-5">
-          <Reveal className="lg:col-span-3">
-            <DemoCard demo={feature} size="lg" location="home_reel" />
-          </Reveal>
-          <div className="grid gap-5 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-1">
-            {rest.map((d, i) => (
-              <Reveal key={d.id} delay={(i + 1) * 90}>
-                <DemoCard demo={d} location="home_reel" />
-              </Reveal>
-            ))}
-          </div>
-        </div>
-        <LiveApps className="mt-10" />
-      </div>
-    </section>
-  );
-}
-
+/** Interactive builds: the Hiring Agent opens on this site, the rest in a new tab. */
 export function LiveApps({ className }: { className?: string }) {
   return (
     <div className={className}>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ArrowRight, Check, Copy } from 'lucide-react';
+import { Link } from 'react-router';
+import { ArrowRight, Check, Copy, Wand2 } from 'lucide-react';
 import { PageHeader } from '../components/layout/PageHeader';
 import { HIRE_CTA, PERSON, RESUME, SOCIALS } from '../content/profile';
 import { trackEvent } from '../lib/analytics';
@@ -66,6 +67,19 @@ export function ContactPage() {
               <span role="status" aria-live="polite" className="sr-only">
                 {copied ? 'Email address copied to the clipboard' : ''}
               </span>
+            </div>
+            <div className="mt-12 border-t border-line pt-8">
+              <h2 className="text-[1.0625rem] font-semibold text-ink" style={{ fontStretch: '106%' }}>
+                Hiring for a specific role?
+              </h2>
+              <p className="t-body mt-2 max-w-[54ch]">
+                Paste the job description into my Hiring Agent. It maps each requirement to evidence from my work, scores the fit
+                honestly, and drafts an email and a calendar invite for you.
+              </p>
+              <Link to="/agent/" className="btn btn-ai ring-grad mt-5">
+                <Wand2 size={17} aria-hidden className="text-tone-violet" />
+                Match me to your role
+              </Link>
             </div>
           </div>
 

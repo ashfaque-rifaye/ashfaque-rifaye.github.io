@@ -39,6 +39,16 @@ export interface Capability {
   glyph: 'ai' | 'enterprise' | 'strategy';
 }
 
+export interface Competency {
+  title: string;
+  icon: 'quality' | 'conversation' | 'technical' | 'delivery' | 'stakeholders' | 'commerce';
+  /** Where the proof comes from. */
+  source: string;
+  /** One or two sentences; **double asterisks** mark the figures to emphasize. */
+  proof: string;
+  skills: string[];
+}
+
 export interface Principle {
   title: string;
   line: string;

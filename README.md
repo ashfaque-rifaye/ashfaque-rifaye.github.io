@@ -20,13 +20,13 @@ Live at <https://ashfaque-rifaye.github.io>.
 
 | Route | Page |
 | --- | --- |
-| `/` | Home: hero, selected impact, demo reel, selected work, Hiring Agent, capabilities, principles, AI Lab, trajectory, recognition |
+| `/` | Home: hero, selected impact, selected work, capabilities, skills and competencies, Hiring Agent teaser, principles, AI Lab, trajectory, recognition |
 | `/work/` | Case-study index and other shipped work |
 | `/work/att-genai-virtual-assistant/` | Case study 01 |
 | `/work/verizon-digital-commerce/` | Case study 02 |
 | `/work/ai-product-innovation/` | Case study 03 (DeviceFlex) |
-| `/demos/` | Video walkthroughs and live apps |
-| `/agent/` | Hiring Agent: job description → evidence map, fit score, outreach email, calendar invite, brief |
+| `/demos/` | Video walkthroughs and live apps. Not a header tab: demos lead the AI Lab, which links here, as do the hero, footer and search |
+| `/agent/` | Hiring Agent: job description → evidence map, fit score, outreach email, calendar invite, brief. Not a header tab: linked from the home page, AI Lab, Contact, footer, search and the AI Twin |
 | `/lab/` | AI Lab experiments, with the demos first |
 | `/about/` | Story, by the numbers, skills, credentials |
 | `/resume/` | Résumé downloads and preview |

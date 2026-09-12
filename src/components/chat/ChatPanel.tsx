@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { useNavigate } from 'react-router';
 import {
-  ArrowRight, ArrowUp, ArrowUpRight, Bot, Check, CheckCircle2, Copy, Download, Mail, Moon, Play, RotateCcw, Sun, Wand2, X,
+  ArrowRight, ArrowUp, ArrowUpRight, Check, CheckCircle2, Copy, Download, Mail, Moon, Play, RotateCcw, Sun, Wand2, X,
   type LucideIcon,
 } from 'lucide-react';
+import { AVATAR } from '../../content/profile';
 import {
   actionDoneLabel, actionLabel, canAutoRun, runAction, type ActionContext, type SiteAction,
 } from '../../lib/actions';
@@ -172,8 +173,8 @@ export function ChatPanel({ open, request, onClose }: { open: boolean; request: 
     >
       <header className="relative flex items-center gap-3 overflow-hidden bg-grad-cta px-4 py-3.5 text-white">
         <span aria-hidden className="absolute -right-10 -top-16 h-40 w-40 rounded-full bg-white/15 blur-2xl" />
-        <span className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white/20 ring-1 ring-white/40">
-          <Bot size={20} aria-hidden />
+        <span className="relative h-10 w-10 shrink-0">
+          <img src={AVATAR.face} alt="" width={40} height={40} className="h-10 w-10 rounded-full object-cover ring-2 ring-white/50" />
           <span aria-hidden className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full border-2 border-white bg-tone-emerald" />
         </span>
         <div className="relative min-w-0 flex-1">

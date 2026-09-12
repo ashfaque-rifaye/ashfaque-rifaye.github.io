@@ -3,9 +3,9 @@ import { HireCta } from '../components/sections/HireCta';
 import { Readout } from '../components/ui/Readout';
 import { Reveal } from '../components/ui/Reveal';
 import { SectionHead } from '../components/ui/SectionHead';
-import { Todo } from '../components/ui/Todo';
 import { CERTIFICATIONS, EDUCATION } from '../content/experience';
 import { BY_THE_NUMBERS } from '../content/metrics';
+import { AVATAR } from '../content/profile';
 import { SKILL_GROUPS } from '../content/skills';
 import { cx } from '../lib/utils';
 
@@ -80,20 +80,28 @@ export function AboutPage() {
             ))}
           </ol>
           <aside className="lg:col-span-5">
-            <div className="panel p-7 md:p-9 lg:sticky lg:top-28">
-              <h2 className="t-h3">Why this intersection</h2>
-              <div className="prose-case mt-5">
-                <p>
-                  My engineering foundation helps me understand systems, APIs and technical trade-offs. My product experience
-                  connects that technology to customers and business outcomes.
-                </p>
-                <p>
-                  Enterprise AI needs both. A model only creates value once it is integrated with the systems around it,
-                  measured against a business metric, and trusted by the people who depend on it.
-                </p>
-              </div>
-              <div className="mt-8">
-                <Todo>Portrait: add public/media/portrait.webp (4:5, at least 800px wide) to show it here.</Todo>
+            <div className="panel overflow-hidden lg:sticky lg:top-28">
+              <img
+                src={AVATAR.cardSmall}
+                srcSet={`${AVATAR.cardSmall} 576w, ${AVATAR.card} 864w`}
+                sizes="(min-width: 1024px) 30rem, 100vw"
+                width={576}
+                height={384}
+                alt={AVATAR.alt}
+                className="block aspect-[3/2] w-full object-cover"
+              />
+              <div className="p-7 md:p-9">
+                <h2 className="t-h3">Why this intersection</h2>
+                <div className="prose-case mt-5">
+                  <p>
+                    My engineering foundation helps me understand systems, APIs and technical trade-offs. My product experience
+                    connects that technology to customers and business outcomes.
+                  </p>
+                  <p>
+                    Enterprise AI needs both. A model only creates value once it is integrated with the systems around it,
+                    measured against a business metric, and trusted by the people who depend on it.
+                  </p>
+                </div>
               </div>
             </div>
           </aside>

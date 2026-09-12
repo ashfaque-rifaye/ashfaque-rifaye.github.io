@@ -78,7 +78,8 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
           playDemo(d.id, 'command_palette');
         },
       })),
-      ...LAB_PROJECTS.map<Command>((p) => ({
+      // The Hiring Agent is already listed under Pages.
+      ...LAB_PROJECTS.filter((p) => p.slug !== 'hiring-agent').map<Command>((p) => ({
         id: `lab-${p.slug}`,
         label: p.name,
         group: 'AI Lab',

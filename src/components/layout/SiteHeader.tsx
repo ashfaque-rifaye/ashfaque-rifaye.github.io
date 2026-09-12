@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router';
-import { Download, Menu, Search, Sparkles, X } from 'lucide-react';
+import { Download, Menu, Search, X } from 'lucide-react';
 import { PERSON, RESUME, SOCIALS } from '../../content/profile';
 import { trackEvent } from '../../lib/analytics';
 import { useBodyScrollLock, useFocusTrap, useScrolled } from '../../lib/hooks';
@@ -9,10 +9,10 @@ import { useUi } from '../../site/ui-state';
 import { LogoMark } from './LogoMark';
 import { ThemeToggle } from './ThemeToggle';
 
+/* Deliberately short: demos live in the AI Lab (which links to /demos/), and
+   the Hiring Agent is linked in context. Neither is a tab. */
 export const NAV = [
   { to: '/work/', label: 'Work', end: false },
-  { to: '/demos/', label: 'Demos', end: false },
-  { to: '/agent/', label: 'Hiring Agent', end: false, ai: true },
   { to: '/lab/', label: 'AI Lab', end: false },
   { to: '/about/', label: 'About', end: false },
   { to: '/contact/', label: 'Contact', end: false },
@@ -53,7 +53,6 @@ export function SiteHeader() {
             {NAV.map((item) => (
               <li key={item.to}>
                 <NavLink to={item.to} end={item.end} className="nav-link">
-                  {'ai' in item && <Sparkles size={14} aria-hidden className="text-tone-pink" />}
                   {item.label}
                 </NavLink>
               </li>
@@ -130,7 +129,6 @@ export function SiteHeader() {
                       <>
                         <span className={cx('flex items-center gap-2', isActive && 'text-grad')}>
                           {item.label}
-                          {'ai' in item && <Sparkles size={18} aria-hidden className="text-tone-pink" />}
                         </span>
                         {isActive && <span aria-hidden className="h-2.5 w-2.5 rounded-full bg-grad-brand" />}
                       </>

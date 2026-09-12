@@ -1,11 +1,12 @@
 import { Github } from 'lucide-react';
-import { orderedDemos, LiveApps } from '../components/home/DemoReel';
 import { PageHeader } from '../components/layout/PageHeader';
 import { HireCta } from '../components/sections/HireCta';
 import { ArrowLink } from '../components/ui/Links';
 import { Reveal } from '../components/ui/Reveal';
 import { SectionHead } from '../components/ui/SectionHead';
 import { DemoCard } from '../components/video/DemoCard';
+import { LiveApps } from '../components/video/LiveApps';
+import { orderedDemos } from '../content/demos';
 import { SOCIALS } from '../content/profile';
 import { trackEvent } from '../lib/analytics';
 

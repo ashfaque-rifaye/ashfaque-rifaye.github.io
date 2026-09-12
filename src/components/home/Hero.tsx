@@ -1,14 +1,12 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router';
-import { Play, Sparkles } from 'lucide-react';
-import { HERO, PERSON, RESUME, TITLE_BLOCK } from '../../content/profile';
+import { Play } from 'lucide-react';
+import { AVATAR, HERO, PERSON, RESUME, TITLE_BLOCK } from '../../content/profile';
 import { trackEvent } from '../../lib/analytics';
 import { vars } from '../../lib/utils';
-import { useUi } from '../../site/ui-state';
 import { ButtonAnchor, ButtonLink } from '../ui/Links';
 
 export function Hero() {
-  const { runHiringAgent } = useUi();
   let i = 0;
   const markWords = HERO.mark.split(' ');
   const n = markWords.length;
@@ -55,17 +53,13 @@ export function Hero() {
           ))}
         </h1>
 
-        <div className="mt-10 grid gap-12 lg:mt-12 lg:grid-cols-12 lg:items-end lg:gap-16">
+        <div className="mt-10 grid gap-12 lg:mt-12 lg:grid-cols-12 lg:items-start lg:gap-16">
           <div className="lg:col-span-7">
             <p className="t-lead fade-up" style={vars({ '--d': '420ms' })}>
               {HERO.supporting}
             </p>
             <div className="fade-up mt-9 flex flex-wrap gap-3" style={vars({ '--d': '520ms' })}>
               <ButtonLink to="/work/">Explore my work</ButtonLink>
-              <button type="button" onClick={() => runHiringAgent()} className="btn btn-ai ring-grad">
-                <Sparkles size={17} aria-hidden className="text-tone-pink" />
-                Try my Hiring Agent
-              </button>
               <ButtonAnchor
                 href={RESUME.pdf}
                 download="Ashfaque_Rifaye_Resume.pdf"
@@ -75,14 +69,7 @@ export function Hero() {
               </ButtonAnchor>
             </div>
             <Link
-              to="/#demos"
-              onClick={(e) => {
-                const el = document.getElementById('demos');
-                if (el) {
-                  e.preventDefault();
-                  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-              }}
+              to="/demos/"
               className="fade-up group mt-7 inline-flex items-center gap-2.5 text-[0.9375rem] font-medium text-ink-2 no-underline transition-colors hover:text-ink"
               style={vars({ '--d': '600ms' })}
             >
@@ -92,19 +79,30 @@ export function Hero() {
               Watch the demos
             </Link>
           </div>
-          <dl className="titleblock fade-up lg:col-span-5" style={vars({ '--d': '620ms' })}>
-            {TITLE_BLOCK.map((row) => (
-              <div key={row.key}>
-                <dt className="t-label">{row.key}</dt>
-                <dd>
-                  {row.key === 'Status' && (
-                    <span aria-hidden className="mr-2 inline-block h-1.5 w-1.5 -translate-y-px rounded-full bg-tone-emerald align-middle" />
-                  )}
-                  {row.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
+          <div className="titleblock fade-up lg:col-span-5" style={vars({ '--d': '620ms' })}>
+            <img
+              src={AVATAR.card}
+              srcSet={`${AVATAR.cardSmall} 576w, ${AVATAR.card} 864w`}
+              sizes="(min-width: 1024px) 30rem, 100vw"
+              width={864}
+              height={576}
+              alt={AVATAR.alt}
+              className="block aspect-[3/2] w-full object-cover"
+            />
+            <dl>
+              {TITLE_BLOCK.map((row) => (
+                <div key={row.key}>
+                  <dt className="t-label">{row.key}</dt>
+                  <dd>
+                    {row.key === 'Status' && (
+                      <span aria-hidden className="mr-2 inline-block h-1.5 w-1.5 -translate-y-px rounded-full bg-tone-emerald align-middle" />
+                    )}
+                    {row.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
       </div>
     </section>

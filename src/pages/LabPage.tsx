@@ -1,15 +1,15 @@
 import { Bot, Wand2 } from 'lucide-react';
-import { orderedDemos } from '../components/home/DemoReel';
 import { PageHeader } from '../components/layout/PageHeader';
 import { HireCta } from '../components/sections/HireCta';
-import { ArrowAnchor, ArrowLink } from '../components/ui/Links';
+import { ArrowAnchor, ArrowLink, ButtonLink } from '../components/ui/Links';
 import { SectionHead } from '../components/ui/SectionHead';
 import { VideoEmbed } from '../components/ui/VideoEmbed';
 import { DemoCard } from '../components/video/DemoCard';
-import { demoById } from '../content/demos';
+import { demoById, orderedDemos } from '../content/demos';
 import { LAB_PROJECTS, MORE_BUILDS } from '../content/lab';
 import type { LabProject } from '../content/types';
 import { trackEvent } from '../lib/analytics';
+import { SAMPLE_ROLES } from '../lib/hiring/samples';
 import { useUi } from '../site/ui-state';
 
 export function LabPage() {
@@ -33,9 +33,12 @@ export function LabPage() {
       </PageHeader>
 
       <section aria-labelledby="lab-demos" className="wrap pb-6">
-        <h2 id="lab-demos" className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ink-3">
-          Watch first
-        </h2>
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+          <h2 id="lab-demos" className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ink-3">
+            Watch first
+          </h2>
+          <ArrowLink to="/demos/">All demos and live apps</ArrowLink>
+        </div>
         <div className="mt-4 grid gap-5 md:grid-cols-2">
           {playable.map((d) => (
             <DemoCard key={d.id} demo={d} location="lab_top" />
@@ -103,17 +106,20 @@ function LabEntry({ project: p }: { project: LabProject }) {
               Source on GitHub
             </ArrowAnchor>
           )}
-          {p.slug === 'ai-twin' && (
+          {p.slug === 'hiring-agent' && (
             <>
-              <button type="button" onClick={() => openChat('lab')} className="btn btn-primary">
-                <Bot size={17} aria-hidden />
-                Ask the AI Twin
-              </button>
-              <button type="button" onClick={() => runHiringAgent()} className="btn btn-ai ring-grad">
+              <ButtonLink to="/agent/">Open the Hiring Agent</ButtonLink>
+              <button type="button" onClick={() => runHiringAgent(SAMPLE_ROLES[0].jd)} className="btn btn-ai ring-grad">
                 <Wand2 size={17} aria-hidden className="text-tone-violet" />
-                Open the Hiring Agent
+                Run a sample role
               </button>
             </>
+          )}
+          {p.slug === 'ai-twin' && (
+            <button type="button" onClick={() => openChat('lab')} className="btn btn-primary">
+              <Bot size={17} aria-hidden />
+              Ask the AI Twin
+            </button>
           )}
         </div>
       </div>

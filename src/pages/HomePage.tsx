@@ -1,6 +1,6 @@
 import { AgentTeaser } from '../components/home/AgentTeaser';
 import { Capabilities } from '../components/home/Capabilities';
-import { DemoReel } from '../components/home/DemoReel';
+import { Competencies } from '../components/home/Competencies';
 import { Hero } from '../components/home/Hero';
 import { ImpactBand } from '../components/home/ImpactBand';
 import { LabTeaser } from '../components/home/LabTeaser';
@@ -10,17 +10,18 @@ import { SelectedWork } from '../components/home/SelectedWork';
 import { Trajectory } from '../components/home/Trajectory';
 import { HireCta } from '../components/sections/HireCta';
 
-/* Hero → proof → demos → selected work → the agent → capabilities →
-   how I think → lab → trajectory → recognition → contact. */
+/* Hero → proof → selected work → capabilities → skills with proof → the
+   agent → how I think → lab → trajectory → recognition → contact. Video
+   demos live in the AI Lab and on /demos/. */
 export function HomePage() {
   return (
     <>
       <Hero />
       <ImpactBand />
-      <DemoReel />
       <SelectedWork />
-      <AgentTeaser />
       <Capabilities />
+      <Competencies />
+      <AgentTeaser />
       <Principles />
       <LabTeaser />
       <Trajectory />
